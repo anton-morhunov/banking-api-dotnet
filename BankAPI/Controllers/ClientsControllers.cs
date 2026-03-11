@@ -1,5 +1,6 @@
 using BankAPI.DTO.ClientDTO;
 using BankAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Controllers;
@@ -15,8 +16,20 @@ public class ClientsControllers : ControllerBase
     {
         _clientService = clientService;
     }
+    
+    [HttpGet("debug")]
+    public IActionResult Debug()
+    {
+        var claims = User.Claims.Select(c => new
+        {
+            c.Type,
+            c.Value
+        });
 
+        return Ok(claims);
+    }
     //Get Client by ID
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ClientResponseDTO>> GetClientById(int id)
     {
@@ -31,6 +44,7 @@ public class ClientsControllers : ControllerBase
     }
     
     //Create new Client
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ClientResponseDTO>> CreateClient(ClientCreateDTO dto)
     {
