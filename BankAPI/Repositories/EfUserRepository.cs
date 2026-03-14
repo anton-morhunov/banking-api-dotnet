@@ -37,4 +37,11 @@ public class EfUserRepository : IUserRepository
         await _context.SaveChangesAsync();
         return user;
     }
+
+    public async Task<List<UserModel>> GetAllUsersAsync()
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
