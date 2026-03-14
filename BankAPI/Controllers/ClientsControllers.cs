@@ -37,7 +37,7 @@ public class ClientsControllers : ControllerBase
         
         if (client is null)
         {
-            return NotFound();
+            return NoContent();
         }
         
         return Ok(client);
