@@ -28,8 +28,8 @@ builder.Host.UseSerilog((context, services, configuration) =>
 });
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlite("Data Source = app.db"));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
