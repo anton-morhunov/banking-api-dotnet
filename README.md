@@ -44,7 +44,7 @@ The API is deployed and available online.
 
 Base URL: 
 
-https://banking-api-dotnet-2.onrender.com
+https://banking-api-dotnet-2.onrender.com/swagger
 
 You can test all endpoints directly using Swagger UI.
 
