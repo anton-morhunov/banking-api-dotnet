@@ -6,6 +6,9 @@ obj/
 .idea/
 *.sln.iml
 
+#Development Secrets
+appsettings.Development.json
+
 # OS
 .DS_Store
 
