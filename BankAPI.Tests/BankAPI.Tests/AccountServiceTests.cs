@@ -5,7 +5,6 @@ using BankAPI.Repositories.Interfaces;
 using BankAPI.Models;
 using BankAPI.Services;
 using Microsoft.Extensions.Logging;
-using FluentAssertions;
 
 namespace BankAPI.Tests;
 
