@@ -71,17 +71,18 @@ public class ClientsControllers : ControllerBase
     }
 
     //Get Client by name
-    [HttpGet("{name}")]
-    public async Task<ActionResult<ClientResponseDTO>> GetClientByName(string name)
+    [HttpGet("name/{name}")]
+    public async Task<ActionResult<List<ClientResponseDTO>>> GetClientByName([FromQuery] string? name)
     {
-        var client = await _clientService.GetClientByNameAsync(name);
-
-        if (client is null)
+        if (!string.IsNullOrWhiteSpace(name))
         {
-            return NotFound();
+            var client = await _clientService.GetClientByNameAsync(name);
+            return Ok(client);
         }
 
-        return Ok(client);
+        var allClients = await _clientService.GetAllClientsAsync();
+        return Ok(allClients);
+        
     }
 
     [HttpPut("{id:int}")]
@@ -99,7 +100,7 @@ public class ClientsControllers : ControllerBase
         return Ok(client);
     }
 
-    [HttpPost("{id:int}/status")]
+    [HttpPatch("{id:int}")]
     public async Task<IActionResult> ClientUpdateStatus(int id, ClientStatusDTO dto)
     {
         var result = await _clientService.ClientUpdateStatusAsync(id, dto.Status);
