@@ -17,7 +17,7 @@ public class ClientsControllers : ControllerBase
         _clientService = clientService;
     }
     
-    [HttpGet("debug")]
+    /*[HttpGet("debug")]
     public IActionResult Debug()
     {
         var claims = User.Claims.Select(c => new
@@ -27,7 +27,8 @@ public class ClientsControllers : ControllerBase
         });
 
         return Ok(claims);
-    }
+    }*/
+    
     //Get Client by ID
     [Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
@@ -37,7 +38,7 @@ public class ClientsControllers : ControllerBase
         
         if (client is null)
         {
-            return NoContent();
+            return NotFound();
         }
         
         return Ok(client);
@@ -56,33 +57,18 @@ public class ClientsControllers : ControllerBase
             );
     }
     
-    //Get all clients
+    //Get all clients or Get Client By Name
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetAllClientsAsync()
+    public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetClientsAsync([FromQuery] string? name)
     {
-        var clients = await _clientService.GetAllClientsAsync();
-
-        if (!clients.Any())
+        if (string.IsNullOrWhiteSpace(name))
         {
-            return NotFound();
-        }
-        
-        return Ok(clients);
-    }
-
-    //Get Client by name
-    [HttpGet("name/{name}")]
-    public async Task<ActionResult<List<ClientResponseDTO>>> GetClientByName([FromQuery] string? name)
-    {
-        if (!string.IsNullOrWhiteSpace(name))
-        {
-            var client = await _clientService.GetClientByNameAsync(name);
-            return Ok(client);
+            var clients = await _clientService.GetAllClientsAsync();
+            return Ok(clients);
         }
 
-        var allClients = await _clientService.GetAllClientsAsync();
-        return Ok(allClients);
-        
+        var client = await _clientService.GetClientByNameAsync(name);
+        return Ok(client);
     }
 
     [HttpPut("{id:int}")]

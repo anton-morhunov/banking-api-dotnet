@@ -18,8 +18,8 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
 
-    [HttpGet("id:int")]
-    public async Task<ActionResult<AccountResponseDto>> GetById(int accountId, int clientId)
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<AccountResponseDto>> GetAccountById(int accountId, int clientId)
     {
         var account = await _accountService.GetAccountByIdAsync(accountId,  clientId);
 
@@ -31,18 +31,6 @@ public class AccountController : ControllerBase
         return Ok(account);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<AccountResponseDto>> CreateAccount(AccountCreateDto accountCreateDto)
-    {
-        var account = await _accountService.CreateAccount(accountCreateDto);
-        
-        return CreatedAtAction(
-            nameof(GetById),
-            new { id = account.ClientId }, 
-            account
-            );
-    }
-
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
     {
@@ -50,8 +38,20 @@ public class AccountController : ControllerBase
         
         return Ok(accounts);
     }
-
-    [HttpPatch("UpdateStatusAsync")]
+    
+    [HttpPost]
+    public async Task<ActionResult<AccountResponseDto>> CreateAccount(AccountCreateDto accountCreateDto)
+    {
+        var account = await _accountService.CreateAccount(accountCreateDto);
+        
+        return CreatedAtAction(
+            nameof(GetAccountById),
+            new { id = account.ClientId }, 
+            account
+            );
+    }
+    
+    [HttpPatch("{id:int}/status")]
     public async Task<ActionResult<AccountResponseDto>> AccountUpdateStatusAsync(
         int accountId, 
         int clientId,
@@ -72,7 +72,7 @@ public class AccountController : ControllerBase
         return Ok(updateAccount);
     }
 
-    [HttpPatch("/status")]
+    [HttpPatch("{id:int}/close")]
     public async Task<ActionResult<bool>> CloseAccountAsync(
         int accountId, 
         int clientId
@@ -83,7 +83,7 @@ public class AccountController : ControllerBase
         return Ok(closeAccount);
     }
 
-    [HttpPatch("/plan")]
+    [HttpPatch("{id:int}/plan")]
     public async Task<ActionResult<AccountResponseDto>> UpdatePlanAsync(
         int accountId, 
         int clientId, 

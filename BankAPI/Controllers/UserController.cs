@@ -26,20 +26,20 @@ public class UserController : ControllerBase
 
         if (!users.Any())
         {
-            return NoContent();
+            return NotFound();
         }
         return Ok(users);
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpGet("getUserById")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<UserResponse?>> GetUserByIdAsync(int id)
     {
         var user = await _userService.GetUserByIdAsync(id);
 
         if (user is null)
         {
-            return NoContent();
+            return NotFound();
         }
         
         return  Ok(user);
