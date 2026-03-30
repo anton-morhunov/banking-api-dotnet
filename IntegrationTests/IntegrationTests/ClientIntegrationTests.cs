@@ -28,7 +28,8 @@ public class ClientIntegrationTests
 
         Assert.Contains(content, c => 
             c.Name == "Anton" && 
-            c.Email == "anton@test.com"
+            c.Email == "anton@test.com" &&
+            c.PhoneNumber == "123456789"
         );
     }
 }
