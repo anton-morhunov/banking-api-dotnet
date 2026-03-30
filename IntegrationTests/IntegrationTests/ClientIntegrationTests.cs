@@ -24,5 +24,11 @@ public class ClientIntegrationTests
         var content = await response.Content.ReadFromJsonAsync<List<ClientResponseDTO>>();
 
         Assert.NotNull(content);
+        Assert.NotEmpty(content);
+
+        Assert.Contains(content, c => 
+            c.Name == "Anton" && 
+            c.Email == "anton@test.com"
+        );
     }
 }

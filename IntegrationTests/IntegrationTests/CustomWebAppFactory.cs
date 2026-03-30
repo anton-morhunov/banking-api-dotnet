@@ -1,4 +1,6 @@
 using BankAPI.Data;
+using BankAPI.DTO.ClientDTO;
+using BankAPI.Models.ClientModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +11,10 @@ namespace IntegrationTests;
 public class CustomWebApplicationFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
 {
+    
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        
         builder.ConfigureServices(services =>
         {
             var descriptor = services.SingleOrDefault(
@@ -23,6 +27,21 @@ public class CustomWebApplicationFactory<TProgram>
             {
                 options.UseInMemoryDatabase("TestDb");
             });
+            
+            var sp = services.BuildServiceProvider();
+            using var scope = sp.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            db.Database.EnsureCreated();
+
+            db.Clients.Add(new ClientModel
+            {
+                Name = "Anton",
+                Email = "anton@test.com",
+                PhoneNumber = "123456789"
+            });
+
+            db.SaveChanges();
         });
     }
 }
