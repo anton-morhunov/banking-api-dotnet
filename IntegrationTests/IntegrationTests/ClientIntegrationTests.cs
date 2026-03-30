@@ -20,7 +20,11 @@ public class ClientIntegrationTests
         var response = await _client.GetAsync("/api/clients");
 
         var raw = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(raw);
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Status: {response.StatusCode}\nBody: {raw}");
+        }
 
         Assert.True(response.IsSuccessStatusCode, raw);
 

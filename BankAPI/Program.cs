@@ -108,11 +108,16 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var adminSetting = scope.ServiceProvider
         .GetRequiredService<IOptions<AdminSettings>>().Value;
-    if (db.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+    
+    if (app.Environment.IsEnvironment("Testing"))
+    {
+        // do nothing
+    }
+    else
     {
         db.Database.Migrate();
+        await DatabaseSeeder.SeedAsync(db, adminSetting);
     }
-    await DatabaseSeeder.SeedAsync(db,adminSetting);
 }
 
 var port = Environment.GetEnvironmentVariable("PORT");
