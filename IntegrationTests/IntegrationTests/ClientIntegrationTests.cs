@@ -19,7 +19,10 @@ public class ClientIntegrationTests
     {
         var response = await _client.GetAsync("/api/clients");
 
-        response.EnsureSuccessStatusCode();
+        var raw = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(raw);
+
+        Assert.True(response.IsSuccessStatusCode, raw);
 
         var content = await response.Content.ReadFromJsonAsync<List<ClientResponseDTO>>();
 
