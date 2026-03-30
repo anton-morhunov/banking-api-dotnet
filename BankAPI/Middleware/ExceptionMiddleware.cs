@@ -26,7 +26,8 @@ public class ExceptionMiddleware
 
             await context.Response.WriteAsJsonAsync(new
             {
-                error = "Internal server error",
+                error = ex.Message,
+                stackTrace = ex.StackTrace
             });
         }
     }
