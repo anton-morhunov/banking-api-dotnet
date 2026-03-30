@@ -108,7 +108,10 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var adminSetting = scope.ServiceProvider
         .GetRequiredService<IOptions<AdminSettings>>().Value;
-    db.Database.Migrate();
+    if (db.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+    {
+        db.Database.Migrate();
+    }
     await DatabaseSeeder.SeedAsync(db,adminSetting);
 }
 
@@ -130,3 +133,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
