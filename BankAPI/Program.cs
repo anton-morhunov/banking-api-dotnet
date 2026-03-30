@@ -109,11 +109,7 @@ using (var scope = app.Services.CreateScope())
     var adminSetting = scope.ServiceProvider
         .GetRequiredService<IOptions<AdminSettings>>().Value;
     
-    if (app.Environment.IsEnvironment("Testing"))
-    {
-        // do nothing
-    }
-    else
+    if (db.Database.IsRelational())
     {
         db.Database.Migrate();
         await DatabaseSeeder.SeedAsync(db, adminSetting);
