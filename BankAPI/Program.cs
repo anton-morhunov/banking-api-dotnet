@@ -76,21 +76,24 @@ var jwtSettings = builder.Configuration
     .GetSection("Jwt")
     .Get<JwtSettings>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            ValidateIssuerSigningKey = true,
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
 
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
 
-            ValidateIssuer = false,
-            ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateAudience = false,
             
-            RoleClaimType = ClaimTypes.Role
-        };
-    });
+                RoleClaimType = ClaimTypes.Role
+            };
+        });
+}
 
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("Jwt"));
@@ -108,8 +111,12 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var adminSetting = scope.ServiceProvider
         .GetRequiredService<IOptions<AdminSettings>>().Value;
-    db.Database.Migrate();
-    await DatabaseSeeder.SeedAsync(db,adminSetting);
+    
+    if (db.Database.IsRelational())
+    {
+        db.Database.Migrate();
+        await DatabaseSeeder.SeedAsync(db, adminSetting);
+    }
 }
 
 var port = Environment.GetEnvironmentVariable("PORT");
@@ -130,3 +137,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
