@@ -77,4 +77,25 @@ public class UserServiceTests
                     clientId), 
                 Times.Once);
     }
+
+    [Fact]
+    public async Task GetUserByIdAsync_ShouldReturnNull_WhenUserWasNotFound()
+    {
+        var mockUserRepository = new Mock<IUserRepository>();
+        var mockLoger = new Mock<ILogger<UserService>>();
+        
+        var clientId = 1;
+        
+        mockUserRepository.Setup(x => x.GetUserByIdAsync(clientId))
+            .ReturnsAsync((UserModel?)null);
+        
+        var service = new UserService(mockUserRepository.Object, mockLoger.Object);
+        var result = await service.GetUserByIdAsync(clientId);
+        
+        Assert.Null(result);
+        
+        mockUserRepository
+            .Verify(x => x.GetUserByIdAsync(clientId), 
+                Times.Once);
+    }
 }

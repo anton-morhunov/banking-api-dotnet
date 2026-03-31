@@ -25,9 +25,11 @@ public class ClientServiceTests
 
         var createdModel = new ClientModel
         {
+            Id = 1,
             Name = dto.Name,
             Email = dto.Email,
-            PhoneNumber = dto.PhoneNumber
+            PhoneNumber = dto.PhoneNumber,
+            Status = ClientStatus.Active
         };
         
         mockClientRepository
@@ -39,10 +41,12 @@ public class ClientServiceTests
         var result = await service.CreateClientAsync(dto);
         
         Assert.NotNull(result);
-        
+        Assert.Equal(createdModel.Id, result.Id);
         Assert.Equal(dto.Name, result.Name);
         Assert.Equal(dto.Email, result.Email);
         Assert.Equal(dto.PhoneNumber, result.PhoneNumber);
+        Assert.Equal(ClientStatus.Active, result.Status);
+        
     }
 
     [Fact]
@@ -134,7 +138,11 @@ public class ClientServiceTests
         
         var clientModel = new ClientModel
         {
+            Id = 1,
             Name = "James",
+            Email = "James@gmail.com",
+            PhoneNumber = "8725646464",
+            Status = ClientStatus.Active,
         };
         
         mockClientRepository
@@ -146,7 +154,33 @@ public class ClientServiceTests
         var result = await service.GetClientByNameAsync(name);
         
         Assert.NotNull(result);
+        Assert.Equal(clientModel.Id, result.Id);
         Assert.Equal(clientModel.Name, result.Name);
+        Assert.Equal(clientModel.Email, result.Email);
+        Assert.Equal(clientModel.PhoneNumber, result.PhoneNumber);
+        Assert.Equal(clientModel.Status, result.Status);
+        
+        mockClientRepository
+            .Verify(x => x.GetClientByName(name), 
+                Times.Once);
+    }
+
+    [Fact]
+    public async Task GetClientByNameAsync_ShouldReturnNull_WhenClientDoesNotExist()
+    {
+        var mockClientRepository = new Mock<IClientRepository>();
+        var mockLogger = new Mock<ILogger<ClientService>>();
+        
+        var  name = "James";
+        
+        mockClientRepository.Setup(x => x.GetClientByName(name))
+            .ReturnsAsync((ClientModel?)null);
+        
+        var service = new ClientService(mockClientRepository.Object, mockLogger.Object);
+        
+        var result = await service.GetClientByNameAsync(name);
+        
+        Assert.Null(result);
         
         mockClientRepository
             .Verify(x => x.GetClientByName(name), 
@@ -237,7 +271,11 @@ public class ClientServiceTests
 
         var clientModel = new ClientModel
         {
-            Id = clientId
+            Id = clientId,
+            Name = "Test",
+            Email = "testTest@gmail.com",
+            PhoneNumber = "123456789",
+            Status = ClientStatus.Active
         };
         
         mockClientRepository
@@ -250,6 +288,10 @@ public class ClientServiceTests
         
         Assert.NotNull(result);
         Assert.Equal(clientModel.Id, result.Id);
+        Assert.Equal(clientModel.Name, result.Name);
+        Assert.Equal(clientModel.Email, result.Email);
+        Assert.Equal(clientModel.PhoneNumber, result.PhoneNumber);
+        Assert.Equal(clientModel.Status, result.Status);
         
         mockClientRepository
             .Verify(x => x.GetClientByIdAsync(clientId),
