@@ -1,0 +1,47 @@
+using BankAPI.Application.Interfaces.RepositoryInterfaces;
+using BankAPI.Infrastructure.Data;
+using BankAPI.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace BankAPI.Infrastructure.Repositories;
+
+public class EfUserRepository : IUserRepository
+{
+    private readonly AppDbContext _context;
+
+    public EfUserRepository(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<UserModel?> GetUserByEmailAsync(string email)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(x => x.Email == email);
+    }
+
+    public async Task<UserModel?> GetUserByIdAsync(int id)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public Task SaveUserAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
+
+    public async Task<UserModel> CreateUserAsync(UserModel user)
+    {
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task<List<UserModel>> GetAllUsersAsync()
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .ToListAsync();
+    }
+}
