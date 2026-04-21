@@ -1,0 +1,26 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4290eba0_002D90fe_002D4aa8_002Dab43_002D984c53228045/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::05B0574E-E1D1-CD74-25F1-9153593101A0::net10.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4560ecf7_002D8b71_002D4df7_002D8111_002D5c5ccbf1063b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::05B0574E-E1D1-CD74-25F1-9153593101A0::net10.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests.GetAccountById_ShouldReturnAccount_WhenAccountExists&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4c342e5f_002Ddc8c_002D45e0_002D8260_002D030d50069548/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::05B0574E-E1D1-CD74-25F1-9153593101A0::net10.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests.GetAccountById_ShouldReturnAccount_WhenAccountExists&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58bdf507_002Db1fa_002D444e_002Db587_002D7ddba1e84fed/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AccountServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::05B0574E-E1D1-CD74-25F1-9153593101A0::net10.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cf8a32fa_002Dea9e_002D4c21_002Db398_002Dc8c087e3d960/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateClientAsync_ShouldReturnResponse_WhenClientCreated" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::05B0574E-E1D1-CD74-25F1-9153593101A0::net10.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests.CreateClientAsync_ShouldReturnResponse_WhenClientCreated&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
