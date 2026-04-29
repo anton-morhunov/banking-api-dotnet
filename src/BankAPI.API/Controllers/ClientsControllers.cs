@@ -31,7 +31,7 @@ public class ClientsControllers : ControllerBase
     }*/
     
     //Get Client by ID
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ClientResponseDTO>> GetClientById(int id)
     {
