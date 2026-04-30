@@ -46,7 +46,7 @@ public class ClientsControllers : ControllerBase
     }
     
     //Create new Client
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ClientResponseDTO>> CreateClient(ClientCreateDTO dto)
     {
