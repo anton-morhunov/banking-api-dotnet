@@ -45,18 +45,23 @@ function CreateClient() {
     
     return (
         <div style={{ padding: "2-px" }}>
+            
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',}}>
             <h1>Create new client</h1>
             
             <div style={{
-                ...styles.card,
                 display: "flex",
                 flexDirection: "column",
                 gap:"10px",
-                maxWidth:"800%"
+                marginBottom:"20px",
+                width: "20%"
             }}>
                 <input 
                     className="create-client-input"
-                    style={{ width: "50%", padding: "8px", margin: "0 auto" }}
+                    style={{ width: "100%", padding: "8px", margin: "0 auto" }}
                     value={inputName} 
                     onChange={(e) => setName(e.target.value)} 
                     placeholder="Enter name"
@@ -64,7 +69,7 @@ function CreateClient() {
                 
                 <input
                     className="create-client-input"
-                    style={{ width: "50%", padding: "8px", margin: "0 auto" }}
+                    style={{ width: "100%", padding: "8px", margin: "0 auto" }}
                     value={inputEmail} 
                     onChange={(e) => setEmail(e.target.value)} 
                     placeholder="Enter email"
@@ -72,7 +77,7 @@ function CreateClient() {
                 
                 <input
                     className="create-client-input"
-                    style={{ width: "50%", padding: "8px", margin: "0 auto"}}
+                    style={{ width: "100%", padding: "8px", margin: "0 auto"}}
                     value={inputPhoneNumber} 
                     onChange={(e) => setPhoneNumber(e.target.value)} 
                     placeholder="Enter phone number"
@@ -85,6 +90,7 @@ function CreateClient() {
                     disabled={!inputName || !inputEmail || !inputPhoneNumber}>
                     Create
                 </button>
+            </div>
             </div>
     </div>
     )

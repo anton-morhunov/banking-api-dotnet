@@ -31,7 +31,7 @@ public class ClientsControllers : ControllerBase
     }*/
     
     //Get Client by ID
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ClientResponseDTO>> GetClientById(int id)
     {
@@ -46,7 +46,7 @@ public class ClientsControllers : ControllerBase
     }
     
     //Create new Client
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ClientResponseDTO>> CreateClient(ClientCreateDTO dto)
     {
@@ -58,7 +58,7 @@ public class ClientsControllers : ControllerBase
             );
     }
     
-    //Get all clients or Get Client By Name
+    //[Authorize (Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetClientsAsync([FromQuery] string? name)
     {

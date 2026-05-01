@@ -4,15 +4,19 @@ import SearchingPage from "./pages/SearchingPage.jsx";
 import CreateClientPage from "./pages/CreateClientPage.jsx";
 import AccountsPage from "./pages/AccountsPage.jsx";
 import EmployeesPage from "./pages/EmployeesPage.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import RegisterEmployeePage from "./pages/RegisterEmployeePage.jsx";
 
 function App() {
     return(
         <Routes>
             <Route path="/" element={<LoginPage/>} />
-            <Route path="/home" element={<SearchingPage/>} />
-            <Route path="/create_client" element={<CreateClientPage/>} />
-            <Route path="/colleagues" element={<EmployeesPage/>} />
-            <Route path="/accounts" element={<AccountsPage/>} />
+            <Route path="/home" element={<ProtectedRoute> <SearchingPage/> </ProtectedRoute>} />
+            <Route path="/create_client" element={<ProtectedRoute> <CreateClientPage/> </ProtectedRoute>} />
+            <Route path="/colleagues" element={<ProtectedRoute><EmployeesPage/></ProtectedRoute>} />
+            <Route path="/accounts" element={<ProtectedRoute><AccountsPage/></ProtectedRoute>} />
+            <Route path="/colleagues" element={<ProtectedRoute><EmployeesPage/></ProtectedRoute>}/>
+            <Route path="/register_user" element={<ProtectedRoute><RegisterEmployeePage/></ProtectedRoute>}/>
         </Routes>
     )
 }
