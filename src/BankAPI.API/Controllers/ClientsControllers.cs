@@ -58,7 +58,7 @@ public class ClientsControllers : ControllerBase
             );
     }
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetClientsAsync([FromQuery] string? name)
     {
