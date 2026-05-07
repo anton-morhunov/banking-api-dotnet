@@ -19,7 +19,7 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> GetAccountByIdAsync(
         int accountId, 
-        int clientId
+        int? clientId
         )
     {
         _logger.LogInformation(
@@ -267,5 +267,25 @@ public class AccountService : IAccountService
             );
         
         return response;
+    }
+
+    public async Task<IEnumerable<AccountResponseDto>> GetAllAccounts()
+    {
+        _logger.LogDebug(
+            "Getting all accounts"
+            );
+
+        var accounts = await _accountRepository.GetAllAccountsAsync();
+
+        return accounts.Select(x => new AccountResponseDto
+        {
+            AccountId = x.Id,
+            ClientId = x.ClientId,
+            Balance = x.Balance,
+            AccountNumber = x.AccountNumber,
+            Status = x.Status,
+            Plan = x.Plan,
+            CreatedAt = x.CreatedAt
+        });
     }
 }
