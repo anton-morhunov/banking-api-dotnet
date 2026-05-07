@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {api} from "../api/api";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 function SearchingPage(){
     
@@ -116,7 +116,11 @@ function SearchingPage(){
                             <tr key={client.id}>
                                 <td style={styles.td}>{client.id}</td>
                                 <td style={styles.td}>{client.name}</td>
-                                <td style={styles.td}>{client.email}</td>
+                                <td style={styles.td}>
+                                    <Link to={`/clients/${client.id}`} style={{color: "blue"}}>
+                                        {client.email}
+                                    </Link>
+                                </td>
                                 <td style={styles.td}>{client.phoneNumber}</td>
                                 <td style={styles.td}>
                                     <span style={{

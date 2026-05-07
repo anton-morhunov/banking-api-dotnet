@@ -7,6 +7,7 @@ import EmployeesPage from "./pages/EmployeesPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import RegisterEmployeePage from "./pages/RegisterEmployeePage.jsx";
 import CreateAccountPage from "./pages/CreateAccountPage.jsx";
+import ClientDetailsPage from "./pages/ClientDetailsPage.jsx";
 
 function App() {
     return(
@@ -19,6 +20,7 @@ function App() {
             <Route path="/colleagues" element={<ProtectedRoute><EmployeesPage/></ProtectedRoute>}/>
             <Route path="/register_user" element={<ProtectedRoute><RegisterEmployeePage/></ProtectedRoute>}/>
             <Route path="/create_account" element={<ProtectedRoute><CreateAccountPage/></ProtectedRoute>}/>
+            <Route path="/clients/:id" element={<ProtectedRoute><ClientDetailsPage/></ProtectedRoute>}/>
         </Routes>
     )
 }

@@ -36,7 +36,7 @@ public class AccountController : ControllerBase
         return Ok(all);
     }
 
-    [HttpGet("{accountId}")]
+    [HttpGet("{clientId}")]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
     {
         var accounts = await _accountService.GetAllAccountsByClientIdAsync(clientId);
