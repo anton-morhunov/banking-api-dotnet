@@ -12,7 +12,7 @@ public class EfAccountRepository : IAccountRepository
         _db = db;
     }
     
-    public async Task<AccountModel?> GetAccountAsync(int accountId, int clientId)
+    public async Task<AccountModel?> GetAccountAsync(int accountId, int? clientId)
     {
         return await _db.Accounts
             //.AsNoTracking()
@@ -54,6 +54,13 @@ public class EfAccountRepository : IAccountRepository
     public Task SaveAsync()
     {
         return _db.SaveChangesAsync();
+    }
+
+    public async Task<List<AccountModel>> GetAllAccountsAsync()
+    {
+        return await _db.Accounts
+            .AsNoTracking()
+            .ToListAsync();
     }
     
 }

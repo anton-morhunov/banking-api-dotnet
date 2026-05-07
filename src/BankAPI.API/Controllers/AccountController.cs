@@ -18,20 +18,25 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<AccountResponseDto>> GetAccountById(int accountId, int clientId)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAccountById(int accountId, 
+        [FromQuery]int? clientId)
     {
-        var account = await _accountService.GetAccountByIdAsync(accountId,  clientId);
-
-        if (account is null)
+        if (clientId.HasValue)
         {
-            return NotFound();
+            var account = await _accountService.GetAccountByIdAsync(accountId,  clientId);
+
+            if (account is null)
+            {
+                return NotFound();
+            }
         }
-        
-        return Ok(account);
+
+        var all = await _accountService.GetAllAccounts();
+        return Ok(all);
     }
 
-    [HttpGet]
+    [HttpGet("{accountId}")]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
     {
         var accounts = await _accountService.GetAllAccountsByClientIdAsync(clientId);
