@@ -7,6 +7,8 @@ function ClientDetailsPage(){
     const { id } = useParams();
     const [client, setClient] = useState(null);
     const [account, setAccounts] = useState([]);
+    const [editingField, setEditField] = useState(null);
+    const [editedClient, setEditedClient] = useState({});
 
     const styles = {
         card: {
@@ -29,7 +31,7 @@ function ClientDetailsPage(){
     };
 
     const sectionStyle = {
-        width: "45%"
+        width: "40%"
     };
 
     const rowStyle = {
@@ -70,12 +72,40 @@ function ClientDetailsPage(){
             try {
                 var response = await api.get(`/clients/${id}`);
                 setClient(response.data);
+                setEditedClient(response.data);
             } catch (err) {
                 console.log(err);
             }
         };
         fetchClient();
     }, [id]);
+
+    const saveField = async () => {
+
+        try {
+            await api.put(`/clients/${client.id}`, editedClient);
+
+            setClient(editedClient);
+
+            setEditField(null);
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
+    const updateClientStatus = async () => {
+        try{
+            await api.patch(`/clients/${client.id}/dto`, {status: status});
+            
+            setClient({
+                ...client,
+                status: dto
+            })
+        } catch(err){
+            console.log(err);
+        }
+    }
 
     useEffect(() => {
         api.get(`/accounts/${id}`)
@@ -116,17 +146,132 @@ function ClientDetailsPage(){
                         <div style={sectionStyle}>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Name</span>
-                                <span style={valueStyle}>{client.name}</span>
+                                {
+                                    editingField === "name" ? (
+                                        <input
+                                            value={editedClient.name}
+                                            onChange={(e) =>
+                                                setEditedClient({
+                                                    ...editedClient,name: e.target.value
+                                                })
+                                            }
+                                            style={{
+                                                border: "none",
+                                                borderBottom: "2px solid #d1d5db",
+                                                background: "transparent",
+                                                outline: "none",
+                                                padding: "6px 2px",
+                                                fontSize: "18px",
+                                                width: "220px",
+                                                color: "#374151",
+                                                fontWeight: "500",
+                                                caretColor: "#2563eb"
+                                            }}
+                                        />
+                                    ) : (
+                                        <span style={valueStyle}>{client.name}</span>
+                                    )}
+                                {editingField === "name" ? (
+                                    <button 
+                                        type="button" 
+                                        onClick={()=>saveField("name")} 
+                                        className="primary-btn">
+                                        Save
+                                    </button>
+                                ) :( 
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setEditField("name")} 
+                                        className="primary-btn">
+                                    Edit
+                                    </button>
+                                )}
                             </div>
 
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Email</span>
-                                <span style={valueStyle}>{client.email}</span>
+                                {editingField === "email" ? (
+                                    <input
+                                    value={editedClient.email}
+                                    onChange={(e) => 
+                                        setEditedClient({
+                                            ...editedClient, email: e.target.value
+                                        })
+                                    }
+                                    style={{
+                                        border: "none",
+                                        borderBottom: "2px solid #d1d5db",
+                                        background: "transparent",
+                                        outline: "none",
+                                        padding: "6px 2px",
+                                        fontSize: "18px",
+                                        width: "220px",
+                                        color: "#374151",
+                                        fontWeight: "500",
+                                        caretColor: "#2563eb"
+                                    }}
+                                    />
+                                ) : (
+                                    <span style={valueStyle}>{client.email}</span>
+                                )}
+                                {editingField === "email" ? (
+                                    <button
+                                        type="button"
+                                        onClick={()=>saveField("email")}
+                                        className="primary-btn">
+                                        Save
+                                    </button>
+                                ) :(
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditField("email")}
+                                        className="primary-btn">
+                                        Edit
+                                    </button>
+                                )}
                             </div>
 
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Phone number</span>
-                                <span style={valueStyle}>{client.phoneNumber}</span>
+                                {editingField === "phoneNumber" ? (
+                                    <input
+                                    value={editedClient.phoneNumber}
+                                    onChange={(e) => 
+                                        setEditedClient({
+                                            ...editedClient, phoneNumber: e.target.value
+                                        })
+                                    }
+                                    style={{
+                                        border: "none",
+                                        borderBottom: "2px solid #d1d5db",
+                                        background: "transparent",
+                                        outline: "none",
+                                        padding: "6px 2px",
+                                        fontSize: "18px",
+                                        width: "220px",
+                                        color: "#374151",
+                                        fontWeight: "500",
+                                        caretColor: "#2563eb"
+                                    }}
+                                    />
+                                ) : (
+                                    <span style={valueStyle}>{client.phoneNumber}</span>
+                                )}
+                                {editingField === "phoneNumber" ? (
+                                    <button
+                                        type="button"
+                                        onClick={()=>saveField("phoneNumber")}
+                                        className="primary-btn">
+                                        Save
+                                    </button>
+                                ) :(
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditField("phoneNumber")}
+                                        className="primary-btn">
+                                        Edit
+                                    </button>
+                                )}
                             </div>
                         </div>
                         
@@ -149,9 +294,17 @@ function ClientDetailsPage(){
                             </div>
                             <div style={{...rowStyle, display: "flex", justifyContent: "center"}}>
                                 <span style={labelStyle}>
-                                    <botton className="block-btn">
+                                    <button className="block-btn">
                                         Block
-                                    </botton>
+                                    </button>
+                                </span>
+                            </div>
+                            
+                            <div style={{...rowStyle, display: "flex", justifyContent: "center"}}>
+                                <span style={labelStyle}>
+                                    <button className="block-btn">
+                                        Suspend
+                                    </button>
                                 </span>
                             </div>
                         </div>

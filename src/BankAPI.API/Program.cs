@@ -75,11 +75,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<ClientsUpdateValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<AccountCreateValidators>();
 builder.Services.AddValidatorsFromAssemblyContaining<AccountUpdateValidators>();
 builder.Services.AddControllers();
+var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy => policy
-            .WithOrigins("http://localhost:5173")
+            .WithOrigins(frontendUrl!)
             .AllowAnyHeader()
             .AllowAnyMethod());
 });

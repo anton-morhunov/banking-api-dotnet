@@ -139,7 +139,8 @@ public class ClientService : IClientService
             Name = client.Name,
             Email = client.Email,
             PhoneNumber = client.PhoneNumber,
-            Status = client.Status
+            Status = client.Status,
+            Created = client.CreateDate
         };
 
         _logger.LogInformation(
@@ -202,7 +203,8 @@ public class ClientService : IClientService
             Name = x.Name,
             Email = x.Email,
             PhoneNumber = x.PhoneNumber,
-            Status = x.Status
+            Status = x.Status,
+            Created = x.CreateDate
             
         }).ToList();
     }
