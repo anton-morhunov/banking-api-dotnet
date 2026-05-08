@@ -1,5 +1,7 @@
+using System.Net;
 using System.Net.Http.Json;
 using BankAPI.Application.DTOs.ClientDto;
+using FluentAssertions;
 
 namespace BankAPI.IntegrationTests.IntegrationTests;
 
@@ -17,6 +19,8 @@ public class ClientIntegrationTests
     public async Task GetClientsAsync_ShouldReturnClients()
     {
         var response = await _client.GetAsync("/api/clients");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var raw = await response.Content.ReadAsStringAsync();
         

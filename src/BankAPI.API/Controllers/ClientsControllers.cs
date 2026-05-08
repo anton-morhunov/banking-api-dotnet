@@ -31,7 +31,7 @@ public class ClientsControllers : ControllerBase
     }*/
     
     //Get Client by ID
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employee")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ClientResponseDTO>> GetClientById(int id)
     {
@@ -46,7 +46,7 @@ public class ClientsControllers : ControllerBase
     }
     
     //Create new Client
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<ClientResponseDTO>> CreateClient(ClientCreateDTO dto)
     {
@@ -58,7 +58,7 @@ public class ClientsControllers : ControllerBase
             );
     }
     
-    //[Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetClientsAsync([FromQuery] string? name)
     {
@@ -72,6 +72,7 @@ public class ClientsControllers : ControllerBase
         return Ok(client);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateClient(
         [FromRoute] int id, 
@@ -87,6 +88,7 @@ public class ClientsControllers : ControllerBase
         return Ok(client);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}")]
     public async Task<IActionResult> ClientUpdateStatus(int id, ClientStatus dto)
     {
@@ -100,6 +102,7 @@ public class ClientsControllers : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpGet("active")]
     public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetAllActiveClients()
     {
