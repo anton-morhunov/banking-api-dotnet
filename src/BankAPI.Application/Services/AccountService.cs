@@ -109,7 +109,9 @@ public class AccountService : IAccountService
                 Balance = account.Balance,
                 ClientId = account.ClientId,
                 AccountType = account.AccountType,
-                Status = account.Status
+                Status = account.Status,
+                CreatedAt = account.CreatedAt,
+                AccountId = account.Id
             };
             
             response.Add(dto);

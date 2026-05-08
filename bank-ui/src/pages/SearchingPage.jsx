@@ -117,7 +117,7 @@ function SearchingPage(){
                                 <td style={styles.td}>{client.id}</td>
                                 <td style={styles.td}>{client.name}</td>
                                 <td style={styles.td}>
-                                    <Link to={`/clients/${client.id}`} style={{color: "blue"}}>
+                                    <Link to={`/clients/${client.id}`} className="client-link">
                                         {client.email}
                                     </Link>
                                 </td>
