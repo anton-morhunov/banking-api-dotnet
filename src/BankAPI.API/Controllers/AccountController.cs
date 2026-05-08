@@ -1,5 +1,6 @@
 using BankAPI.Application.DTOs.AccountDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Controllers;
@@ -17,7 +18,8 @@ public class AccountController : ControllerBase
     {
         _accountService = accountService;
     }
-
+    
+    [Authorize(Roles = "Admin, Employee")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAccountById(int accountId, 
         [FromQuery]int? clientId)
@@ -36,6 +38,7 @@ public class AccountController : ControllerBase
         return Ok(all);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpGet("{clientId}")]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
     {
@@ -44,6 +47,7 @@ public class AccountController : ControllerBase
         return Ok(accounts);
     }
     
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<AccountResponseDto>> CreateAccount(AccountCreateDto accountCreateDto)
     {
@@ -56,6 +60,7 @@ public class AccountController : ControllerBase
             );
     }
     
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}/status")]
     public async Task<ActionResult<AccountResponseDto>> AccountUpdateStatusAsync(
         int accountId, 
@@ -77,6 +82,7 @@ public class AccountController : ControllerBase
         return Ok(updateAccount);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}/close")]
     public async Task<ActionResult<bool>> CloseAccountAsync(
         int accountId, 
@@ -88,6 +94,7 @@ public class AccountController : ControllerBase
         return Ok(closeAccount);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}/plan")]
     public async Task<ActionResult<AccountResponseDto>> UpdatePlanAsync(
         int accountId, 

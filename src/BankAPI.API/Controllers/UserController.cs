@@ -17,7 +17,7 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
-
+    
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUserAsync()

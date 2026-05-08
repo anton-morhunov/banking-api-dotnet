@@ -8,8 +8,8 @@ function SearchingPage(){
     
     const [inputId, setId] = useState("")
     const [client, setClient] = useState(null)
-
     const [clients, setClients] = useState([])
+    
 
     const styles = {
         card: {
@@ -163,11 +163,11 @@ function SearchingPage(){
                     >
                         Clients
                     </div>
-                    
                     <div className="sidebar-item"
-                            onClick={() => navigate("/colleagues")}>
+                         onClick={() => navigate("/colleagues")}>
                         Colleagues
                     </div>
+                    
                 </div>
 
             </div>

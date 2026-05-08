@@ -1,5 +1,6 @@
 using BankAPI.Infrastructure.Data;
 using BankAPI.Domain.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,16 @@ public class CustomWebApplicationFactory<TProgram>
         
         builder.ConfigureServices(services =>
         {
+            services.AddAuthentication("Test")
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                    "Test",  options => { });
+
+            services.PostConfigure<AuthenticationOptions>(options =>
+            {
+                options.DefaultScheme = "Test";
+                options.DefaultChallengeScheme = "Test";
+            });
+            
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
 
