@@ -44,40 +44,72 @@ function CreateClient() {
     }
     
     return (
-        <div style={{ padding: "2-px" }}>
+        <div 
+            style={{
+            minHeight: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        }}>
             
             <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',}}>
-            <h1>Create new client</h1>
-            
-            <div style={{
+                width: "400px",
+                backgroundColor: "#fff",
+                padding: "40px",
+                borderRadius: "20px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                 display: "flex",
                 flexDirection: "column",
-                gap:"10px",
-                marginBottom:"20px",
-                width: "20%"
+                gap: "20px"
             }}>
-                <input 
-                    className="create-client-input"
-                    style={{ width: "100%", padding: "8px", margin: "0 auto" }}
+                
+            <h1 style={{
+                textAlign: "center",
+                margin: 0,
+                fontSize: "36px",
+                fontWeight: "600"
+            }}
+            >
+                Create new client
+            </h1>
+                
+                <input
+                    style={{
+                        padding: "14px",
+                        borderRadius: "12px",
+                        border: "1px solid #ddd",
+                        fontSize: "16px",
+                        backgroundColor: "#ffffff",
+                        color: "#1f2937"
+                    }}
                     value={inputName} 
                     onChange={(e) => setName(e.target.value)} 
                     placeholder="Enter name"
                 />
                 
                 <input
-                    className="create-client-input"
-                    style={{ width: "100%", padding: "8px", margin: "0 auto" }}
+                    style={{
+                        padding: "14px",
+                        borderRadius: "12px",
+                        border: "1px solid #ddd",
+                        fontSize: "16px",
+                        backgroundColor: "#ffffff",
+                        color: "#1f2937"
+                    }}
                     value={inputEmail} 
                     onChange={(e) => setEmail(e.target.value)} 
                     placeholder="Enter email"
                 />
                 
                 <input
-                    className="create-client-input"
-                    style={{ width: "100%", padding: "8px", margin: "0 auto"}}
+                    style={{
+                        padding: "14px",
+                        borderRadius: "12px",
+                        border: "1px solid #ddd",
+                        fontSize: "16px",
+                        backgroundColor: "#ffffff",
+                        color: "#1f2937"
+                    }}
                     value={inputPhoneNumber} 
                     onChange={(e) => setPhoneNumber(e.target.value)} 
                     placeholder="Enter phone number"
@@ -85,12 +117,15 @@ function CreateClient() {
                 
                 <button
                     className="primary-btn"
-                    style={{ width: "50%", padding: "8px", margin: "0 auto" }}
+                    style={{
+                        padding: "14px",
+                        borderRadius: "12px",
+                        fontSize: "16px"
+                    }}
                     onClick={createClient} 
                     disabled={!inputName || !inputEmail || !inputPhoneNumber}>
                     Create
                 </button>
-            </div>
             </div>
     </div>
     )

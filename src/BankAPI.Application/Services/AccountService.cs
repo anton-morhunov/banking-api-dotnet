@@ -46,7 +46,8 @@ public class AccountService : IAccountService
             CreatedAt = account.CreatedAt,
             AccountNumber = account.AccountNumber,
             ClientId = account.ClientId,
-            AccountId = account.Id
+            AccountId = account.Id,
+            AccountType = account.AccountType
         };
         
         _logger.LogInformation(
@@ -287,7 +288,8 @@ public class AccountService : IAccountService
             AccountNumber = x.AccountNumber,
             Status = x.Status,
             Plan = x.Plan,
-            CreatedAt = x.CreatedAt
+            CreatedAt = x.CreatedAt,
+            AccountType = x.AccountType
         });
     }
 }

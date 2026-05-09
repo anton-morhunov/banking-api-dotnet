@@ -147,7 +147,12 @@ function AccountsPage() {
                                     </td>
                                     <td style={styles.td}>
                                         <span style={{
-                                            color: account.accountType === 0 ? "green" : "orange",
+                                            color: account.accountType === 0 
+                                                ? "#2563eb" 
+                                                : account.accountType === 1 
+                                                    ? "#22c55e" 
+                                                    : "#9333ea",
+                                            fontWeight: "bold"
                                         }}>{accountType[account.accountType]}
                                         </span>
                                     </td>

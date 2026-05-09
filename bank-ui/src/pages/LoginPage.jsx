@@ -28,49 +28,77 @@ function LoginPage() {
 
     return(
         <div style={{
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: "#f5f6f8"
+            minHeight: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
         }}>
             <div style={{
-                ...styles.card,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                maxWidth: '100%',
-                width: '20%',
+                width: "400px",
+                backgroundColor: "#fff",
+                padding: "40px",
+                borderRadius: "20px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "30px"
             }}>
                 <h1 style={{
-                    fontSize: "32px", 
-                    fontWeight: "600"}}>
-                    BankAPI Back Office
+                    textAlign: "center",
+                    margin: 0,
+                    fontSize: "36px",
+                    fontWeight: "600"
+                }}
+                >
+                    TheNorthFieldBank
                 </h1>
+                
+                <h2 style={{
+                        textAlign: "center",
+                        margin: 0,
+                        fontSize: "30px",
+                        fontWeight: "600"
+                }}
+                >
+                    Back Office
+                </h2>
                 
                 <div style={{
                     display: "flex", 
-                    gap: "10px", 
+                    gap: "15px", 
                     marginBottom: "20px", 
                     flexDirection: "column",
                 }}>
                     <input
                         value={inputLogin}
                         onChange={(e) => setInputLogin(e.target.value)}
-                        className="login-input" 
-                        style={{ width: "100%", padding: "8px", margin:"0 auto"}} 
+                        style={{ padding: "14px",
+                            borderRadius: "12px",
+                            border: "1px solid #ddd",
+                            fontSize: "16px",
+                            backgroundColor: "#ffffff",
+                            color: "#1f2937"}} 
                         placeholder="Enter LogIn"/>
                     
                     <input 
                         type="password"
                         value={inputPassword}
                         onChange={(e) => setInputPassword(e.target.value)}
-                        className="login-input" 
-                        style={{ width: "100%", padding: "8px", margin:"0 auto" }} 
+                        style={{ padding: "14px",
+                            borderRadius: "12px",
+                            border: "1px solid #ddd",
+                            fontSize: "16px",
+                            backgroundColor: "#ffffff",
+                            color: "#1f2937"}}
                         placeholder="Enter Password"/>
                 </div>
                 <button
-                    className="primary-btn" 
+                    className="primary-btn"
+                    style={{
+                        padding: "14px",
+                        borderRadius: "12px",
+                        fontSize: "16px"
+                    }}
                     onClick={handleLogin}>
                     LogIn
                 </button>
