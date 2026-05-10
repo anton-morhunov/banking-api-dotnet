@@ -16,14 +16,14 @@ public class AccountServiceTests
         var mockAccountRepository = new Mock<IAccountRepository>();
         var mockLogger = new Mock<ILogger<AccountService>>();
 
-        var clientId = 1;
+        //var clientId = 1;
         var accountId = 2;
         var fixedDay = new DateTime(2020, 1, 1);
         
         var accountModel = new AccountModel()
         {
             Id = accountId,
-            ClientId = clientId,
+            //ClientId = clientId,
             Balance = 100,
             Status = AccountStatus.Active,
             AccountType = AccountType.Debit,
@@ -35,19 +35,20 @@ public class AccountServiceTests
 
         mockAccountRepository
             .Setup(x => x.GetAccountAsync(
-                accountId, 
-                clientId))
+                accountId
+                //clientId
+                    ))
             .ReturnsAsync(accountModel);
 
         var accountService = new AccountService(mockAccountRepository.Object, mockLogger.Object);
 
         var result = await accountService.GetAccountByIdAsync(
-            accountId,
-            clientId
+            accountId
+            //clientId
         );
         
         Assert.NotNull(result);
-        Assert.Equal(accountModel.ClientId, result.ClientId);
+        //Assert.Equal(accountModel.ClientId, result.ClientId);
         Assert.Equal(accountModel.Id, result.AccountId);
         Assert.Equal(accountModel.Balance, result.Balance);
         Assert.Equal(accountModel.Status, result.Status);
@@ -58,8 +59,9 @@ public class AccountServiceTests
         
         mockAccountRepository
             .Verify(x => x.GetAccountAsync(
-                    accountId,
-                    clientId),
+                    accountId
+                    //clientId
+                    ),
                 Times.Once
             );
     }
@@ -70,28 +72,30 @@ public class AccountServiceTests
        var mockAccountRepository = new Mock<IAccountRepository>(); 
        var mockLogger = new Mock<ILogger<AccountService>>();
        
-       var clientId = 1;
+       //var clientId = 1;
        var accountId = 2;
        
        mockAccountRepository
            .Setup(x => x.GetAccountAsync(
-               accountId, 
-               clientId))
+               accountId
+               //clientId
+               ))
            .ReturnsAsync((AccountModel?)null);
        
        var service = new AccountService(mockAccountRepository.Object, mockLogger.Object);
        
        var result = await service.GetAccountByIdAsync(
-           accountId, 
-           clientId
+           accountId
+           //clientId
            );
        
            Assert.Null(result);
         
            mockAccountRepository
                .Verify(x => x.GetAccountAsync(
-                       accountId, 
-                       clientId), 
+                       accountId
+                       //clientId
+                       ), 
                    Times.Once
                );
     }

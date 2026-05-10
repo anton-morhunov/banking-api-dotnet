@@ -1,6 +1,6 @@
-import {api} from "../api/api.js";
+import {api} from "../../api/api.js";
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 function AccountsPage() {
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ function AccountsPage() {
         if(inputId.trim() === "") return;
 
         try {
-            const res = await api.get(`/accounts/${inputId}`);
+            const res = await api.get(`/accounts?accountId=${inputId}`);
             setAccount(res.data);
         } catch (error) {
             console.log(error);
@@ -126,7 +126,10 @@ function AccountsPage() {
                             <tbody>
                             {(account ? [account] : accounts).map(account => (
                                 <tr key={account.id}>
-                                    <td style={styles.td}>{account.accountId}</td>
+                                    <td style={styles.td}>
+                                        <Link to={`/accounts/${account.accountId}`} className="client-link">{account.accountId}
+                                        </Link>
+                                    </td>
                                     <td style={styles.td}>{account.balance}</td>
                                     <td style={styles.td}>{account.clientId}</td>
                                     <td style={styles.td}>
@@ -139,7 +142,11 @@ function AccountsPage() {
                                     </td>
                                     <td style={styles.td}>
                                         <span style={{
-                                            color: account.plan === 0 ? "blue" : "gold",
+                                            color: account.plan === 0 
+                                                ? "#64748b" 
+                                                : account.plan === 1 
+                                                    ? "#eab308" 
+                                                    : "#0f766e",
                                             fontWeight: "bold"
                                         }}>
                                             {accountPlan[account.plan]}
