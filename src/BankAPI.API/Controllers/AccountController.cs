@@ -21,17 +21,24 @@ public class AccountController : ControllerBase
     
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAccountById(int accountId, 
-        [FromQuery]int? clientId)
+    public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAccountById(
+        int? accountId
+        //[FromQuery]int? clientId
+        )
     {
-        if (clientId.HasValue)
+        if (accountId.HasValue)
         {
-            var account = await _accountService.GetAccountByIdAsync(accountId,  clientId);
+            var account = await _accountService.GetAccountByIdAsync(
+                accountId 
+                //clientId
+                );
 
             if (account is null)
             {
                 return NotFound();
             }
+            
+            return Ok(account);
         }
 
         var all = await _accountService.GetAllAccounts();
@@ -64,13 +71,13 @@ public class AccountController : ControllerBase
     [HttpPatch("{id:int}/status")]
     public async Task<ActionResult<AccountResponseDto>> AccountUpdateStatusAsync(
         int accountId, 
-        int clientId,
+        //int clientId,
         AccountUpdateDto accountUpdateDto
         )
     {
         var updateAccount = await _accountService.AccountUpdateStatusAsync(
             accountId, 
-            clientId, 
+            //clientId, 
             accountUpdateDto
             );
 
@@ -89,7 +96,9 @@ public class AccountController : ControllerBase
         int clientId
         )
     {
-        var closeAccount = await _accountService.CloseAccountAsync(accountId, clientId);
+        var closeAccount = await _accountService.CloseAccountAsync(accountId
+            //clientId
+            );
 
         return Ok(closeAccount);
     }
@@ -104,7 +113,7 @@ public class AccountController : ControllerBase
     {
         var updateAccountPlan = await _accountService.AccountUpdatePlanAsync(
             accountId, 
-            clientId, 
+            //clientId, 
             accountUpdateDto
             );
 

@@ -46,5 +46,6 @@
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.ClientUpdateStatusAsync_ShouldReturnClient&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

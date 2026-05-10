@@ -18,8 +18,8 @@ public class AccountService : IAccountService
     }
 
     public async Task<AccountResponseDto?> GetAccountByIdAsync(
-        int accountId, 
-        int? clientId
+        int? accountId
+        //int? clientId
         )
     {
         _logger.LogInformation(
@@ -27,7 +27,9 @@ public class AccountService : IAccountService
             accountId
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId,  clientId);
+        var account = await _accountRepository.GetAccountAsync(accountId
+            //clientId
+            );
 
         if (account == null)
         {
@@ -47,7 +49,8 @@ public class AccountService : IAccountService
             AccountNumber = account.AccountNumber,
             ClientId = account.ClientId,
             AccountId = account.Id,
-            AccountType = account.AccountType
+            AccountType = account.AccountType,
+            Plan = account.Plan
         };
         
         _logger.LogInformation(
@@ -112,7 +115,8 @@ public class AccountService : IAccountService
                 AccountType = account.AccountType,
                 Status = account.Status,
                 CreatedAt = account.CreatedAt,
-                AccountId = account.Id
+                AccountId = account.Id,
+                Plan = account.Plan
             };
             
             response.Add(dto);
@@ -128,7 +132,7 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> AccountUpdateStatusAsync(
         int accountId, 
-        int clientId, 
+        //int clientId, 
         AccountUpdateDto accountUpdateDto
         )
     {
@@ -138,7 +142,9 @@ public class AccountService : IAccountService
             accountUpdateDto.Status
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId, clientId);
+        var account = await _accountRepository.GetAccountAsync(accountId
+            //clientId
+            );
 
         if (account == null)
         {
@@ -184,8 +190,8 @@ public class AccountService : IAccountService
     }
 
     public async Task<bool> CloseAccountAsync(
-        int accountId, 
-        int clientId
+        int accountId
+        //int clientId
         )
     {
         _logger.LogInformation(
@@ -193,7 +199,10 @@ public class AccountService : IAccountService
             accountId
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId, clientId);
+        var account = await _accountRepository.GetAccountAsync(
+            accountId
+        //clientId
+            );
 
         if (account == null)
         {
@@ -218,7 +227,7 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> AccountUpdatePlanAsync(
         int accountId, 
-        int clientId, 
+        //int clientId, 
         AccountUpdateDto accountUpdateDto
         )
     {
@@ -227,7 +236,9 @@ public class AccountService : IAccountService
             accountId
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId,  clientId);
+        var account = await _accountRepository.GetAccountAsync(accountId  
+            //clientId
+            );
 
         if (account == null)
         {

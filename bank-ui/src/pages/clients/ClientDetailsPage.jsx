@@ -1,6 +1,6 @@
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import {useState, useEffect} from "react";
-import {api} from "../api/api.js";
+import {api} from "../../api/api";
 
 function ClientDetailsPage(){
     
@@ -341,7 +341,7 @@ function ClientDetailsPage(){
                     <tbody>
                     {account?.map(account => (
                         <tr key={account.id}>
-                            <td style={styles.td}>{account.accountId}</td>
+                            <td style={styles.td}><Link to={`/accounts/${account.accountId}`} className="client-link">{account.accountId}</Link></td>
                             <td style={styles.td}>{account.balance}</td>
                             <td style={styles.td}>{account.clientId}</td>
                             <td style={styles.td}>
@@ -354,7 +354,11 @@ function ClientDetailsPage(){
                             </td>
                             <td style={styles.td}>
                                         <span style={{
-                                            color: account.plan === 0 ? "blue" : "gold",
+                                            color: account.plan === 0 
+                                                ? "#64748b" 
+                                                : account.plan === 1 
+                                                    ? "#eab308" 
+                                                    : "#0f766e",
                                             fontWeight: "bold"
                                         }}>
                                             {accountPlan[account.plan]}
