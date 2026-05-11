@@ -113,13 +113,16 @@ function ClientDetailsPage(){
             .catch(error => console.log(error));
     }, []);
     
-    if(!client) return("Loading...");
+    if(!client) return <div className="loader"></div>;
     
     return(
 
         <div style={{ padding: "30px" }}>
-            <div style={{...styles.card, marginBottom:"30px"}}>
-
+            <div style={{
+                ...styles.card, 
+                marginBottom:"30px"
+            }}
+            >
             <h1 style={{
                 textAlign: "center",
                 fontSize: "32px",
@@ -127,22 +130,28 @@ function ClientDetailsPage(){
                 marginBottom: "20px"}}>
                 {client.id}
             </h1>
-            
             <h2 style={{
                 textAlign: "center",
                 fontSize: "32px",
                 fontWeight: "400",
-                marginBottom: "40px"}}>
+                marginBottom: "40px"
+            }}
+            >
                 Client Details
             </h2>
-            
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-
+            <div 
+                style={{ 
+                    display: "flex", 
+                    alignItems: "flex-start", 
+                    justifyContent: "space-between" 
+            }}
+            >
                 <div style={{ flex: 1 }}>
                     <div style={{
                         display: "flex",
                         justifyContent: "space-between"
-                    }}>
+                    }}
+                    >
                         <div style={sectionStyle}>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Name</span>
@@ -187,7 +196,6 @@ function ClientDetailsPage(){
                                     </button>
                                 )}
                             </div>
-
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Email</span>
                                 {editingField === "email" ? (
@@ -230,7 +238,6 @@ function ClientDetailsPage(){
                                     </button>
                                 )}
                             </div>
-
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Phone number</span>
                                 {editingField === "phoneNumber" ? (
@@ -274,13 +281,11 @@ function ClientDetailsPage(){
                                 )}
                             </div>
                         </div>
-                        
                         <div style={sectionStyle}>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Created At</span>
                                 <span style={valueStyle}>{new Date(client.created).toLocaleString()}</span>
                             </div>
-
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Status</span>
                                 <span style={valueStyle}>
@@ -292,15 +297,24 @@ function ClientDetailsPage(){
                                     </span>
                                 </span>
                             </div>
-                            <div style={{...rowStyle, display: "flex", justifyContent: "center"}}>
+                            <div style={{
+                                ...rowStyle, 
+                                display: "flex", 
+                                justifyContent: "center"
+                            }}
+                            >
                                 <span style={labelStyle}>
                                     <button className="block-btn">
                                         Block
                                     </button>
                                 </span>
                             </div>
-                            
-                            <div style={{...rowStyle, display: "flex", justifyContent: "center"}}>
+                            <div style={{
+                                ...rowStyle, 
+                                display: "flex", 
+                                justifyContent: "center"
+                            }}
+                            >
                                 <span style={labelStyle}>
                                     <button className="block-btn">
                                         Suspend
@@ -311,20 +325,24 @@ function ClientDetailsPage(){
                     </div>
                 </div>
             </div>
-                
             </div>
             <div style={styles.card}>
                 <h1 style={{
                     textAlign: "center",
                     fontSize: "32px",
                     fontWeight: "400",
-                    marginBottom: "40px"}}>
+                    marginBottom: "40px"
+                }}
+                >
                     Accounts
                 </h1>
-
                 <table
                     cellPadding="5"
-                    style={{ width: "100%", marginTop: "30px", justifyContent: "center"}}
+                    style={{ 
+                        width: "100%", 
+                        marginTop: "30px", 
+                        justifyContent: "center"
+                }}
                 >
                     <thead>
                     <tr>
@@ -337,11 +355,15 @@ function ClientDetailsPage(){
                         <th style={styles.th}>Created date</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     {account?.map(account => (
                         <tr key={account.id}>
-                            <td style={styles.td}><Link to={`/accounts/${account.accountId}`} className="client-link">{account.accountId}</Link></td>
+                            <td style={styles.td}>
+                                <Link to={`/accounts/${account.accountId}`} 
+                                      className="client-link">
+                                    {account.accountId}
+                                </Link>
+                            </td>
                             <td style={styles.td}>{account.balance}</td>
                             <td style={styles.td}>{account.clientId}</td>
                             <td style={styles.td}>

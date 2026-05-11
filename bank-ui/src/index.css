@@ -240,3 +240,30 @@ code {
     background: #f3f4f6;
     color: #111827;
 }
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e5e7eb;
+    border-top: 5px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 100px auto;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+::selection {
+    background: #2563eb;
+    color: white;
+}
+
+.error-text{
+    color: #dc2626;
+    font-size: 14px;
+    margin-top: 4px;
+}
