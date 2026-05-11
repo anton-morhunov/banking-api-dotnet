@@ -65,6 +65,8 @@ function AccountsPage() {
             console.log(error);
         }
     }
+    
+    if(!accounts) return <div className="loader"></div>;
 
     return (
         <div style={{ padding: "20px" }}>
@@ -76,11 +78,8 @@ function AccountsPage() {
                 marginBottom: "20px"}}>
                 Accounts information
             </h1>
-
             <div style={{ display: "flex", alignItems: "flex-start" }}>
-
                 <div style={{ flex: 1 }}>
-
                     <div style={{
                         display: "flex",
                         gap: "10px",
@@ -93,14 +92,12 @@ function AccountsPage() {
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Account ID"
                         />
-
                         <button
                             className="primary-btn"
                             onClick={findAccount}
                         >
                             Find
                         </button>
-
                         <button className="primary-btn"
                                 onClick={() => navigate("/create_account")}>
                             Create New
@@ -122,7 +119,6 @@ function AccountsPage() {
                                 <th style={styles.th}>Created date</th>
                             </tr>
                             </thead>
-
                             <tbody>
                             {(account ? [account] : accounts).map(account => (
                                 <tr key={account.id}>
@@ -172,24 +168,23 @@ function AccountsPage() {
                         </table>
                     </div>
                 </div>
-
                 <div style={{
                     width: "250px",
                     marginLeft: "20px",
                     boxShadow: "-4px 0 10px rgba(0, 0, 0, 0.08)",
                     borderLeft: "1px solid rgba(0,0,0,0.08)",
                     padding: "20px"}}
-                     className="sidebar">
-
-                    <h3 className="sidebar-title">Panel</h3>
-
+                     className="sidebar"
+                >
+                    <h3 className="sidebar-title">
+                        Panel
+                    </h3>
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/accounts")}
                     >
                         Accounts
                     </div>
-
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/home")}
@@ -202,7 +197,6 @@ function AccountsPage() {
                         Colleagues
                     </div>
                 </div>
-
             </div>
         </div>
     );

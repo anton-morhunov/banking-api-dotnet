@@ -25,29 +25,29 @@ public class AuthService : IAuthService
         _jwtService = jwtService;
     }
 
-    public async Task<LoginResponse> LogInAsync(string email, string password)
+    public async Task<LoginResponse> LogInAsync(LoginRequest loginRequest)
     {
-        var user = await _userRepository.GetUserByEmailAsync(email);
+        var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
 
-        _logger.LogInformation("Getting user with email {email}", email);
+        _logger.LogInformation("Getting user with email {email}", loginRequest.Email);
 
         if (user == null)
         {
-            _logger.LogWarning("User with email {email} not found", email);
+            _logger.LogWarning("User with email {email} not found", loginRequest.Email);
             throw new UnauthorizedAccessException("Invalid credentials");
         }
 
-        var isValid = _passwordService.Verify(password, user.PasswordHash);
+        var isValid = _passwordService.Verify(loginRequest.PasswordHash, user.PasswordHash);
 
         if (!isValid)
         {
-            _logger.LogWarning("Invalid password for {email}", email);
+            _logger.LogWarning("Invalid password for {email}", loginRequest.Email);
             throw new UnauthorizedAccessException("Invalid credentials");
         }
 
         var token = _jwtService.GenerateToken(user);
 
-        _logger.LogInformation("Login successful for {email}", email);
+        _logger.LogInformation("Login successful for {email}", loginRequest.Email);
 
         return new LoginResponse
         {

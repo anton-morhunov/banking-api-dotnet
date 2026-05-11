@@ -55,9 +55,10 @@ function SearchingPage(){
         }
     }
 
+    if(!clients) return <div className="loader"></div>;
+
     return (
         <div style={{ padding: "20px" }}>
-
             <h1 style={{ 
                 textAlign: "left", 
                 fontSize: "32px",
@@ -65,11 +66,8 @@ function SearchingPage(){
                 marginBottom: "20px"}}> 
                 Clients information
             </h1>
-            
             <div style={{ display: "flex", alignItems: "flex-start" }}>
-                
                 <div style={{ flex: 1 }}>
-                    
                     <div style={{
                         display: "flex",
                         gap: "10px",
@@ -82,14 +80,12 @@ function SearchingPage(){
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Client ID"
                         />
-
                         <button 
                             className="primary-btn"
                             onClick={findClient}
                         >
                             Find
                         </button>
-
                         <button className="primary-btn" 
                                 onClick={() => navigate("/create_client")}>
                             Create New
@@ -110,7 +106,6 @@ function SearchingPage(){
                             <th style={styles.th}>Created date</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {(client ? [client] : clients).map(client => (
                             <tr key={client.id}>
@@ -139,7 +134,6 @@ function SearchingPage(){
                     </table>
                     </div>
                 </div>
-                
                 <div style={{
                     width: "250px",
                     marginLeft: "20px",
@@ -147,16 +141,13 @@ function SearchingPage(){
                     borderLeft: "1px solid rgba(0,0,0,0.08)",
                     padding: "20px"}}
                      className="sidebar">
-                    
                     <h3 className="sidebar-title">Panel</h3>
-
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/accounts")}
                     >
                         Accounts
                     </div>
-
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/home")}
@@ -167,9 +158,7 @@ function SearchingPage(){
                          onClick={() => navigate("/colleagues")}>
                         Colleagues
                     </div>
-                    
                 </div>
-
             </div>
         </div>
     );

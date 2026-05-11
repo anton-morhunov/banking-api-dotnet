@@ -53,26 +53,27 @@ function EmployeesPage() {
         }
     }
 
+    if(!employees) return <div className="loader"></div>;
+
     return (
         <div style={{ padding: "20px" }}>
-
             <h1 style={{
                 textAlign: "left",
                 fontSize: "32px",
                 fontWeight: "400",
-                marginBottom: "20px"}}>
+                marginBottom: "20px"
+            }}
+            >
                 Employees information
             </h1>
-
             <div style={{ display: "flex", alignItems: "flex-start" }}>
-
                 <div style={{ flex: 1 }}>
-
                     <div style={{
                         display: "flex",
                         gap: "10px",
                         marginBottom: "20px",
-                    }}>
+                    }}
+                    >
                         <input
                             className="search-input"
                             style={{ width: "70%", padding: "8px" }}
@@ -80,14 +81,12 @@ function EmployeesPage() {
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Client ID"
                         />
-
                         <button
                             className="primary-btn"
                             onClick={findEmployee}
                         >
                             Find
                         </button>
-
                         <button
                             className="primary-btn"
                             onClick={() => navigate("/register_user")}
@@ -107,7 +106,6 @@ function EmployeesPage() {
                                 <th style={styles.th}>UserRole</th>
                             </tr>
                             </thead>
-
                             <tbody>
                             {(employee ? [employee] : employees).map(employee => (
                                 <tr key={employee.id}>
@@ -127,7 +125,6 @@ function EmployeesPage() {
                         </table>
                     </div>
                 </div>
-
                 <div style={{
                     width: "250px",
                     marginLeft: "20px",
@@ -135,29 +132,26 @@ function EmployeesPage() {
                     borderLeft: "1px solid rgba(0,0,0,0.08)",
                     padding: "20px"}}
                      className="sidebar">
-
-                    <h3 className="sidebar-title">Panel</h3>
-
+                    <h3 className="sidebar-title">
+                        Panel
+                    </h3>
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/accounts")}
                     >
                         Accounts
                     </div>
-
                     <div
                         className="sidebar-item"
                         onClick={() => navigate("/home")}
                     >
                         Clients
                     </div>
-
                     <div className="sidebar-item"
                          onClick={() => navigate("/colleagues")}>
                         Colleagues
                     </div>
                 </div>
-
             </div>
         </div>
     );

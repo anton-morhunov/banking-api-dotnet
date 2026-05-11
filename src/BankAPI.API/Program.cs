@@ -12,12 +12,15 @@ using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BankAPI.Application.Validators.Login_Validators;
+using BankAPI.Application.Validators.UserValidators;
 using BankAPI.Infrastructure.Data.Configurations;
 using BankAPI.Domain.Entities;
 using BankAPI.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using BankAPI.Infrastructure.Services;
+using FluentValidation.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +63,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
 builder.Services.AddScoped<IClientRepository, EfClientRepository>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -70,11 +74,15 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<ClientCreateValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<ClientsUpdateValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<AccountCreateValidators>();
 builder.Services.AddValidatorsFromAssemblyContaining<AccountUpdateValidators>();
-builder.Services.AddControllers();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserCreateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserUpdateValidator>();
 var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
 builder.Services.AddCors(options =>
 {

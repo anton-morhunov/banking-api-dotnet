@@ -84,10 +84,11 @@ function AccountDetails() {
             .catch(error => console.log(error));
     })
     
+    if(!account) return <div className="loader"></div>;
+    
     return(
         <div style={{padding: '30px'}}>
             <div style={{...styles.card, marginBottom: '30px'}}>
-                
                 <h1 style={{
                     textAlign: "center",
                     fontSize: '32px',
@@ -96,7 +97,6 @@ function AccountDetails() {
                 }}>
                     {account.accountId}
                 </h1>
-                
                 <h2 style={{
                     textAlign: "center",
                     fontSize: '32px',
@@ -105,7 +105,6 @@ function AccountDetails() {
                 }}>
                     Account Details
                 </h2>
-                
                 <div style={{flex: 1}}>
                     <div style={{
                         display:"flex", 
@@ -126,7 +125,6 @@ function AccountDetails() {
                                 <span style={valueStyle}>{new Date(account.createdAt).toLocaleString()}</span>
                             </div>
                         </div>
-                        
                         <div style={sectionStyle}>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Account Plan</span>
@@ -175,14 +173,23 @@ function AccountDetails() {
                                 }}>
                                         {statusMap[account.status]} 
                                     </span>
-                                <button
-                                type="button"
-                                className="primary-btn">
+                                <button 
+                                    type="button" 
+                                    className="primary-btn"
+                                >
                                     Edit
                                 </button>
                             </div>
-                            <div style={{...rowStyle, display: "flex", justifyContent:"center"}}>
-                                <span style={labelStyle}>
+                            <div 
+                                style={{
+                                    ...rowStyle, 
+                                    display: "flex", 
+                                    justifyContent:"center"
+                            }}
+                            >
+                                <span 
+                                    style={labelStyle}
+                                >
                                     <button 
                                         className="block-btn"
                                     >
@@ -209,12 +216,13 @@ function AccountDetails() {
                 }}>
                     Connected Accounts
                 </h1>
-                <table
-                cellPadding="5"
-                style={{width:"100%",
-                marginTop:"30px",
-                justifyContent:"center"
-                }}>
+                <table 
+                    cellPadding="5" 
+                    style={{width:"100%", 
+                        marginTop:"30px", 
+                        justifyContent:"center"
+                }}
+                >
                     <thead>
                     <tr>
                         <th style={styles.th}>ID</th>
