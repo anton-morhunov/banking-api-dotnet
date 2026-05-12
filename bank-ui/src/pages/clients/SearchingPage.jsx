@@ -7,6 +7,9 @@ import TableCard from "../../components/ui/Card/Card.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import PageTitle from "../../components/ui/Typography/PageTitle.jsx";
 import Sidebar from "../../components/layout/Sidebar/Sidebar.jsx";
+import Input from "../../components/ui/Input/Input.jsx";
+import styles from "../../components/layout/PageLayout/layout.module.css";
+import { clientStatusMap } from "../../constants/clientConstants.js"
 
 function SearchingPage(){
     
@@ -15,13 +18,7 @@ function SearchingPage(){
     const [inputId, setId] = useState("")
     const [client, setClient] = useState(null)
     const [clients, setClients] = useState([])
-
-    const statusMap = {
-        0: "Active",
-        1: "Blocked",
-        2: "Closed",
-    }
-
+    
     useEffect(() => {
         api.get("/clients")
             .then(response => setClients(response.data))
@@ -42,20 +39,14 @@ function SearchingPage(){
     if(!clients) return <div className="loader"></div>;
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div className={styles.pageContainer}>
             <PageTitle> 
                 Clients information
             </PageTitle>
-            <div style={{ display: "flex", alignItems: "flex-start" }}>
-                <div style={{ flex: 1 }}>
-                    <div style={{
-                        display: "flex",
-                        gap: "10px",
-                        marginBottom: "20px",
-                    }}>
-                        <input
-                            className="search-input"
-                            style={{ width: "70%", padding: "8px" }}
+            <div className={styles.pageLayout}>
+                <div className={styles.pageContent}>
+                    <div className={styles.actionBar}>
+                        <Input
                             value={inputId}
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Client ID"
@@ -101,7 +92,7 @@ function SearchingPage(){
                                         color: client.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
-                                        {statusMap[client.status]}
+                                        {clientStatusMap[client.status]}
                                     </span>
                                 </TableCell>
                                 <TableCell>

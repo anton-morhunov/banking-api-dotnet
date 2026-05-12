@@ -1,10 +1,10 @@
 import {Routes, Route} from 'react-router-dom'
-import LoginPage from './pages/LoginPage.jsx'
+import LoginPage from './pages/login/LoginPage.jsx'
 import SearchingPage from "./pages/clients/SearchingPage.jsx";
 import CreateClientPage from "./pages/clients/CreateClientPage.jsx";
 import AccountsPage from "./pages/accounts/AccountsPage.jsx";
 import EmployeesPage from "./pages/employees/EmployeesPage.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/routing/ProtectedRoute.jsx";
 import RegisterEmployeePage from "./pages/employees/RegisterEmployeePage.jsx";
 import CreateAccountPage from "./pages/accounts/CreateAccountPage.jsx";
 import ClientDetailsPage from "./pages/clients/ClientDetailsPage.jsx";

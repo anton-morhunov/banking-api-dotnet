@@ -7,17 +7,15 @@ import TableCell from "../../components/ui/Card/TableCell.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import PageTitle from "../../components/ui/Typography/PageTitle.jsx";
 import Sidebar from "../../components/layout/Sidebar/Sidebar.jsx";
+import Input from "../../components/ui/Input/Input.jsx";
+import styles from "../../components/layout/PageLayout/layout.module.css";
+import { roleMap } from "../../constants/employeeConstants.js";
 function EmployeesPage() {
 
     const navigate = useNavigate();
     const [inputId, setId] = useState("")
     const [employee, setEmployee] = useState(null)
     const [employees, setEmployees] = useState([])
-
-    const statusMap = {
-        0: "Administrator",
-        1: "Employee",
-    }
     
     useEffect(() => {
         api.get("/users")
@@ -39,21 +37,14 @@ function EmployeesPage() {
     if(!employees) return <div className="loader"></div>;
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div className={styles.pageContainer}>
             <PageTitle>
                 Employees information
             </PageTitle>
-            <div style={{ display: "flex", alignItems: "flex-start" }}>
-                <div style={{ flex: 1 }}>
-                    <div style={{
-                        display: "flex",
-                        gap: "10px",
-                        marginBottom: "20px",
-                    }}
-                    >
-                        <input
-                            className="search-input"
-                            style={{ width: "70%", padding: "8px" }}
+            <div className={styles.pageLayout}>
+                <div className={styles.pageContent}>
+                    <div className={styles.actionBar}>
+                        <Input
                             value={inputId}
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Client ID"
@@ -91,7 +82,7 @@ function EmployeesPage() {
                                         color: employee.userRole === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
-                                        {statusMap[employee.userRole]}
+                                        {roleMap[employee.userRole]}
                                     </span>
                                     </TableCell>
                                 </tr>
@@ -105,5 +96,4 @@ function EmployeesPage() {
         </div>
     );
 }
-
 export default EmployeesPage;

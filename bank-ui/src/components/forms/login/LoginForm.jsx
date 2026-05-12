@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "../../schemas/loginSchema.js";
+import { LoginSchema } from "../../../schemas/login/loginSchema.js";
 import { useNavigate } from "react-router-dom";
-import { login } from '../../services/authServices.js';
+import { login } from '../../../services/authServices.js';
 import { useState } from 'react';
 function LoginForm() {
 

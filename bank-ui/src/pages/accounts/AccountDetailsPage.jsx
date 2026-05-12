@@ -6,6 +6,7 @@ import PrimaryButton from "../../components/ui/Button/Button.jsx";
 import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
+import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js";
 
 function AccountDetails() {
     
@@ -29,24 +30,6 @@ function AccountDetails() {
     
     const valueStyle = {
         fontWeight: "500"
-    }
-
-    const accountPlan = {
-        0: "Basic",
-        1: "Premium",
-        2: "Business",
-    }
-
-    const accountType = {
-        0: "Debit",
-        1: "Credit",
-        2: "Transfer"
-    }
-
-    const statusMap = {
-        0: "Active",
-        1: "Blocked",
-        2: "Closed",
     }
     
     useEffect(() => {
@@ -155,7 +138,7 @@ function AccountDetails() {
                                     color: account.status === 0 ? "green" : "red",
                                     fontWeight: "bold"
                                 }}>
-                                        {statusMap[account.status]} 
+                                        {accountStatusMap[account.status]} 
                                     </span>
                                 <PrimaryButton
                                     type="button"

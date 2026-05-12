@@ -1,15 +1,9 @@
 import RegisterEmployeeForm from "../../components/forms/employees/EmployeeForm.jsx";
+import styles from "../../components/layout/PageLayout/layout.module.css";
 function RegisterEmployeePage() {
 
     return (
-        <div
-            style={{
-                padding: "2px",
-                minHeight: "100vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center" }}
-        >
+        <div className={styles.pageHeader}>
             <RegisterEmployeeForm />
         </div>
     )

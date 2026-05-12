@@ -1,13 +1,9 @@
 import AccountForm from "../../components/forms/accounts/AccountForm.jsx";
+import styles from "../../components/layout/PageLayout/layout.module.css";
 function CreateAccountPage() {
 
     return (
-        <div style={{
-            minHeight: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
+        <div className={styles.pageHeader}>
             <AccountForm />
         </div>
     )
