@@ -1,0 +1,27 @@
+.button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.primaryBtn:hover {
+    background-color: #1669c1;
+    
+}
+
+.primaryBtn{
+    background-color: #1a73e8;
+    color: white;
+}
+
+.dangerBtn{
+    background-color: #e81a1a;
+    color: white;
+}
+
+.dangerBtn:hover{
+    background-color: #c11616;
+}

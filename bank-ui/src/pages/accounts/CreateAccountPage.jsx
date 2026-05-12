@@ -1,4 +1,4 @@
-import AccountForm from "../../components/accounts/AccountForm.jsx";
+import AccountForm from "../../components/forms/accounts/AccountForm.jsx";
 function CreateAccountPage() {
 
     return (

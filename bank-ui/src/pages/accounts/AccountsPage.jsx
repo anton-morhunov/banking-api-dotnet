@@ -1,6 +1,12 @@
 import {api} from "../../api/api.js";
 import {useState, useEffect} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import PrimaryButton from "../../components/ui/Button/Button.jsx";
+import TableCard from "../../components/ui/Card/Card.jsx";
+import TableColumn from "../../components/ui/Card/TableColumn.jsx";
+import TableCell from "../../components/ui/Card/TableCell.jsx";
+import PageTitle from "../../components/ui/Typography/PageTitle.jsx";
+import Sidebar from "../../components/layout/Sidebar/Sidebar.jsx";
 
 function AccountsPage() {
     const navigate = useNavigate();
@@ -9,27 +15,6 @@ function AccountsPage() {
     const [account, setAccount] = useState(null)
 
     const [accounts, setAccounts] = useState([])
-
-    const styles = {
-        card: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            padding: "20px",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-        },
-        th: {
-            backgroundColor: "#f9fafb",
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px",
-            textAlign: "left"
-        },
-        td: {
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px"
-        }
-    };
-
 
     const statusMap = {
         0: "Active",
@@ -71,13 +56,9 @@ function AccountsPage() {
     return (
         <div style={{ padding: "20px" }}>
 
-            <h1 style={{
-                textAlign: "left",
-                fontSize: "32px",
-                fontWeight: "400",
-                marginBottom: "20px"}}>
+            <PageTitle>
                 Accounts information
-            </h1>
+            </PageTitle>
             <div style={{ display: "flex", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
                     <div style={{
@@ -92,51 +73,50 @@ function AccountsPage() {
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Account ID"
                         />
-                        <button
-                            className="primary-btn"
+                        <PrimaryButton
                             onClick={findAccount}
                         >
                             Find
-                        </button>
-                        <button className="primary-btn"
+                        </PrimaryButton>
+                        <PrimaryButton
                                 onClick={() => navigate("/create_account")}>
                             Create New
-                        </button>
+                        </PrimaryButton>
                     </div>
-                    <div style={styles.card} >
+                    <TableCard>
                         <table
                             cellPadding="5"
                             style={{ width: "100%", marginTop: "30px" }}
                         >
                             <thead>
                             <tr>
-                                <th style={styles.th}>ID</th>
-                                <th style={styles.th}>Balance</th>
-                                <th style={styles.th}>Client ID</th>
-                                <th style={styles.th}>Status</th>
-                                <th style={styles.th}>Account Plan</th>
-                                <th style={styles.th}>Account Type</th>
-                                <th style={styles.th}>Created date</th>
+                                <TableColumn>ID</TableColumn>
+                                <TableColumn>Balance</TableColumn>
+                                <TableColumn>Client ID</TableColumn>
+                                <TableColumn>Status</TableColumn>
+                                <TableColumn>Account Plan</TableColumn>
+                                <TableColumn>Account Type</TableColumn>
+                                <TableColumn>Created date</TableColumn>
                             </tr>
                             </thead>
                             <tbody>
                             {(account ? [account] : accounts).map(account => (
                                 <tr key={account.id}>
-                                    <td style={styles.td}>
+                                    <TableCell>
                                         <Link to={`/accounts/${account.accountId}`} className="client-link">{account.accountId}
                                         </Link>
-                                    </td>
-                                    <td style={styles.td}>{account.balance}</td>
-                                    <td style={styles.td}>{account.clientId}</td>
-                                    <td style={styles.td}>
+                                    </TableCell>
+                                    <TableCell>{account.balance}</TableCell>
+                                    <TableCell>{account.clientId}</TableCell>
+                                    <TableCell>
                                     <span style={{
                                         color: account.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
                                         {statusMap[account.status]}
                                     </span>
-                                    </td>
-                                    <td style={styles.td}>
+                                    </TableCell>
+                                    <TableCell>
                                         <span style={{
                                             color: account.plan === 0 
                                                 ? "#64748b" 
@@ -147,8 +127,8 @@ function AccountsPage() {
                                         }}>
                                             {accountPlan[account.plan]}
                                             </span>
-                                    </td>
-                                    <td style={styles.td}>
+                                    </TableCell>
+                                    <TableCell>
                                         <span style={{
                                             color: account.accountType === 0 
                                                 ? "#2563eb" 
@@ -158,45 +138,17 @@ function AccountsPage() {
                                             fontWeight: "bold"
                                         }}>{accountType[account.accountType]}
                                         </span>
-                                    </td>
-                                    <td style={styles.td}>
+                                    </TableCell>
+                                    <TableCell>
                                         {new Date(account.createdAt).toLocaleString()}
-                                    </td>
+                                    </TableCell>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
-                    </div>
+                    </TableCard>
                 </div>
-                <div style={{
-                    width: "250px",
-                    marginLeft: "20px",
-                    boxShadow: "-4px 0 10px rgba(0, 0, 0, 0.08)",
-                    borderLeft: "1px solid rgba(0,0,0,0.08)",
-                    padding: "20px"}}
-                     className="sidebar"
-                >
-                    <h3 className="sidebar-title">
-                        Panel
-                    </h3>
-                    <div
-                        className="sidebar-item"
-                        onClick={() => navigate("/accounts")}
-                    >
-                        Accounts
-                    </div>
-                    <div
-                        className="sidebar-item"
-                        onClick={() => navigate("/home")}
-                    >
-                        Clients
-                    </div>
-
-                    <div className="sidebar-item"
-                         onClick={() => navigate("/colleagues")}>
-                        Colleagues
-                    </div>
-                </div>
+                <Sidebar />
             </div>
         </div>
     );

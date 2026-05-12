@@ -1,33 +1,17 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {api} from '../../api/api';
+import BlockButton from "../../components/ui/Button/BlockButton.jsx";
+import PrimaryButton from "../../components/ui/Button/Button.jsx";
+import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
+import TableCard from "../../components/ui/Card/Card.jsx";
+import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 
 function AccountDetails() {
     
     const {id} = useParams();
     const [account, setAccount] = useState({});
     const [client, setClient] = useState({});
-    
-    const styles ={
-        card: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            padding: "20px",
-            boxShadow: "0 1px  3px rgba(0,0,0,0.5)",
-        },
-        
-        th: {
-            backgroundColor: "#f9fafb",
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px",
-            textAlign: "left"
-        },
-        td: {
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px"
-        }
-    }
     
     const sectionStyle = {
         width: '40%',
@@ -88,7 +72,7 @@ function AccountDetails() {
     
     return(
         <div style={{padding: '30px'}}>
-            <div style={{...styles.card, marginBottom: '30px'}}>
+            <CardDetailsPage>
                 <h1 style={{
                     textAlign: "center",
                     fontSize: '32px',
@@ -140,11 +124,11 @@ function AccountDetails() {
                                         {accountPlan[account.plan]}
                                     </span>
                                 </span>
-                                <button
+                                <PrimaryButton
                                     type="button"
-                                    className="primary-btn">
+                                >
                                     Edit
-                                </button>
+                                </PrimaryButton>
                             </div>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Account Type</span>
@@ -159,11 +143,11 @@ function AccountDetails() {
                                     }}>{accountType[account.accountType]}
                                         </span>
                                 </span>
-                                <button
+                                <PrimaryButton
                                     type="button"
-                                    className="primary-btn">
+                                >
                                     Edit
-                                </button>
+                                </PrimaryButton>
                             </div>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Account Status</span>
@@ -173,12 +157,11 @@ function AccountDetails() {
                                 }}>
                                         {statusMap[account.status]} 
                                     </span>
-                                <button 
-                                    type="button" 
-                                    className="primary-btn"
+                                <PrimaryButton
+                                    type="button"
                                 >
                                     Edit
-                                </button>
+                                </PrimaryButton>
                             </div>
                             <div 
                                 style={{
@@ -190,24 +173,16 @@ function AccountDetails() {
                                 <span 
                                     style={labelStyle}
                                 >
-                                    <button 
-                                        className="block-btn"
-                                    >
+                                    <BlockButton>
                                         Block
-                                    </button>
+                                    </BlockButton>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div 
-                style=
-                    {{
-                        ...styles.card,
-                        marginBottom: "30px"
-            }}
-            >
+            </CardDetailsPage>
+            <TableCard>
                 <h1 style={{
                     textAlign: "center",
                     fontSize: '32px',
@@ -225,16 +200,16 @@ function AccountDetails() {
                 >
                     <thead>
                     <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Name</th>
-                        <th style={styles.th}>Email</th>
-                        <th style={styles.th}>Phone number</th>
-                        <th style={styles.th}>Status</th>
-                        <th style={styles.th}>Created date</th>
+                        <TableColumn>ID</TableColumn>
+                        <TableColumn>Name</TableColumn>
+                        <TableColumn>Email</TableColumn>
+                        <TableColumn>Phone number</TableColumn>
+                        <TableColumn>Status</TableColumn>
+                        <TableColumn>Created date</TableColumn>
                     </tr>
                     </thead>
                 </table>
-            </div>
+            </TableCard>
         </div>
     )
 }

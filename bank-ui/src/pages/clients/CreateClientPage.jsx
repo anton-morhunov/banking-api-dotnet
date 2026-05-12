@@ -1,4 +1,4 @@
-import ClientForm from "../../components/clients/ClientForm.jsx";
+import ClientForm from "../../components/forms/clients/ClientForm.jsx";
 function CreateClient() {
     
     return (
