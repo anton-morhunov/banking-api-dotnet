@@ -1,38 +1,22 @@
 import {api} from "../../api/api.js";
 import {useState, useEffect} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import styles from "../../components/layout/PageLayout/layout.module.css";
 import PrimaryButton from "../../components/ui/Button/Button.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import TableCell from "../../components/ui/Card/TableCell.jsx";
 import PageTitle from "../../components/ui/Typography/PageTitle.jsx";
 import Sidebar from "../../components/layout/Sidebar/Sidebar.jsx";
+import Input from "../../components/ui/Input/Input.jsx";
+import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js";
 
 function AccountsPage() {
     const navigate = useNavigate();
 
     const [inputId, setId] = useState("")
     const [account, setAccount] = useState(null)
-
     const [accounts, setAccounts] = useState([])
-
-    const statusMap = {
-        0: "Active",
-        1: "Blocked",
-        2: "Closed",
-    }
-    
-    const accountPlan = {
-        0: "Basic",
-        1: "Premium",
-        2: "Business",
-    }
-    
-    const accountType = {
-        0: "Debit",
-        1: "Credit",
-        2: "Transfer"
-    }
 
     useEffect(() => {
         api.get("/accounts")
@@ -54,21 +38,14 @@ function AccountsPage() {
     if(!accounts) return <div className="loader"></div>;
 
     return (
-        <div style={{ padding: "20px" }}>
-
+        <div className={styles.pageContainer}>
             <PageTitle>
                 Accounts information
             </PageTitle>
-            <div style={{ display: "flex", alignItems: "flex-start" }}>
-                <div style={{ flex: 1 }}>
-                    <div style={{
-                        display: "flex",
-                        gap: "10px",
-                        marginBottom: "20px",
-                    }}>
-                        <input
-                            className="search-input"
-                            style={{ width: "70%", padding: "8px" }}
+            <div className={styles.pageLayout}>
+                <div className={styles.pageContent}>
+                    <div className={styles.actionBar}>
+                        <Input
                             value={inputId}
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Account ID"
@@ -103,7 +80,8 @@ function AccountsPage() {
                             {(account ? [account] : accounts).map(account => (
                                 <tr key={account.id}>
                                     <TableCell>
-                                        <Link to={`/accounts/${account.accountId}`} className="client-link">{account.accountId}
+                                        <Link to={`/accounts/${account.accountId}`} 
+                                              className="client-link">{account.accountId}
                                         </Link>
                                     </TableCell>
                                     <TableCell>{account.balance}</TableCell>
@@ -113,7 +91,7 @@ function AccountsPage() {
                                         color: account.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
-                                        {statusMap[account.status]}
+                                        {accountStatusMap[account.status]}
                                     </span>
                                     </TableCell>
                                     <TableCell>

@@ -1,0 +1,31 @@
+.loginFormContainer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pageHeader {
+    padding: 2px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pageContainer{
+    padding: 20px; 
+}
+
+.pageLayout{
+    display: flex;
+    align-items: flex-start;
+}
+
+.pageContent{
+    flex: 1;
+}
+
+.actionBar{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}

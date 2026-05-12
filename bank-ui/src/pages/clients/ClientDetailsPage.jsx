@@ -7,6 +7,8 @@ import TableCard from "../../components/ui/Card/Card.jsx";
 import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import TableCell from "../../components/ui/Card/TableCell.jsx";
+import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js"
+import { clientStatusMap } from "../../constants/clientConstants.js"
 
 function ClientDetailsPage(){
     
@@ -33,24 +35,6 @@ function ClientDetailsPage(){
     const valueStyle = {
         fontWeight: "500"
     };
-
-    const statusMap = {
-        0: "Active",
-        1: "Blocked",
-        2: "Closed",
-    }
-
-    const accountPlan = {
-        0: "Basic",
-        1: "Premium",
-        2: "Business",
-    }
-
-    const accountType = {
-        0: "Debit",
-        1: "Credit",
-        2: "Transfer"
-    }
 
     useEffect(()=> {
         const fetchClient = async () => {
@@ -247,19 +231,15 @@ function ClientDetailsPage(){
                                     <span style={valueStyle}>{client.phoneNumber}</span>
                                 )}
                                 {editingField === "phoneNumber" ? (
-                                    <button
-                                        type="button"
-                                        onClick={()=>saveField("phoneNumber")}
-                                        className="primary-btn">
+                                    <PrimaryButton
+                                        onClick={()=>saveField("phoneNumber")}>
                                         Save
-                                    </button>
+                                    </PrimaryButton>
                                 ) :(
-                                    <button
-                                        type="button"
-                                        onClick={() => setEditField("phoneNumber")}
-                                        className="primary-btn">
+                                    <PrimaryButton
+                                        onClick={() => setEditField("phoneNumber")}>
                                         Edit
-                                    </button>
+                                    </PrimaryButton>
                                 )}
                             </div>
                         </div>
@@ -275,7 +255,7 @@ function ClientDetailsPage(){
                                         color: client.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
-                                        {statusMap[client.status]}
+                                        {clientStatusMap[client.status]}
                                     </span>
                                 </span>
                             </div>
@@ -353,7 +333,7 @@ function ClientDetailsPage(){
                                         color: account.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
-                                        {statusMap[account.status]}
+                                        {accountStatusMap[account.status]}
                                     </span>
                             </TableCell>
                             <TableCell>

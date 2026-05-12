@@ -1,13 +1,9 @@
 import ClientForm from "../../components/forms/clients/ClientForm.jsx";
+import styles from "../../components/layout/PageLayout/layout.module.css";
 function CreateClient() {
     
     return (
-        <div style={{
-            minHeight: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
+        <div className={styles.pageHeader}>
             <ClientForm />
         </div>
     )
