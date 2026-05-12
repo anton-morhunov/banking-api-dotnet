@@ -1,4 +1,4 @@
-import RegisterEmployeeForm from "../../components/employees/EmployeeForm.jsx";
+import RegisterEmployeeForm from "../../components/forms/employees/EmployeeForm.jsx";
 function RegisterEmployeePage() {
 
     return (

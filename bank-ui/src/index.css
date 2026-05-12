@@ -127,20 +127,6 @@ code {
     background-color: #1669c1;
 }
 
-.block-btn {
-    background-color: #e81a1a;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.primary-btn:hover {
-    background-color: #1669c1;
-}
-
 .search-input {
     width: 100%;
     padding: 14px 20px;

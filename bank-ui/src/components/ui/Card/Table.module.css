@@ -1,0 +1,23 @@
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px  3px rgba(0,0,0,0.5);
+}
+
+.th {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px;
+    text-align: left;
+}
+
+.td {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px;
+}
+
+.cardDetailsPage {
+    margin-bottom: 30px
+}

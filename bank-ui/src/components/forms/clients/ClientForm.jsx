@@ -1,7 +1,7 @@
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { clientSchema} from "../../schemas/clients/clientSchema.js";
+import { clientSchema} from "../../../schemas/clients/clientSchema.js";
 import { useState } from "react";
 
 function ClientForm() {

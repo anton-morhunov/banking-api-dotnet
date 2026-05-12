@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 import { useForm } from "react-hook-form";
-import {AccountSchema} from "../../schemas/accounts/accountSchema.js";
+import {AccountSchema} from "../../../schemas/accounts/accountSchema.js";
 import { zodResolver } from "@hookform/resolvers/zod";
 function AccountForm() {
     

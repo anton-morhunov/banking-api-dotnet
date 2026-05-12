@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { api } from "../../api/api";
-import {employeeSchema} from "../../schemas/employees/employeeSchema.js";
+import { api } from "../../../api/api";
+import {employeeSchema} from "../../../schemas/employees/employeeSchema.js";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 function RegisterEmployeeForm() {

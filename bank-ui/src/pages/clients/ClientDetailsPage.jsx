@@ -1,6 +1,12 @@
 import {useParams, Link} from "react-router-dom";
 import {useState, useEffect} from "react";
 import {api} from "../../api/api";
+import BlockButton from "../../components/ui/Button/BlockButton.jsx";
+import PrimaryButton from "../../components/ui/Button/Button.jsx";
+import TableCard from "../../components/ui/Card/Card.jsx";
+import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
+import TableColumn from "../../components/ui/Card/TableColumn.jsx";
+import TableCell from "../../components/ui/Card/TableCell.jsx";
 
 function ClientDetailsPage(){
     
@@ -9,26 +15,6 @@ function ClientDetailsPage(){
     const [account, setAccounts] = useState([]);
     const [editingField, setEditField] = useState(null);
     const [editedClient, setEditedClient] = useState({});
-
-    const styles = {
-        card: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            padding: "20px",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-        },
-        th: {
-            backgroundColor: "#f9fafb",
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px",
-            textAlign: "left"
-        },
-        td: {
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px"
-        }
-    };
 
     const sectionStyle = {
         width: "40%"
@@ -118,11 +104,7 @@ function ClientDetailsPage(){
     return(
 
         <div style={{ padding: "30px" }}>
-            <div style={{
-                ...styles.card, 
-                marginBottom:"30px"
-            }}
-            >
+            <CardDetailsPage>
             <h1 style={{
                 textAlign: "center",
                 fontSize: "32px",
@@ -181,19 +163,19 @@ function ClientDetailsPage(){
                                         <span style={valueStyle}>{client.name}</span>
                                     )}
                                 {editingField === "name" ? (
-                                    <button 
+                                    <PrimaryButton 
                                         type="button" 
-                                        onClick={()=>saveField("name")} 
-                                        className="primary-btn">
+                                        onClick={()=>saveField("name")}
+                                    >
                                         Save
-                                    </button>
+                                    </PrimaryButton>
                                 ) :( 
-                                    <button 
+                                    <PrimaryButton 
                                         type="button" 
                                         onClick={() => setEditField("name")} 
-                                        className="primary-btn">
+                                        >
                                     Edit
-                                    </button>
+                                    </PrimaryButton>
                                 )}
                             </div>
                             <div style={rowStyle}>
@@ -223,19 +205,19 @@ function ClientDetailsPage(){
                                     <span style={valueStyle}>{client.email}</span>
                                 )}
                                 {editingField === "email" ? (
-                                    <button
+                                    <PrimaryButton
                                         type="button"
                                         onClick={()=>saveField("email")}
-                                        className="primary-btn">
+                                    >
                                         Save
-                                    </button>
+                                    </PrimaryButton>
                                 ) :(
-                                    <button
+                                    <PrimaryButton
                                         type="button"
                                         onClick={() => setEditField("email")}
-                                        className="primary-btn">
+                                    >
                                         Edit
-                                    </button>
+                                    </PrimaryButton>
                                 )}
                             </div>
                             <div style={rowStyle}>
@@ -304,9 +286,9 @@ function ClientDetailsPage(){
                             }}
                             >
                                 <span style={labelStyle}>
-                                    <button className="block-btn">
+                                    <BlockButton>
                                         Block
-                                    </button>
+                                    </BlockButton>
                                 </span>
                             </div>
                             <div style={{
@@ -316,17 +298,17 @@ function ClientDetailsPage(){
                             }}
                             >
                                 <span style={labelStyle}>
-                                    <button className="block-btn">
+                                    <BlockButton>
                                         Suspend
-                                    </button>
+                                    </BlockButton>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div style={styles.card}>
+            </CardDetailsPage>
+            <TableCard>
                 <h1 style={{
                     textAlign: "center",
                     fontSize: "32px",
@@ -346,35 +328,35 @@ function ClientDetailsPage(){
                 >
                     <thead>
                     <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Balance</th>
-                        <th style={styles.th}>Client ID</th>
-                        <th style={styles.th}>Status</th>
-                        <th style={styles.th}>Account Plan</th>
-                        <th style={styles.th}>Account Type</th>
-                        <th style={styles.th}>Created date</th>
+                        <TableColumn>ID</TableColumn>
+                        <TableColumn>Balance</TableColumn>
+                        <TableColumn>Client ID</TableColumn>
+                        <TableColumn>Status</TableColumn>
+                        <TableColumn>Account Plan</TableColumn>
+                        <TableColumn>Account Type</TableColumn>
+                        <TableColumn>Created date</TableColumn>
                     </tr>
                     </thead>
                     <tbody>
                     {account?.map(account => (
                         <tr key={account.id}>
-                            <td style={styles.td}>
+                            <TableCell>
                                 <Link to={`/accounts/${account.accountId}`} 
                                       className="client-link">
                                     {account.accountId}
                                 </Link>
-                            </td>
-                            <td style={styles.td}>{account.balance}</td>
-                            <td style={styles.td}>{account.clientId}</td>
-                            <td style={styles.td}>
+                            </TableCell>
+                            <TableCell>{account.balance}</TableCell>
+                            <TableCell>{account.clientId}</TableCell>
+                            <TableCell>
                                     <span style={{
                                         color: account.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
                                         {statusMap[account.status]}
                                     </span>
-                            </td>
-                            <td style={styles.td}>
+                            </TableCell>
+                            <TableCell>
                                         <span style={{
                                             color: account.plan === 0 
                                                 ? "#64748b" 
@@ -385,8 +367,8 @@ function ClientDetailsPage(){
                                         }}>
                                             {accountPlan[account.plan]}
                                             </span>
-                            </td>
-                            <td style={styles.td}>
+                            </TableCell>
+                            <TableCell>
                                         <span style={{
                                             color: account.accountType === 0
                                                 ? "#2563eb"
@@ -396,15 +378,15 @@ function ClientDetailsPage(){
                                             fontWeight: "bold"
                                         }}>{accountType[account.accountType]}
                                         </span>
-                            </td>
-                            <td style={styles.td}>
+                            </TableCell>
+                            <TableCell>
                                 {new Date(account.createdAt).toLocaleString()}
-                            </td>
+                            </TableCell>
                         </tr>
                     ))}
                     </tbody>
                 </table>
-            </div>
+            </TableCard>
         </div>
     )
 }

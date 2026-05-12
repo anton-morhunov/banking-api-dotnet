@@ -1,6 +1,12 @@
 import {useEffect, useState} from "react";
 import {api} from "../../api/api";
 import {useNavigate, Link} from "react-router-dom";
+import PrimaryButton from "../../components/ui/Button/Button.jsx";
+import TableCell from "../../components/ui/Card/TableCell.jsx";
+import TableCard from "../../components/ui/Card/Card.jsx";
+import TableColumn from "../../components/ui/Card/TableColumn.jsx";
+import PageTitle from "../../components/ui/Typography/PageTitle.jsx";
+import Sidebar from "../../components/layout/Sidebar/Sidebar.jsx";
 
 function SearchingPage(){
     
@@ -9,28 +15,6 @@ function SearchingPage(){
     const [inputId, setId] = useState("")
     const [client, setClient] = useState(null)
     const [clients, setClients] = useState([])
-    
-
-    const styles = {
-        card: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            padding: "20px",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-        },
-        th: {
-            backgroundColor: "#f9fafb",
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px",
-            textAlign: "left"
-        },
-        td: {
-            borderBottom: "1px solid #e5e7eb",
-            padding: "10px"
-        }
-    };
-    
 
     const statusMap = {
         0: "Active",
@@ -59,13 +43,9 @@ function SearchingPage(){
 
     return (
         <div style={{ padding: "20px" }}>
-            <h1 style={{ 
-                textAlign: "left", 
-                fontSize: "32px",
-                fontWeight: "400",
-                marginBottom: "20px"}}> 
+            <PageTitle> 
                 Clients information
-            </h1>
+            </PageTitle>
             <div style={{ display: "flex", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
                     <div style={{
@@ -80,85 +60,60 @@ function SearchingPage(){
                             onChange={e => setId(e.target.value)}
                             placeholder="Enter Client ID"
                         />
-                        <button 
-                            className="primary-btn"
+                        <PrimaryButton
                             onClick={findClient}
                         >
                             Find
-                        </button>
-                        <button className="primary-btn" 
+                        </PrimaryButton>
+                        <PrimaryButton 
                                 onClick={() => navigate("/create_client")}>
                             Create New
-                        </button>
+                        </PrimaryButton>
                     </div>
-                    <div style={styles.card} >
+                    <TableCard>
                     <table
                         cellPadding="5"
                         style={{ width: "100%", marginTop: "30px" }}
                     >
                         <thead>
                         <tr>
-                            <th style={styles.th}>ID</th>
-                            <th style={styles.th}>Name</th>
-                            <th style={styles.th}>Email</th>
-                            <th style={styles.th}>Phone number</th>
-                            <th style={styles.th}>Status</th>
-                            <th style={styles.th}>Created date</th>
+                            <TableColumn>ID</TableColumn>
+                            <TableColumn>Name</TableColumn>
+                            <TableColumn>Email</TableColumn>
+                            <TableColumn>Phone number</TableColumn>
+                            <TableColumn>Status</TableColumn>
+                            <TableColumn>Created date</TableColumn>
                         </tr>
                         </thead>
                         <tbody>
                         {(client ? [client] : clients).map(client => (
                             <tr key={client.id}>
-                                <td style={styles.td}>{client.id}</td>
-                                <td style={styles.td}>{client.name}</td>
-                                <td style={styles.td}>
+                                <TableCell>{client.id}</TableCell>
+                                <TableCell>{client.name}</TableCell>
+                                <TableCell>
                                     <Link to={`/clients/${client.id}`} className="client-link">
                                         {client.email}
                                     </Link>
-                                </td>
-                                <td style={styles.td}>{client.phoneNumber}</td>
-                                <td style={styles.td}>
+                                </TableCell>
+                                <TableCell>{client.phoneNumber}</TableCell>
+                                <TableCell>
                                     <span style={{
                                         color: client.status === 0 ? "green" : "red",
                                         fontWeight: "bold"
                                     }}>
                                         {statusMap[client.status]}
                                     </span>
-                                </td>
-                                <td style={styles.td}>
+                                </TableCell>
+                                <TableCell>
                                     {new Date(client.created).toLocaleString()}
-                                </td>
+                                </TableCell>
                             </tr>
                         ))}
                         </tbody>
                     </table>
-                    </div>
+                    </TableCard>
                 </div>
-                <div style={{
-                    width: "250px",
-                    marginLeft: "20px",
-                    boxShadow: "-4px 0 10px rgba(0, 0, 0, 0.08)",
-                    borderLeft: "1px solid rgba(0,0,0,0.08)",
-                    padding: "20px"}}
-                     className="sidebar">
-                    <h3 className="sidebar-title">Panel</h3>
-                    <div
-                        className="sidebar-item"
-                        onClick={() => navigate("/accounts")}
-                    >
-                        Accounts
-                    </div>
-                    <div
-                        className="sidebar-item"
-                        onClick={() => navigate("/home")}
-                    >
-                        Clients
-                    </div>
-                    <div className="sidebar-item"
-                         onClick={() => navigate("/colleagues")}>
-                        Colleagues
-                    </div>
-                </div>
+                <Sidebar />
             </div>
         </div>
     );
