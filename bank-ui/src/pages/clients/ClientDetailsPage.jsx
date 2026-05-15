@@ -17,6 +17,7 @@ function ClientDetailsPage(){
     const [account, setAccounts] = useState([]);
     const [editingField, setEditField] = useState(null);
     const [editedClient, setEditedClient] = useState({});
+    const [blockClient, setBlockClient] = useState({});
 
     const sectionStyle = {
         width: "40%"
@@ -63,25 +64,25 @@ function ClientDetailsPage(){
             console.log(err);
         }
     };
-    
-    const updateClientStatus = async () => {
-        try{
-            await api.patch(`/clients/${client.id}/dto`, {status: status});
-            
-            setClient({
-                ...client,
-                status: dto
-            })
-        } catch(err){
-            console.log(err);
-        }
-    }
 
     useEffect(() => {
         api.get(`/accounts/${id}`)
             .then(response => setAccounts(response.data))
             .catch(error => console.log(error));
     }, []);
+    
+    const updateClientStatus = async (newStatus) => {
+        try{
+            await api.patch(`/clients/${client.id}?dto=${clientStatusMap}`);
+            
+            setClient({
+                ...client,
+                status: clientStatusMap
+            });
+        } catch(err){
+            console.log(err);
+        }
+    };
     
     if(!client) return <div className="loader"></div>;
     
