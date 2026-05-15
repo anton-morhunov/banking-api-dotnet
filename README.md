@@ -210,7 +210,7 @@ flowchart TD
 
 Visualization of the repository evolution using Gource.
 
-<video src="./screenshots/gource.mp4" controls width="90%"></video>
+[![Watch Timeline Video](./screenshots/preview.png)](./screenshots/gource.mp4)
 
     
 
