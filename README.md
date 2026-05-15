@@ -1,44 +1,66 @@
-# Banking API
+# Banking Backoffice System
 
-RESTful API built with ASP.NET Core for managing banking clients and accounts with JWT authentication and role-based authorization.
+Full-stack banking management application built with ASP.NET Core and React.
 
-## Technologies
-Backend
-- C#
-- ASP.NET Core
+The project includes JWT authentication, role-based authorization, client/account management, and a responsive frontend dashboard.
+
+## Demo
+[Watch Full Demo](./screenshots/demo.mp4)
+
+## Screenshots
+
+### Login Page
+![Login](./screenshots/login.png)
+
+### Clients Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Client Details
+![Client](./screenshots/client-details.png)
+
+## Tech Stack
+
+### Backend
+- ASP.NET Core Web API
 - Entity Framework Core
-- PostgreSQL / SQL
-
-Authentication & API
+- PostgreSQL
 - JWT Authentication
-- REST API
-- Swagger
+- FluentValidation
+- xUnit
 
-DevOps
+### Frontend
+- React
+- JavaScript
+- Axios
+- React Router
+
+### DevOps
 - Docker
 - GitHub Actions
 - Render
-
-Testing
-- xUnit
+- Supabase
 
 ## Features
-- JWT authentication and role-based authorization
-- secure login endpoint
-- protected API endpoints
-- client management
-- bank account management
-- update account status
-- RESTful API design
-- Swagger API documentation
+
+- JWT authentication
+- Role-based authorization
+- Secure protected endpoints
+- Client management
+- Bank accounts and clients management
+- Frontend dashboard
+- API validation
+- Swagger documentation
+- Responsive UI
+- CI/CD with GitHub Actions
 
 
 ## Deployment
-The project is deployed using Render.
+The project is deployed using Render and Supabase.
 
 Live API(Swagger): https://banking-api-dotnet-2.onrender.com/swagger
+Frontend: https://banking-api-application.onrender.com/
 
-## How to Use
+## API Usage
 
 The API is deployed and available online.
 
