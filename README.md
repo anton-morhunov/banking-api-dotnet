@@ -76,8 +76,6 @@ Base URL:
 
 https://banking-api-dotnet-2.onrender.com/swagger
 
-You can test all endpoints directly using Swagger UI.
-
 ---
 
 ## Authentication Flow
@@ -168,6 +166,7 @@ Example response:
 - Services – business logic    
 - Validators – request validation logic
 
+
 ## Architecture
 
 ```mermaid
@@ -205,15 +204,13 @@ flowchart TD
 
     Repositories --> EFCore
     EFCore --> DB
-    ```
- 
+```
     
 ## Development Timeline
 
 Visualization of the repository evolution using Gource.
 
 <video src="./screenshots/gource.mp4" controls width="90%"></video>
-    
 
     
 
