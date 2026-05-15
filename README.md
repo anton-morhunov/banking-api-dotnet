@@ -5,7 +5,7 @@ Full-stack banking management application built with ASP.NET Core and React.
 The project includes JWT authentication, role-based authorization, client/account management, and a responsive frontend dashboard.
 
 ## Demo
-[Watch Full Demo](./screenshots/demo.mp4)
+[!Demo](./screenshots/demo.gif)
 
 ## Screenshots
 
@@ -58,7 +58,11 @@ The project includes JWT authentication, role-based authorization, client/accoun
 The project is deployed using Render and Supabase.
 
 Live API(Swagger): https://banking-api-dotnet-2.onrender.com/swagger
+
 Frontend: https://banking-api-application.onrender.com/
+
+Email: test@gmail.com  
+Password: test  
 
 ## API Usage
 
