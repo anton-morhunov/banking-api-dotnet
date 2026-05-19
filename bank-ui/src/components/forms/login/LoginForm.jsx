@@ -4,10 +4,14 @@ import { LoginSchema } from "../../../schemas/login/loginSchema.js";
 import { useNavigate } from "react-router-dom";
 import { login } from '../../../services/authServices.js';
 import { useState } from 'react';
+import { GoogleLogin} from "@react-oauth/google";
+import { api } from "../../../api/api";
+
 function LoginForm() {
 
     const navigate = useNavigate();
     const[loginError, setLoginError] = useState("");
+    const[googleError, setGoogleError] = useState("");
     
     const { 
         register, 
@@ -23,6 +27,22 @@ function LoginForm() {
             navigate("/home");
         }catch(error){
             setLoginError("Your email or password is incorrect. Please try again.");
+        }
+    }
+    
+    const handleGoogleLogin = async (credentialResponse) => {
+        
+        try{
+            const response = await api.post("/auth/google", {
+                credential: credentialResponse.credential,
+            });
+            
+            localStorage.setItem("token", response.data.token);
+            
+            navigate("/home");
+        }catch(error){
+            setGoogleError("This Google account is not registered")
+            console.log(error.response);
         }
     }
     
@@ -57,7 +77,7 @@ function LoginForm() {
                     Back Office
                 </h2>
                 
-                {(errors.email || errors.passwordHash || loginError) && (
+                {(errors.email || errors.passwordHash || loginError || googleError) && (
                     <div
                         style={{
                             backgroundColor: "rgba(239, 68, 68, 0.15)",
@@ -71,7 +91,7 @@ function LoginForm() {
                     >
                         {errors.email?.message ||
                             errors.passwordHash?.message ||
-                            loginError}
+                            loginError || googleError}
                     </div>
                 )}
                 
@@ -130,13 +150,19 @@ function LoginForm() {
                             padding: "14px", 
                             borderRadius: "12px", 
                             fontSize: "16px", 
-                            width: "100%"
+                            width: "100%",
+                            marginBottom: "20px",
                     }} 
                         disabled={isSubmitting} 
                         type="submit"
                     >
                         LogIn
                     </button>
+                    <GoogleLogin 
+                        onSuccess={handleGoogleLogin}
+                    onError={() => {
+                        setLoginError("This Google account is not allowed.");}}
+                    />
                 </form>
             </div>
     );
