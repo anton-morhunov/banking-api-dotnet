@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.AuthDto;
+using BankAPI.Application.DTOs.GoogleAuth;
 using BankAPI.Application.Interfaces.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,15 @@ namespace BankAPI.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IGoogleAuthService _googleAuthService;
     
-    public AuthController(IAuthService authService)
+    public AuthController(
+        IAuthService authService, 
+        IGoogleAuthService googleAuthService
+        )
     {
         _authService = authService;
+        _googleAuthService = googleAuthService;
     }
 
     [HttpPost("login")]
@@ -39,4 +45,13 @@ public class AuthController : ControllerBase
         
         return Ok(createUser);
     }
+
+    [HttpPost("google")]
+    public async Task<IActionResult> GoogleLogin(GoogleAuthRequestDto dto)
+    {
+        var response = await _googleAuthService.GoogleLoginAsync(dto.Credential);
+
+        return Ok(response);
+    }
+    
 }
