@@ -9,6 +9,7 @@ import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import TableCell from "../../components/ui/Card/TableCell.jsx";
 import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js"
 import { clientStatusMap } from "../../constants/clientConstants.js"
+import UnblockButton from "../../components/ui/Button/UnblockButton.jsx";
 
 function ClientDetailsPage(){
     
@@ -53,32 +54,37 @@ function ClientDetailsPage(){
     const saveField = async () => {
 
         try {
-            await api.put(`/clients/${client.id}`, editedClient);
+            const response = await api.put(`/clients/${client.id}`, editedClient);
+            
+            console.log(response.data);
 
             setClient(editedClient);
 
             setEditField(null);
 
         } catch (err) {
-            console.log(err);
+            console.log(err.response);
         }
     };
     
-    const updateClientStatus = async () => {
+    const updateClientStatus = async (status) => {
         try{
-            await api.patch(`/clients/${client.id}/dto`, {status: status});
+            
+            const response = await api.patch(`/clients/${client.id}?dto=${status}`);
+
+            console.log(response.data);
             
             setClient({
                 ...client,
-                status: dto
+                status
             })
         } catch(err){
-            console.log(err);
+            console.log(err.response);
         }
     }
 
     useEffect(() => {
-        api.get(`/accounts/${id}`)
+        api.get(`/accounts/client/${id}`)
             .then(response => setAccounts(response.data))
             .catch(error => console.log(error));
     }, []);
@@ -266,9 +272,17 @@ function ClientDetailsPage(){
                             }}
                             >
                                 <span style={labelStyle}>
-                                    <BlockButton>
+                                    {
+                                    client.status === 0 ? (
+                                    <BlockButton onClick={() => updateClientStatus(1)}>
                                         Block
                                     </BlockButton>
+                                    ) : (
+                                    <UnblockButton onClick={() => updateClientStatus(0)}>
+                                        Unblock
+                                    </UnblockButton>)
+                                    }
+                                    
                                 </span>
                             </div>
                             <div style={{
@@ -278,9 +292,21 @@ function ClientDetailsPage(){
                             }}
                             >
                                 <span style={labelStyle}>
-                                    <BlockButton>
-                                        Suspend
-                                    </BlockButton>
+                                    {
+                                        client.status === 0 ? (
+                                            <BlockButton 
+                                                onClick={() => updateClientStatus(2)}
+                                            >
+                                                Suspend
+                                            </BlockButton>
+                                        ) : (
+                                            <UnblockButton 
+                                                onClick={() => updateClientStatus(0)}
+                                            >
+                                                Unblock
+                                            </UnblockButton>
+                                        )
+                                    }
                                 </span>
                             </div>
                         </div>

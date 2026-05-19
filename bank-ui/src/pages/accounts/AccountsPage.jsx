@@ -28,7 +28,7 @@ function AccountsPage() {
         if(inputId.trim() === "") return;
 
         try {
-            const res = await api.get(`/accounts?accountId=${inputId}`);
+            const res = await api.get(`/accounts/${inputId}`);
             setAccount(res.data);
         } catch (error) {
             console.log(error);
@@ -78,7 +78,7 @@ function AccountsPage() {
                             </thead>
                             <tbody>
                             {(account ? [account] : accounts).map(account => (
-                                <tr key={account.id}>
+                                <tr key={account.accountId}>
                                     <TableCell>
                                         <Link to={`/accounts/${account.accountId}`} 
                                               className="client-link">{account.accountId}

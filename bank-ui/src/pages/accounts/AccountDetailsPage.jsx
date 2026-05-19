@@ -7,6 +7,7 @@ import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
 import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js";
+import UnblockButton from "../../components/ui/Button/UnblockButton.jsx";
 
 function AccountDetails() {
     
@@ -36,7 +37,7 @@ function AccountDetails() {
         
         const fetchData = async () => {
             try{
-                var response = await api.get(`/accounts?accountId=${id}`);
+                const response = await api.get(`/accounts/${id}`);
                 setAccount(response.data);
             } catch (error) {
                 console.log(error);
@@ -45,11 +46,27 @@ function AccountDetails() {
         fetchData();
     }, [id]);
     
-    useEffect(() => {
+    /*useEffect(() => {
         api.get(`/clients/${id}`)
             .then(response => setClient(response.data))
             .catch(error => console.log(error));
-    })
+    })*/
+    
+    const UpdateAccountStatus = async (status) => {
+        
+        try{
+            
+            const response = await api.patch(`/accounts/${id}/status`, {status})
+            console.log(response.data);
+            
+            setAccount(prev => ({
+                ...prev,
+                status
+            }));
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     
     if(!account) return <div className="loader"></div>;
     
@@ -156,9 +173,44 @@ function AccountDetails() {
                                 <span 
                                     style={labelStyle}
                                 >
-                                    <BlockButton>
-                                        Block
-                                    </BlockButton>
+                                    {
+                                        account.status === 0 ? (
+                                            <BlockButton 
+                                                onClick = {() => UpdateAccountStatus(1)}>
+                                                Block
+                                            </BlockButton>
+                                        ) : (
+                                            <UnblockButton
+                                            onClick = {() => UpdateAccountStatus(0)}>
+                                            Unblock
+                                            </UnblockButton>)
+                                    
+                                    }
+                                </span>
+                            </div>
+                            <div
+                                style={{
+                                    ...rowStyle,
+                                    display: "flex",
+                                    justifyContent:"center"
+                                }}
+                            >
+                                <span
+                                    style={labelStyle}
+                                >
+                                    {
+                                        account.status === 0 ? (
+                                            <BlockButton
+                                                onClick = {() => UpdateAccountStatus(2)}>
+                                                Close
+                                            </BlockButton>
+                                        ) : (
+                                            <UnblockButton
+                                                onClick = {() => UpdateAccountStatus(0)}>
+                                                Open
+                                            </UnblockButton>)
+
+                                    }
                                 </span>
                             </div>
                         </div>
