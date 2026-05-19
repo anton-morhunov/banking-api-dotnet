@@ -18,6 +18,7 @@ function ClientDetailsPage(){
     const [account, setAccounts] = useState([]);
     const [editingField, setEditField] = useState(null);
     const [editedClient, setEditedClient] = useState({});
+    const [blockClient, setBlockClient] = useState({});
 
     const sectionStyle = {
         width: "40%"
@@ -66,6 +67,12 @@ function ClientDetailsPage(){
             console.log(err.response);
         }
     };
+
+    useEffect(() => {
+        api.get(`/accounts/${id}`)
+            .then(response => setAccounts(response.data))
+            .catch(error => console.log(error));
+    }, []);
     
     const updateClientStatus = async (status) => {
         try{

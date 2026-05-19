@@ -1,52 +1,80 @@
-# Banking API
+# Banking Backoffice System
 
-RESTful API built with ASP.NET Core for managing banking clients and accounts with JWT authentication and role-based authorization.
+Full-stack banking management application built with ASP.NET Core and React.
 
-## Technologies
-Backend
-- C#
-- ASP.NET Core
+The project includes JWT authentication, role-based authorization, client/account management, and a responsive frontend dashboard.
+
+## Demo
+<p align="center">
+  <img src="./screenshots/demo.gif" width="90%">
+</p>
+
+## Screenshots
+
+### Login Page
+![Login](./screenshots/login.png)
+
+### Clients Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Client Details
+![Client](./screenshots/client-details.png)
+
+## Tech Stack
+
+### Backend
+- ASP.NET Core Web API
 - Entity Framework Core
-- PostgreSQL / SQL
-
-Authentication & API
+- PostgreSQL
 - JWT Authentication
-- REST API
-- Swagger
+- FluentValidation
+- xUnit
 
-DevOps
+### Frontend
+- React
+- JavaScript
+- Axios
+- React Router
+
+### DevOps
 - Docker
 - GitHub Actions
 - Render
-
-Testing
-- xUnit
+- Supabase
 
 ## Features
-- JWT authentication and role-based authorization
-- secure login endpoint
-- protected API endpoints
-- client management
-- bank account management
-- update account status
-- RESTful API design
-- Swagger API documentation
+
+- JWT authentication
+- Role-based authorization
+- Secure protected endpoints
+- Client management
+- Bank accounts and clients management
+- Frontend dashboard
+- API validation
+- Swagger documentation
+- Responsive UI
+- CI/CD with GitHub Actions
 
 
 ## Deployment
-The project is deployed using Render.
+The project is deployed using Render and Supabase.
 
 Live API(Swagger): https://banking-api-dotnet-2.onrender.com/swagger
 
-## How to Use
+Frontend Application: https://banking-api-application.onrender.com/
 
-The API is deployed and available online.
+### Test Credentials
+
+Email: test@gmail.com  
+Password: test
+
+## API Usage
+
+You can test all endpoints directly using Swagger UI.
 
 Base URL: 
 
 https://banking-api-dotnet-2.onrender.com/swagger
-
-You can test all endpoints directly using Swagger UI.
 
 ---
 
@@ -138,6 +166,7 @@ Example response:
 - Services – business logic    
 - Validators – request validation logic
 
+
 ## Architecture
 
 ```mermaid
@@ -175,6 +204,13 @@ flowchart TD
 
     Repositories --> EFCore
     EFCore --> DB
+```
+    
+## Development Timeline
+
+Visualization of the repository evolution using Gource.
+
+[![Watch Timeline Video](./screenshots/preview.png)](./screenshots/gource.mp4)
 
     
 
