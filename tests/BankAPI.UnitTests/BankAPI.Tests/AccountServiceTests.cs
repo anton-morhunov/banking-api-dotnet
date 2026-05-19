@@ -15,15 +15,13 @@ public class AccountServiceTests
     {
         var mockAccountRepository = new Mock<IAccountRepository>();
         var mockLogger = new Mock<ILogger<AccountService>>();
-
-        //var clientId = 1;
+        
         var accountId = 2;
         var fixedDay = new DateTime(2020, 1, 1);
         
         var accountModel = new AccountModel()
         {
             Id = accountId,
-            //ClientId = clientId,
             Balance = 100,
             Status = AccountStatus.Active,
             AccountType = AccountType.Debit,
@@ -36,7 +34,6 @@ public class AccountServiceTests
         mockAccountRepository
             .Setup(x => x.GetAccountAsync(
                 accountId
-                //clientId
                     ))
             .ReturnsAsync(accountModel);
 
@@ -44,11 +41,9 @@ public class AccountServiceTests
 
         var result = await accountService.GetAccountByIdAsync(
             accountId
-            //clientId
         );
         
         Assert.NotNull(result);
-        //Assert.Equal(accountModel.ClientId, result.ClientId);
         Assert.Equal(accountModel.Id, result.AccountId);
         Assert.Equal(accountModel.Balance, result.Balance);
         Assert.Equal(accountModel.Status, result.Status);
@@ -60,7 +55,6 @@ public class AccountServiceTests
         mockAccountRepository
             .Verify(x => x.GetAccountAsync(
                     accountId
-                    //clientId
                     ),
                 Times.Once
             );
@@ -72,13 +66,11 @@ public class AccountServiceTests
        var mockAccountRepository = new Mock<IAccountRepository>(); 
        var mockLogger = new Mock<ILogger<AccountService>>();
        
-       //var clientId = 1;
        var accountId = 2;
        
        mockAccountRepository
            .Setup(x => x.GetAccountAsync(
                accountId
-               //clientId
                ))
            .ReturnsAsync((AccountModel?)null);
        
@@ -86,7 +78,6 @@ public class AccountServiceTests
        
        var result = await service.GetAccountByIdAsync(
            accountId
-           //clientId
            );
        
            Assert.Null(result);
@@ -94,7 +85,6 @@ public class AccountServiceTests
            mockAccountRepository
                .Verify(x => x.GetAccountAsync(
                        accountId
-                       //clientId
                        ), 
                    Times.Once
                );

@@ -20,33 +20,33 @@ public class AccountController : ControllerBase
     }
     
     [Authorize(Roles = "Admin, Employee")]
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAccountById(
+    [HttpGet ("{accountId:int}")]
+    public async Task<ActionResult<AccountResponseDto>> GetAccountById(
         int? accountId
-        //[FromQuery]int? clientId
         )
-    {
-        if (accountId.HasValue)
+    { 
+        var account = await _accountService.GetAccountByIdAsync(
+            accountId 
+            ); 
+        
+        if (account is null) 
         {
-            var account = await _accountService.GetAccountByIdAsync(
-                accountId 
-                //clientId
-                );
-
-            if (account is null)
-            {
-                return NotFound();
-            }
-            
-            return Ok(account);
+            return NotFound();
         }
+            
+        return Ok(account);
+    }
 
+    [Authorize(Roles = "Admin, Employee")]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccounts()
+    {
         var all = await _accountService.GetAllAccounts();
         return Ok(all);
     }
 
     [Authorize(Roles = "Admin, Employee")]
-    [HttpGet("{clientId}")]
+    [HttpGet("client/{clientId:int}")]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
     {
         var accounts = await _accountService.GetAllAccountsByClientIdAsync(clientId);
@@ -68,16 +68,14 @@ public class AccountController : ControllerBase
     }
     
     [Authorize(Roles = "Admin, Employee")]
-    [HttpPatch("{id:int}/status")]
+    [HttpPatch("{accountId:int}/status")]
     public async Task<ActionResult<AccountResponseDto>> AccountUpdateStatusAsync(
         int accountId, 
-        //int clientId,
         AccountUpdateDto accountUpdateDto
         )
     {
         var updateAccount = await _accountService.AccountUpdateStatusAsync(
             accountId, 
-            //clientId, 
             accountUpdateDto
             );
 
@@ -89,7 +87,7 @@ public class AccountController : ControllerBase
         return Ok(updateAccount);
     }
 
-    [Authorize(Roles = "Admin, Employee")]
+    /*[Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}/close")]
     public async Task<ActionResult<bool>> CloseAccountAsync(
         int accountId, 
@@ -101,7 +99,7 @@ public class AccountController : ControllerBase
             );
 
         return Ok(closeAccount);
-    }
+    }*/
 
     [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}/plan")]
@@ -113,7 +111,6 @@ public class AccountController : ControllerBase
     {
         var updateAccountPlan = await _accountService.AccountUpdatePlanAsync(
             accountId, 
-            //clientId, 
             accountUpdateDto
             );
 

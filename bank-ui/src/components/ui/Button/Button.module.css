@@ -25,3 +25,12 @@
 .dangerBtn:hover{
     background-color: #c11616;
 }
+
+.successBtn{
+    background-color: #16a34a;
+    color: white;
+}
+
+.successBtn:hover{
+    background-color: #15803d;
+}

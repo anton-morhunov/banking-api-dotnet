@@ -19,7 +19,6 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> GetAccountByIdAsync(
         int? accountId
-        //int? clientId
         )
     {
         _logger.LogInformation(
@@ -28,7 +27,6 @@ public class AccountService : IAccountService
             );
         
         var account = await _accountRepository.GetAccountAsync(accountId
-            //clientId
             );
 
         if (account == null)
@@ -132,7 +130,6 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> AccountUpdateStatusAsync(
         int accountId, 
-        //int clientId, 
         AccountUpdateDto accountUpdateDto
         )
     {
@@ -150,16 +147,6 @@ public class AccountService : IAccountService
         {
             _logger.LogWarning(
                 "Account{AccountId} not found", 
-                accountId
-                );
-            
-            return null;
-        }
-
-        if (account.Status == AccountStatus.Closed)
-        {
-            _logger.LogWarning(
-                "Account {AccountId} status is closed", 
                 accountId
                 );
             
@@ -191,7 +178,6 @@ public class AccountService : IAccountService
 
     public async Task<bool> CloseAccountAsync(
         int accountId
-        //int clientId
         )
     {
         _logger.LogInformation(
@@ -201,7 +187,6 @@ public class AccountService : IAccountService
         
         var account = await _accountRepository.GetAccountAsync(
             accountId
-        //clientId
             );
 
         if (account == null)
@@ -227,7 +212,6 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto?> AccountUpdatePlanAsync(
         int accountId, 
-        //int clientId, 
         AccountUpdateDto accountUpdateDto
         )
     {
@@ -236,8 +220,7 @@ public class AccountService : IAccountService
             accountId
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId  
-            //clientId
+        var account = await _accountRepository.GetAccountAsync(accountId
             );
 
         if (account == null)
