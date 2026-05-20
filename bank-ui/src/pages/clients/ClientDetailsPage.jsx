@@ -35,7 +35,9 @@ function ClientDetailsPage(){
     };
 
     const valueStyle = {
-        fontWeight: "500"
+        fontWeight: "500",
+        color: "#111827",
+        textAlign: "right"
     };
 
     useEffect(()=> {
@@ -69,7 +71,7 @@ function ClientDetailsPage(){
     };
 
     useEffect(() => {
-        api.get(`/accounts/${id}`)
+        api.get(`/accounts/client/${id}`)
             .then(response => setAccounts(response.data))
             .catch(error => console.log(error));
     }, []);
