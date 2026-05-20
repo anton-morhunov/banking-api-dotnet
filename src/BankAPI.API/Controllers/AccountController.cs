@@ -102,10 +102,9 @@ public class AccountController : ControllerBase
     }*/
 
     [Authorize(Roles = "Admin, Employee")]
-    [HttpPatch("{id:int}/plan")]
+    [HttpPatch("{accountId:int}/plan")]
     public async Task<ActionResult<AccountResponseDto>> UpdatePlanAsync(
-        int accountId, 
-        int clientId, 
+        int accountId,
         AccountUpdateDto accountUpdateDto
         )
     {
