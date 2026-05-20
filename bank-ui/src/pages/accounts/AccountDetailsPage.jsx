@@ -14,6 +14,9 @@ function AccountDetails() {
     const {id} = useParams();
     const [account, setAccount] = useState({});
     const [client, setClient] = useState({});
+    const [type, setType] = useState("0");
+    const [isEditingPlan, setIsEditingPlan] = useState(false);
+    const [selectedPlan, setSelectedPlan] = useState(0);
     
     const sectionStyle = {
         width: '40%',
@@ -39,12 +42,28 @@ function AccountDetails() {
             try{
                 const response = await api.get(`/accounts/${id}`);
                 setAccount(response.data);
+                setSelectedPlan(response.data.plan);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
     }, [id]);
+    
+    const savePlan = async () => {
+        try{
+            const response = await api.patch(`/accounts/${id}/plan`, 
+                {
+                plan: selectedPlan,
+                }
+            );
+            
+            setAccount(response.data);
+            setIsEditingPlan(false);
+        }catch(error){
+            console.log(error);
+        }
+    }
     
     /*useEffect(() => {
         api.get(`/clients/${id}`)
@@ -112,22 +131,50 @@ function AccountDetails() {
                         <div style={sectionStyle}>
                             <div style={rowStyle}>
                                 <span style={labelStyle}>Account Plan</span>
-                                <span style={valueStyle}>
-                                    <span style={{
-                                        color: account.plan === 0
-                                            ? "#64748b"
-                                            : account.plan === 1
-                                                ? "#eab308"
-                                                : "#0f766e",
-                                        fontWeight: "bold"
-                                    }}>
+                                
+                                {
+                                    isEditingPlan ? (
+                                        <select
+                                            value={selectedPlan}
+                                            onChange={
+                                            (e) =>
+                                                setSelectedPlan(Number(e.target.value))}
+                                            style={{
+                                                padding: "14px",
+                                                borderRadius: "12px",
+                                                border: "1px solid #ddd",
+                                                fontSize: "16px",
+                                                backgroundColor: "#fff",
+                                                width: "180px",
+                                                color: "#1f2937",
+                                                textAlign: "center",
+                                                fontWeight: "500"
+                                            }}
+                                        >
+                                            <option value={0}>Basic</option>
+                                            <option value={1}>Premium</option>
+                                            <option value={2}>Business</option>
+                                        </select>
+                                    ) : (
+                                        <span style={{
+                                            color: account.plan === 0
+                                                ? "#64748b"
+                                                : account.plan === 1
+                                                    ? "#eab308"
+                                                    : "#0f766e", 
+                                            fontWeight: "bold"
+                                        }}
+                                        >
                                         {accountPlan[account.plan]}
                                     </span>
-                                </span>
+                                    )
+                                }
+
                                 <PrimaryButton
                                     type="button"
+                                    onClick={ isEditingPlan ? savePlan : () => setIsEditingPlan(true)  }
                                 >
-                                    Edit
+                                    {isEditingPlan ? "Save" : "Edit"}
                                 </PrimaryButton>
                             </div>
                             <div style={rowStyle}>
@@ -157,36 +204,18 @@ function AccountDetails() {
                                 }}>
                                         {accountStatusMap[account.status]} 
                                     </span>
-                                <PrimaryButton
-                                    type="button"
-                                >
-                                    Edit
-                                </PrimaryButton>
-                            </div>
-                            <div 
-                                style={{
-                                    ...rowStyle, 
-                                    display: "flex", 
-                                    justifyContent:"center"
-                            }}
-                            >
-                                <span 
-                                    style={labelStyle}
-                                >
-                                    {
-                                        account.status === 0 ? (
-                                            <BlockButton 
-                                                onClick = {() => UpdateAccountStatus(1)}>
-                                                Block
-                                            </BlockButton>
-                                        ) : (
-                                            <UnblockButton
+                                {
+                                    account.status === 0 ? (
+                                        <BlockButton
+                                            onClick = {() => UpdateAccountStatus(1)}>
+                                            Block
+                                        </BlockButton>
+                                    ) : (
+                                        <UnblockButton
                                             onClick = {() => UpdateAccountStatus(0)}>
                                             Unblock
-                                            </UnblockButton>)
-                                    
-                                    }
-                                </span>
+                                        </UnblockButton>)
+                                }
                             </div>
                             <div
                                 style={{

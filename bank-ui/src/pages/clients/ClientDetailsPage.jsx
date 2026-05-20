@@ -402,6 +402,17 @@ function ClientDetailsPage(){
                     </tbody>
                 </table>
             </TableCard>
+            <TableCard>
+                <h1 style={{
+                    textAlign: "center",
+                    fontSize: "32px",
+                    fontWeight: "400",
+                    marginBottom: "40px"
+                }}
+                >
+                    Notes
+                </h1>
+            </TableCard>
         </div>
     )
 }
