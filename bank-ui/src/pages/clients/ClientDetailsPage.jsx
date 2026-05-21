@@ -1,8 +1,6 @@
 import {useParams, Link} from "react-router-dom";
 import {useState, useEffect} from "react";
-import {api} from "../../api/api";
 import BlockButton from "../../components/ui/Button/BlockButton.jsx";
-import PrimaryButton from "../../components/ui/Button/Button.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
@@ -10,6 +8,23 @@ import TableCell from "../../components/ui/Card/TableCell.jsx";
 import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js"
 import { clientStatusMap } from "../../constants/clientConstants.js"
 import UnblockButton from "../../components/ui/Button/UnblockButton.jsx";
+import InnerCard from "../../components/ui/Card/InnerCard.jsx";
+import {
+    rowStyleText,
+    labelStyle,
+    valueStyle,
+    sectionStyle
+} from "../../styles/clientDetailsStyles";
+import {
+    getClientById,
+    updateClient,
+    updateClientStatusRequest
+} from "../../services/clientService.js";
+import {
+    getAccountsByClientId
+} from "../../services/accountService.js";
+import EditableClientField from "../../components/forms/clients/EditableClientsField.jsx";
+import {descriptionStyle, headerStyle} from "../../styles/detailsPageGeneralStyle.js";
 
 function ClientDetailsPage(){
     
@@ -18,33 +33,12 @@ function ClientDetailsPage(){
     const [account, setAccounts] = useState([]);
     const [editingField, setEditField] = useState(null);
     const [editedClient, setEditedClient] = useState({});
-    const [blockClient, setBlockClient] = useState({});
-
-    const sectionStyle = {
-        width: "40%"
-    };
-
-    const rowStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: "12px"
-    };
-
-    const labelStyle = {
-        color: "#666"
-    };
-
-    const valueStyle = {
-        fontWeight: "500",
-        color: "#111827",
-        textAlign: "right"
-    };
-
+    
     useEffect(()=> {
         const fetchClient = async () => {
 
             try {
-                var response = await api.get(`/clients/${id}`);
+                const response = await getClientById(id);
                 setClient(response.data);
                 setEditedClient(response.data);
             } catch (err) {
@@ -57,10 +51,10 @@ function ClientDetailsPage(){
     const saveField = async () => {
 
         try {
-            const response = await api.put(`/clients/${client.id}`, editedClient);
-            
-            console.log(response.data);
-
+             await updateClient(
+                client.id, 
+                editedClient
+            );
             setClient(editedClient);
 
             setEditField(null);
@@ -69,17 +63,26 @@ function ClientDetailsPage(){
             console.log(err.response);
         }
     };
-
     useEffect(() => {
-        api.get(`/accounts/client/${id}`)
-            .then(response => setAccounts(response.data))
-            .catch(error => console.log(error));
-    }, []);
+        const fetchAccounts = async () => {
+            try{
+                const response = await getAccountsByClientId(id);
+
+                setAccounts(response.data);
+            }catch(error){
+                console.log(error);
+            }
+        }; 
+        fetchAccounts();
+    }, [id])
     
     const updateClientStatus = async (status) => {
         try{
             
-            const response = await api.patch(`/clients/${client.id}?dto=${status}`);
+            const response = await updateClientStatusRequest(
+                client.id, 
+                status
+            );
 
             console.log(response.data);
             
@@ -91,12 +94,6 @@ function ClientDetailsPage(){
             console.log(err.response);
         }
     }
-
-    useEffect(() => {
-        api.get(`/accounts/client/${id}`)
-            .then(response => setAccounts(response.data))
-            .catch(error => console.log(error));
-    }, []);
     
     if(!client) return <div className="loader"></div>;
     
@@ -104,19 +101,10 @@ function ClientDetailsPage(){
 
         <div style={{ padding: "30px" }}>
             <CardDetailsPage>
-            <h1 style={{
-                textAlign: "center",
-                fontSize: "32px",
-                fontWeight: "400",
-                marginBottom: "20px"}}>
+            <h1 style={headerStyle}>
                 {client.id}
             </h1>
-            <h2 style={{
-                textAlign: "center",
-                fontSize: "32px",
-                fontWeight: "400",
-                marginBottom: "40px"
-            }}
+            <h2 style={descriptionStyle}
             >
                 Client Details
             </h2>
@@ -133,192 +121,120 @@ function ClientDetailsPage(){
                         justifyContent: "space-between"
                     }}
                     >
-                        <div style={sectionStyle}>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Name</span>
-                                {
-                                    editingField === "name" ? (
-                                        <input
-                                            value={editedClient.name}
-                                            onChange={(e) =>
-                                                setEditedClient({
-                                                    ...editedClient,name: e.target.value
-                                                })
-                                            }
+                        <InnerCard>
+                            <div style={sectionStyle}>
+
+                                <EditableClientField
+                                    label="Name"
+                                    field="name"
+                                    editingField={editingField}
+                                    editedClient={editedClient}
+                                    setEditedClient={setEditedClient}
+                                    setEditField={setEditField}
+                                    saveField={saveField}
+                                />
+
+                                <EditableClientField
+                                    label="Email"
+                                    field="email"
+                                    editingField={editingField}
+                                    editedClient={editedClient}
+                                    setEditedClient={setEditedClient}
+                                    setEditField={setEditField}
+                                    saveField={saveField}
+                                />
+
+                                <EditableClientField
+                                    label="Phone Number"
+                                    field="phoneNumber"
+                                    editingField={editingField}
+                                    editedClient={editedClient}
+                                    setEditedClient={setEditedClient}
+                                    setEditField={setEditField}
+                                    saveField={saveField}
+                                />
+
+                            </div>
+                        </InnerCard>
+                        <InnerCard>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    height: "100%"
+                                }}
+                            >
+                                <div>
+                                    <div style={rowStyleText}>
+                                        <span style={labelStyle}>Created At</span>
+
+                                        <span style={valueStyle}>
+                                            {new Date(client.created).toLocaleString()}
+                                        </span>
+                                    </div>
+                                    <div style={rowStyleText}>
+                                        <span style={labelStyle}>Status</span>
+                                        <span
                                             style={{
-                                                border: "none",
-                                                borderBottom: "2px solid #d1d5db",
-                                                background: "transparent",
-                                                outline: "none",
-                                                padding: "6px 2px",
-                                                fontSize: "18px",
-                                                width: "220px",
-                                                color: "#374151",
-                                                fontWeight: "500",
-                                                caretColor: "#2563eb"
+                                                color: client.status === 0 ? "green" : "red",
+                                                fontWeight: "bold"
                                             }}
-                                        />
-                                    ) : (
-                                        <span style={valueStyle}>{client.name}</span>
-                                    )}
-                                {editingField === "name" ? (
-                                    <PrimaryButton 
-                                        type="button" 
-                                        onClick={()=>saveField("name")}
-                                    >
-                                        Save
-                                    </PrimaryButton>
-                                ) :( 
-                                    <PrimaryButton 
-                                        type="button" 
-                                        onClick={() => setEditField("name")} 
                                         >
-                                    Edit
-                                    </PrimaryButton>
-                                )}
-                            </div>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Email</span>
-                                {editingField === "email" ? (
-                                    <input
-                                    value={editedClient.email}
-                                    onChange={(e) => 
-                                        setEditedClient({
-                                            ...editedClient, email: e.target.value
-                                        })
-                                    }
+                                            {clientStatusMap[client.status]}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
                                     style={{
-                                        border: "none",
-                                        borderBottom: "2px solid #d1d5db",
-                                        background: "transparent",
-                                        outline: "none",
-                                        padding: "6px 2px",
-                                        fontSize: "18px",
-                                        width: "220px",
-                                        color: "#374151",
-                                        fontWeight: "500",
-                                        caretColor: "#2563eb"
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center"
                                     }}
-                                    />
-                                ) : (
-                                    <span style={valueStyle}>{client.email}</span>
-                                )}
-                                {editingField === "email" ? (
-                                    <PrimaryButton
-                                        type="button"
-                                        onClick={()=>saveField("email")}
+                                >
+                                    <h3
+                                        style={{
+                                            marginBottom: "24px",
+                                            color: "#94a3b8",
+                                            fontSize: "28px"
+                                        }}
                                     >
-                                        Save
-                                    </PrimaryButton>
-                                ) :(
-                                    <PrimaryButton
-                                        type="button"
-                                        onClick={() => setEditField("email")}
+                                        Actions
+                                    </h3>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            gap: "32px",
+                                            justifyContent: "center"
+                                        }}
                                     >
-                                        Edit
-                                    </PrimaryButton>
-                                )}
+                                        {
+                                            client.status === 0 ? (
+                                                <>
+                                                    <BlockButton
+                                                        onClick={() => updateClientStatus(1)}
+                                                    >
+                                                        Block
+                                                    </BlockButton>
+
+                                                    <BlockButton
+                                                        onClick={() => updateClientStatus(2)}
+                                                    >
+                                                        Suspend
+                                                    </BlockButton>
+                                                </>
+                                            ) : (
+                                                <UnblockButton
+                                                    onClick={() => updateClientStatus(0)}
+                                                >
+                                                    Unblock
+                                                </UnblockButton>
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </div>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Phone number</span>
-                                {editingField === "phoneNumber" ? (
-                                    <input
-                                    value={editedClient.phoneNumber}
-                                    onChange={(e) => 
-                                        setEditedClient({
-                                            ...editedClient, phoneNumber: e.target.value
-                                        })
-                                    }
-                                    style={{
-                                        border: "none",
-                                        borderBottom: "2px solid #d1d5db",
-                                        background: "transparent",
-                                        outline: "none",
-                                        padding: "6px 2px",
-                                        fontSize: "18px",
-                                        width: "220px",
-                                        color: "#374151",
-                                        fontWeight: "500",
-                                        caretColor: "#2563eb"
-                                    }}
-                                    />
-                                ) : (
-                                    <span style={valueStyle}>{client.phoneNumber}</span>
-                                )}
-                                {editingField === "phoneNumber" ? (
-                                    <PrimaryButton
-                                        onClick={()=>saveField("phoneNumber")}>
-                                        Save
-                                    </PrimaryButton>
-                                ) :(
-                                    <PrimaryButton
-                                        onClick={() => setEditField("phoneNumber")}>
-                                        Edit
-                                    </PrimaryButton>
-                                )}
-                            </div>
-                        </div>
-                        <div style={sectionStyle}>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Created At</span>
-                                <span style={valueStyle}>{new Date(client.created).toLocaleString()}</span>
-                            </div>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Status</span>
-                                <span style={valueStyle}>
-                                    <span style={{
-                                        color: client.status === 0 ? "green" : "red",
-                                        fontWeight: "bold"
-                                    }}>
-                                        {clientStatusMap[client.status]}
-                                    </span>
-                                </span>
-                            </div>
-                            <div style={{
-                                ...rowStyle, 
-                                display: "flex", 
-                                justifyContent: "center"
-                            }}
-                            >
-                                <span style={labelStyle}>
-                                    {
-                                    client.status === 0 ? (
-                                    <BlockButton onClick={() => updateClientStatus(1)}>
-                                        Block
-                                    </BlockButton>
-                                    ) : (
-                                    <UnblockButton onClick={() => updateClientStatus(0)}>
-                                        Unblock
-                                    </UnblockButton>)
-                                    }
-                                    
-                                </span>
-                            </div>
-                            <div style={{
-                                ...rowStyle, 
-                                display: "flex", 
-                                justifyContent: "center"
-                            }}
-                            >
-                                <span style={labelStyle}>
-                                    {
-                                        client.status === 0 ? (
-                                            <BlockButton 
-                                                onClick={() => updateClientStatus(2)}
-                                            >
-                                                Suspend
-                                            </BlockButton>
-                                        ) : (
-                                            <UnblockButton 
-                                                onClick={() => updateClientStatus(0)}
-                                            >
-                                                Unblock
-                                            </UnblockButton>
-                                        )
-                                    }
-                                </span>
-                            </div>
-                        </div>
+                        </InnerCard>
                     </div>
                 </div>
             </div>
@@ -416,5 +332,4 @@ function ClientDetailsPage(){
         </div>
     )
 }
-
 export default ClientDetailsPage;
