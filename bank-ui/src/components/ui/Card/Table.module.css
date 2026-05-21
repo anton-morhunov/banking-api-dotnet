@@ -29,3 +29,26 @@
 
     overflow: hidden;
 }
+
+.innerCard {
+    background: rgba(250, 248, 229, 0.22);
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 500px;
+}
+
+.innerCardRowStyle{
+    display: grid;
+    grid-template-columns: 140px 1fr 100px;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 24px;
+}
+
+.innerCardHeaderStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

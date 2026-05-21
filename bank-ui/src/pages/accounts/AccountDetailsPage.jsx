@@ -1,46 +1,26 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {api} from '../../api/api';
-import BlockButton from "../../components/ui/Button/BlockButton.jsx";
-import PrimaryButton from "../../components/ui/Button/Button.jsx";
 import CardDetailsPage from "../../components/ui/Card/CardDetailsPage.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import TableColumn from "../../components/ui/Card/TableColumn.jsx";
-import { accountPlan, accountType, accountStatusMap} from "../../constants/accountConstants.js";
-import UnblockButton from "../../components/ui/Button/UnblockButton.jsx";
+import InnerCard from "../../components/ui/Card/InnerCard.jsx";
+import {sectionStyle, rowStyle, labelStyle, leftRowStyle, valueStyle} from "../../styles/accountDetailsStyle.js";
+import {getAccountById, updateAccountPlan, updateAccountStatus} from "../../services/accountService.js";
+import AccountSettingsCard from "../../components/forms/accounts/accountSettingsCard.jsx";
+import {descriptionStyle, headerStyle} from "../../styles/detailsPageGeneralStyle.js"; 
 
 function AccountDetails() {
     
     const {id} = useParams();
     const [account, setAccount] = useState({});
-    const [client, setClient] = useState({});
-    const [type, setType] = useState("0");
     const [isEditingPlan, setIsEditingPlan] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState(0);
-    
-    const sectionStyle = {
-        width: '40%',
-    }
-    
-    const rowStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: '12px',
-    }
-    
-    const labelStyle = {
-        color: "#666"
-    }
-    
-    const valueStyle = {
-        fontWeight: "500"
-    }
     
     useEffect(() => {
         
         const fetchData = async () => {
             try{
-                const response = await api.get(`/accounts/${id}`);
+                const response = await getAccountById(id);
                 setAccount(response.data);
                 setSelectedPlan(response.data.plan);
             } catch (error) {
@@ -52,11 +32,7 @@ function AccountDetails() {
     
     const savePlan = async () => {
         try{
-            const response = await api.patch(`/accounts/${id}/plan`, 
-                {
-                plan: selectedPlan,
-                }
-            );
+            const response = await updateAccountPlan(id, selectedPlan);
             
             setAccount(response.data);
             setIsEditingPlan(false);
@@ -65,18 +41,10 @@ function AccountDetails() {
         }
     }
     
-    /*useEffect(() => {
-        api.get(`/clients/${id}`)
-            .then(response => setClient(response.data))
-            .catch(error => console.log(error));
-    })*/
-    
     const UpdateAccountStatus = async (status) => {
         
         try{
-            
-            const response = await api.patch(`/accounts/${id}/status`, {status})
-            console.log(response.data);
+            await updateAccountStatus(id, status);
             
             setAccount(prev => ({
                 ...prev,
@@ -92,157 +60,43 @@ function AccountDetails() {
     return(
         <div style={{padding: '30px'}}>
             <CardDetailsPage>
-                <h1 style={{
-                    textAlign: "center",
-                    fontSize: '32px',
-                    fontWeight: '400',
-                    marginBottom: '20px',
-                }}>
+                <h1 style={headerStyle}>
                     {account.accountId}
                 </h1>
-                <h2 style={{
-                    textAlign: "center",
-                    fontSize: '32px',
-                    fontWeight: '400',
-                    marginBottom: '40px',
-                }}>
+                <h2 style={descriptionStyle}>
                     Account Details
                 </h2>
                 <div style={{flex: 1}}>
                     <div style={{
                         display:"flex", 
                         justifyContent:"space-between"}}>
+                        <InnerCard>
                         <div style={sectionStyle}>
-                            <div style={rowStyle}>
+                            <div style={leftRowStyle}>
                                 <span style={labelStyle}>Account number</span>
                                 <span style={valueStyle}>{account.accountNumber}</span>
                             </div>
                             
-                            <div style={rowStyle}>
+                            <div style={leftRowStyle}>
                                 <span style={labelStyle}>Balance</span>
                                 <span style={valueStyle}>{account.balance}</span>
                             </div>
                             
-                            <div style={rowStyle}>
+                            <div style={leftRowStyle}>
                                 <span style={labelStyle}>Created At</span>
                                 <span style={valueStyle}>{new Date(account.createdAt).toLocaleString()}</span>
                             </div>
                         </div>
-                        <div style={sectionStyle}>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Account Plan</span>
-                                
-                                {
-                                    isEditingPlan ? (
-                                        <select
-                                            value={selectedPlan}
-                                            onChange={
-                                            (e) =>
-                                                setSelectedPlan(Number(e.target.value))}
-                                            style={{
-                                                padding: "14px",
-                                                borderRadius: "12px",
-                                                border: "1px solid #ddd",
-                                                fontSize: "16px",
-                                                backgroundColor: "#fff",
-                                                width: "180px",
-                                                color: "#1f2937",
-                                                textAlign: "center",
-                                                fontWeight: "500"
-                                            }}
-                                        >
-                                            <option value={0}>Basic</option>
-                                            <option value={1}>Premium</option>
-                                            <option value={2}>Business</option>
-                                        </select>
-                                    ) : (
-                                        <span style={{
-                                            color: account.plan === 0
-                                                ? "#64748b"
-                                                : account.plan === 1
-                                                    ? "#eab308"
-                                                    : "#0f766e", 
-                                            fontWeight: "bold"
-                                        }}
-                                        >
-                                        {accountPlan[account.plan]}
-                                    </span>
-                                    )
-                                }
-
-                                <PrimaryButton
-                                    type="button"
-                                    onClick={ isEditingPlan ? savePlan : () => setIsEditingPlan(true)  }
-                                >
-                                    {isEditingPlan ? "Save" : "Edit"}
-                                </PrimaryButton>
-                            </div>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Account Type</span>
-                                <span style={valueStyle}>
-                                    <span style={{
-                                        color: account.accountType === 0
-                                            ? "#2563eb"
-                                            : account.accountType === 1
-                                                ? "#22c55e"
-                                                : "#9333ea",
-                                        fontWeight: "bold"
-                                    }}>{accountType[account.accountType]}
-                                        </span>
-                                </span>
-                                <PrimaryButton
-                                    type="button"
-                                >
-                                    Edit
-                                </PrimaryButton>
-                            </div>
-                            <div style={rowStyle}>
-                                <span style={labelStyle}>Account Status</span>
-                                <span style={{
-                                    color: account.status === 0 ? "green" : "red",
-                                    fontWeight: "bold"
-                                }}>
-                                        {accountStatusMap[account.status]} 
-                                    </span>
-                                {
-                                    account.status === 0 ? (
-                                        <BlockButton
-                                            onClick = {() => UpdateAccountStatus(1)}>
-                                            Block
-                                        </BlockButton>
-                                    ) : (
-                                        <UnblockButton
-                                            onClick = {() => UpdateAccountStatus(0)}>
-                                            Unblock
-                                        </UnblockButton>)
-                                }
-                            </div>
-                            <div
-                                style={{
-                                    ...rowStyle,
-                                    display: "flex",
-                                    justifyContent:"center"
-                                }}
-                            >
-                                <span
-                                    style={labelStyle}
-                                >
-                                    {
-                                        account.status === 0 ? (
-                                            <BlockButton
-                                                onClick = {() => UpdateAccountStatus(2)}>
-                                                Close
-                                            </BlockButton>
-                                        ) : (
-                                            <UnblockButton
-                                                onClick = {() => UpdateAccountStatus(0)}>
-                                                Open
-                                            </UnblockButton>)
-
-                                    }
-                                </span>
-                            </div>
-                        </div>
+                        </InnerCard>
+                        <AccountSettingsCard
+                        account={account}
+                        isEditingPlan={isEditingPlan}
+                        selectedPlan={selectedPlan}
+                        setSelectedPlan={setSelectedPlan}
+                        savePlan={savePlan}
+                        setIsEditingPlan={setIsEditingPlan}
+                        updateAccountStatus={UpdateAccountStatus}
+                        />
                     </div>
                 </div>
             </CardDetailsPage>

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {api} from "../../api/api";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import PrimaryButton from "../../components/ui/Button/Button.jsx";
 import TableCard from "../../components/ui/Card/Card.jsx";
 import TableCell from "../../components/ui/Card/TableCell.jsx";
@@ -76,7 +76,11 @@ function EmployeesPage() {
                             {(employee ? [employee] : employees).map(employee => (
                                 <tr key={employee.id}>
                                     <TableCell>{employee.id}</TableCell>
-                                    <TableCell>{employee.email}</TableCell>
+                                    <TableCell>
+                                        <Link to={`/users/${employee.id}`} className="client-link">
+                                            {employee.email}
+                                        </Link>
+                                    </TableCell>
                                     <TableCell>
                                     <span style={{
                                         color: employee.userRole === 0 ? "green" : "red",

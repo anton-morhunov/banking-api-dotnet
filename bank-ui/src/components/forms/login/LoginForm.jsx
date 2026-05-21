@@ -158,11 +158,20 @@ function LoginForm() {
                     >
                         LogIn
                     </button>
-                    <GoogleLogin 
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "24px",
+                        width: "100%"
+                    }}
+                    >
+                    <GoogleLogin
+                        width="400"
                         onSuccess={handleGoogleLogin}
                     onError={() => {
                         setLoginError("This Google account is not allowed.");}}
                     />
+                    </div>
                 </form>
             </div>
     );
