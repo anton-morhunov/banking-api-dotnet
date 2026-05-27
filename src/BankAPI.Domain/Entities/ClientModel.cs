@@ -11,4 +11,6 @@ public class ClientModel
     public ClientStatus Status {get; set; }
     public DateTime CreateDate {get; set; }
     public ICollection<AccountModel> Accounts { get; set; }
+    public ICollection<ClientComment> Comments { get; set; } 
+        = new List<ClientComment>();
 }

@@ -8,6 +8,8 @@ public class AppDbContext : DbContext
     public DbSet<ClientModel> Clients { get; set; }
     public DbSet<AccountModel> Accounts { get; set; }
     public DbSet<UserModel> Users { get; set; }
+    public DbSet<ClientComment> ClientComments{ get; set; }
+    public DbSet<AccountComment> AccountComments{ get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : 
         base(options){}

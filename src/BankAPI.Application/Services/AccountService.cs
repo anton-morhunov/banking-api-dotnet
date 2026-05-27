@@ -220,8 +220,7 @@ public class AccountService : IAccountService
             accountId
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId
-            );
+        var account = await _accountRepository.GetAccountAsync(accountId);
 
         if (account == null)
         {
