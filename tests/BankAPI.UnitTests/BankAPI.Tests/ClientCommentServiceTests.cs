@@ -28,7 +28,7 @@ public class ClientCommentServiceTests
             UserId = 1,
             Text = "test",
             ClientId = 1,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
         };
         
         mockCommentRepository
