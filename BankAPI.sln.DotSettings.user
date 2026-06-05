@@ -55,5 +55,6 @@
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.CreateCommentAsync_ShouldReturnDto_WhenCommentCreated&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.DeleteCommentAsync_ShouldDeleteComment_WhenCommentDeleted&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.GetAccountCommentByIdAsync_ShouldReturnDto_WhenCommentsExists&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

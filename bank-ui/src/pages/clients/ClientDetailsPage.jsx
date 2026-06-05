@@ -16,7 +16,9 @@ import {
     sectionStyle
 } from "../../styles/clientDetailsStyles";
 import {
+    CreateCommitAsync, DeleteCommitAsync,
     getClientById,
+    GetCommentsByClientId,
     updateClient,
     updateClientStatusRequest
 } from "../../services/clientService.js";
@@ -25,6 +27,18 @@ import {
 } from "../../services/accountService.js";
 import EditableClientField from "../../components/forms/clients/EditableClientsField.jsx";
 import {descriptionStyle, headerStyle} from "../../styles/detailsPageGeneralStyle.js";
+import PrimaryButton from "../../components/ui/Button/Button.jsx";
+import {
+    modalButtons,
+    modalOverlay,
+    modal,
+    modalHeaderStyle,
+    modalTextStyle,
+    modalInputStyle, modalCancelButtonStyle, modalConfirmButtonStyle
+} from "../../styles/commentModalStyle.js";
+import {createPortal} from "react-dom";
+import { Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 
 function ClientDetailsPage(){
     
@@ -33,6 +47,12 @@ function ClientDetailsPage(){
     const [account, setAccounts] = useState([]);
     const [editingField, setEditField] = useState(null);
     const [editedClient, setEditedClient] = useState({});
+    const [comments, setComments] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [commentText, setCommentText] = useState('');
+    const [userId, setUserId] = useState('');
+    const [deleteComments, setDeleteComments] = useState({});
+    
     
     useEffect(()=> {
         const fetchClient = async () => {
@@ -92,6 +112,46 @@ function ClientDetailsPage(){
             })
         } catch(err){
             console.log(err.response);
+        }
+    }
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            try{
+                const response = await GetCommentsByClientId(id);
+
+                setComments(response.data);
+            }catch(error){
+                console.log(error);
+            }
+        }
+        fetchComments();
+    }, [id]);
+
+    const handleSubmit = async () => {
+        try {
+            await CreateCommitAsync({ 
+                text : commentText, 
+                clientId : Number(id), 
+                userId : Number(userId)}
+            );
+            setIsModalOpen(false);
+            setCommentText('');
+            setUserId('');
+            
+            const response = await GetCommentsByClientId(id);
+            setComments(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    const deleteComment = async (commentId) => {
+        try{
+            await DeleteCommitAsync(commentId);
+            setComments(prev => prev.filter(c => c.commentId !== commentId));
+        }catch(error){
+            console.log(error);
         }
     }
     
@@ -277,7 +337,12 @@ function ClientDetailsPage(){
                                     {account.accountId}
                                 </Link>
                             </TableCell>
-                            <TableCell>{account.balance}</TableCell>
+                            <TableCell>
+                                {new Intl.NumberFormat('en-US', 
+                                    {style: 'currency', 
+                                        currency: 'USD'
+                                    }).format(account.balance)}
+                            </TableCell>
                             <TableCell>{account.clientId}</TableCell>
                             <TableCell>
                                     <span style={{
@@ -319,15 +384,133 @@ function ClientDetailsPage(){
                 </table>
             </TableCard>
             <TableCard>
-                <h1 style={{
-                    textAlign: "center",
-                    fontSize: "32px",
-                    fontWeight: "400",
-                    marginBottom: "40px"
-                }}
+                    <h1 style={{
+                        textAlign: "center",
+                        fontSize: "32px",
+                        fontWeight: "400",
+                        marginBottom: "40px"
+                    }}
+                    >
+                        Comments
+                    </h1>
+                    <PrimaryButton 
+                        onClick={() => 
+                            setIsModalOpen(true)}
+                    >
+                        + New Comment
+                    </PrimaryButton>
+                {isModalOpen && createPortal(
+                    <div 
+                        onClick={() => 
+                            setIsModalOpen(false)}
+                        style={modalOverlay}
+                    >
+                        <div
+                            onClick={(e) => 
+                                e.stopPropagation()}
+                            style={modal}>
+                            <h3 
+                                style={modalHeaderStyle}
+                            >
+                                New Comment
+                            </h3>
+                            <textarea
+                                placeholder="Enter comment..."
+                                value={commentText}
+                                onChange={(e) => 
+                                    setCommentText(e.target.value)}
+                                style={modalTextStyle}
+                            />
+
+                            <input
+                                placeholder="Enter userId..."
+                                value={userId}
+                                onChange={(e) => 
+                                    setUserId(e.target.value)}
+                                style={modalInputStyle}
+                            />
+
+                            <div 
+                                style={modalCancelButtonStyle}>
+                                <button 
+                                    onClick={() => 
+                                        setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button 
+                                    onClick={handleSubmit} 
+                                    style={modalConfirmButtonStyle}
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>,
+                    document.body
+                )}
+                <table
+                    cellPadding="5"
+                    style={{
+                        width: "100%",
+                        marginTop: "30px",
+                        justifyContent: "center"
+                    }}
                 >
-                    Notes
-                </h1>
+                    <thead>
+                    <tr>
+                        <TableColumn>CommentId</TableColumn>
+                        <TableColumn>Comment</TableColumn>
+                        <TableColumn>User</TableColumn>
+                        <TableColumn>Created date</TableColumn>
+                        <TableColumn>Edit</TableColumn>
+                        <TableColumn>Delete</TableColumn>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {comments?.map(comments => (
+                        <tr key={comments.clientId}>
+                            <TableCell>{comments.commentId}</TableCell>
+                            <TableCell>{comments.text}</TableCell>
+                            <TableCell>{comments.userId}</TableCell>
+                            <TableCell>
+                                {new Date(comments.createdAt).toLocaleString()}
+                            </TableCell>
+                            <TableCell>
+                                <button style={{
+                                    background: '#1a73e8',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    color: '#1a73e8',
+                                    fontSize: '16px',
+                                    padding: '4px 8px',
+                                    borderRadius: '6px',
+                                    transition: 'background 0.2s',
+                                }}>
+                                    <Pencil size={20} style={{color: '#ffffff'}}/>
+                                </button>
+                            </TableCell>
+                            <TableCell>
+                                <button
+                                    onClick={() => deleteComment(comments.commentId)}
+                                    style={{
+                                        background: 'red',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        color: '#e81a1a',
+                                        fontSize: '16px',
+                                        padding: '4px 8px',
+                                        borderRadius: '6px',
+                                        transition: 'background 0.2s',
+                                    }}
+                                >
+                                    <Trash2 size={20} style={{color: '#ffffff'}}/>
+                                </button>
+                            </TableCell>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </TableCard>
         </div>
     )

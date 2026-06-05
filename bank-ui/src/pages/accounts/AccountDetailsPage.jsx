@@ -79,7 +79,10 @@ function AccountDetails() {
                             
                             <div style={leftRowStyle}>
                                 <span style={labelStyle}>Balance</span>
-                                <span style={valueStyle}>{account.balance}</span>
+                                <span style={valueStyle}>{new Intl.NumberFormat('en-US', 
+                                    {style:'currency', currency:'USD'})
+                                    .format(account.balance)}
+                                </span>
                             </div>
                             
                             <div style={leftRowStyle}>
@@ -107,7 +110,7 @@ function AccountDetails() {
                     fontWeight: '400',
                     marginBottom: '20px'
                 }}>
-                    Connected Accounts
+                    Connected Client
                 </h1>
                 <table 
                     cellPadding="5" 
@@ -127,6 +130,16 @@ function AccountDetails() {
                     </tr>
                     </thead>
                 </table>
+            </TableCard>
+            <TableCard>
+                <h1 style={{
+                    textAlign: "center",
+                    fontSize: '32px',
+                    fontWeight: '400',
+                    marginBottom: '20px'
+                }}>
+                    Comments
+                </h1>
             </TableCard>
         </div>
     )
