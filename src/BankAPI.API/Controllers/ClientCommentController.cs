@@ -1,6 +1,7 @@
 using BankAPI.Application.DTOs.ClientCommentDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;
 
@@ -16,6 +17,7 @@ public class ClientCommentController : ControllerBase
         _clientCommentService = clientCommentService;
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<ClientCommentResponseDto>> CreateCommentAsync(ClientCommentCreateDto clientCommentCreateDto)
     {
@@ -24,6 +26,7 @@ public class ClientCommentController : ControllerBase
         return Ok(comment);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpDelete]
     public async Task<ActionResult> DeleteCommentAsync(int commentId)
     { 
@@ -32,7 +35,8 @@ public class ClientCommentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
+    [Authorize(Roles = "Admin, Employee")]
+    [HttpGet("client/{clientId:int}")]
     public async Task<ActionResult<IEnumerable<ClientCommentResponseDto>>> GetAllCommentsByClientIdAsync(int clientId)
     {
         var response = await _clientCommentService.GetCommentsByClientIdAsync(clientId);
@@ -40,6 +44,7 @@ public class ClientCommentController : ControllerBase
         return Ok(response);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPut]
     public async Task<ActionResult<ClientCommentResponseDto>> UpdateCommentAsync(int id,
         ClientCommentUpdateDto clientCommentUpdateDto)

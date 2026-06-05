@@ -1,6 +1,7 @@
 using BankAPI.Application.DTOs.AccountCommentDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;
 
@@ -15,6 +16,7 @@ public class AccountCommentController : ControllerBase
         _accountCommentService = accountCommentService;
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<AccountCommentResponseDto>> CreateCommentAsync(
         AccountCommentCreateDto accountCommentCreateDto)
@@ -23,6 +25,7 @@ public class AccountCommentController : ControllerBase
         return Ok(response);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpDelete]
     public async Task<ActionResult> DeleteCommentAsync(int commentId)
     {
@@ -31,6 +34,7 @@ public class AccountCommentController : ControllerBase
         return Ok(response);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AccountCommentResponseDto>>> GetAllCommentsAsync(int accountId)
     {
@@ -39,6 +43,7 @@ public class AccountCommentController : ControllerBase
         return Ok(comments);
     }
 
+    [Authorize(Roles = "Admin, Employee")]
     [HttpPut]
     public async Task<ActionResult> UpdateAccountCommentAsync(
         int commendId,
