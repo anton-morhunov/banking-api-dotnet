@@ -36,14 +36,17 @@ public class JwtService : IJwtService
             SecurityAlgorithms.HmacSha256
         );
 
+        var expiresAt = DateTime.UtcNow.AddMinutes(_settings.ExpiresMinutes);
+
         var token = new JwtSecurityToken(
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_settings.ExpireMinutes),
+            expires: expiresAt /*DateTime.UtcNow.AddMinutes(_settings.ExpiresMinutes)*/,
             signingCredentials: credentials
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+        
     }
 }
