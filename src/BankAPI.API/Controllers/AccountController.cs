@@ -62,7 +62,7 @@ public class AccountController : ControllerBase
         
         return CreatedAtAction(
             nameof(GetAccountById),
-            new { id = account.ClientId }, 
+            new { accountId = account.AccountId }, 
             account
             );
     }

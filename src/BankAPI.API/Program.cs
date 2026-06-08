@@ -116,12 +116,27 @@ if (!builder.Environment.IsEnvironment("Testing"))
             {
                 ValidateIssuerSigningKey = true,
 
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtSettings.SecretKey)
+                ),
 
                 ValidateIssuer = false,
                 ValidateAudience = false,
-            
+
                 RoleClaimType = ClaimTypes.Role
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    return Task.CompletedTask;
+                },
+
+                OnTokenValidated = context =>
+                {
+                    return Task.CompletedTask;
+                }
             };
         });
 }
@@ -148,7 +163,11 @@ using (var scope = app.Services.CreateScope())
     if (db.Database.IsRelational())
     {
         db.Database.Migrate();
-        await DatabaseSeeder.SeedAsync(db, adminSetting);
+        await DatabaseSeeder.SeedAsync(
+            db, 
+            adminSetting,
+            app.Environment
+            );
     }
 }
 
