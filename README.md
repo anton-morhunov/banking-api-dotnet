@@ -206,6 +206,57 @@ flowchart TD
     EFCore --> DB
 ```
     
+
+## Performance Testing
+
+Load testing was performed using:
+
+- k6
+- InfluxDB
+- Grafana
+
+### Test Scenario
+
+Workload distribution:
+
+- 70% Read operations
+- 20% Create operations
+- 10% Update operations
+
+Virtual users:
+
+- 50 users
+- 100 users
+- 200 users
+
+Test duration: 10 minutes
+
+### Results
+
+| Metric | Result |
+|----------|----------|
+| Total Requests | 76,093 |
+| Successful Requests | 76,042 |
+| Failed Requests | 51 |
+| Error Rate | 0.07% |
+| Average Response Time | 693 ms |
+| Peak Response Time | 2.04 s |
+| Max Concurrent Users | 200 |
+
+## Performance Test Results
+
+### Key Metrics
+
+![Dashboard Overview](./screenshots/dashboard-overview.png)
+
+### Endpoint Response Time Analysis
+
+![Endpoints response Analysis](./screenshots/endpoint-response-time-analysis.png)
+
+### Load Profile and HTTP Status Distribution
+
+![Performance Analysis](./screenshots/performance-analysis.png)
+
 ## Development Timeline
 
 Visualization of the repository evolution using Gource.
