@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BankAPI.Application.Validators.CommentValidators;
+using BankAPI.Application.Validators.DepositValidators;
 using BankAPI.Application.Validators.Login_Validators;
 using BankAPI.Application.Validators.UserValidators;
 using BankAPI.Infrastructure.Data.Configurations;
@@ -72,6 +73,7 @@ builder.Services.AddScoped<IAccountRepository, EfAccountRepository>();
 builder.Services.AddScoped<IUserRepository, EfUserRepository>();
 builder.Services.AddScoped<IClientCommentRepository, EfClientCommentRepository>();
 builder.Services.AddScoped<IAccountCommentRepository, EfAccountCommentRepository>();
+builder.Services.AddScoped<IDepositRepository, EfDepositRepository>();
 builder.Services.AddScoped<IAccountCommentService, AccountCommentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -81,6 +83,7 @@ builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IClientCommentService, ClientCommentService>();
+builder.Services.AddScoped<IDepositService, DepositService>();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<ClientCreateValidator>();
@@ -93,6 +96,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<AccountCommentUpdateValidat
 builder.Services.AddValidatorsFromAssemblyContaining<LoginValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UserCreateValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UserUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DepositValidator>();
 var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
 builder.Services.AddCors(options =>
 {

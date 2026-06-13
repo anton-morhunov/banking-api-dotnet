@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<UserModel> Users { get; set; }
     public DbSet<ClientComment> ClientComments{ get; set; }
     public DbSet<AccountComment> AccountComments{ get; set; }
+    public DbSet<Deposit> Deposits { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : 
         base(options){}
