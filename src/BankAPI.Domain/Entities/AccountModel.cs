@@ -15,4 +15,10 @@ public class AccountModel
     public AccountPlan Plan { get; set; }
     public ICollection<AccountComment> AccountComments { get; set; } 
         = new List<AccountComment>();
+    public ICollection<Deposit> Deposits { get; set; } 
+        = new List<Deposit>();
+    public ICollection<Transfer> OutgoingTransfers { get; set; }
+        =  new List<Transfer>();
+    public ICollection<Transfer> IncomingTransfers { get; set; } 
+        =  new List<Transfer>();
 }

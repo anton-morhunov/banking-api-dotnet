@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace BankAPI.Application.Validators.DepositValidators;
 
-public class DepositValidator : AbstractValidator<DepositResponseDto>
+public class DepositValidator : AbstractValidator<DepositCreateDto>
 {
     public DepositValidator()
     {
@@ -18,5 +18,9 @@ public class DepositValidator : AbstractValidator<DepositResponseDto>
        RuleFor(x => x.Amount)
            .GreaterThan(0)
            .WithMessage("Amount must be greater than zero");
+       
+       RuleFor(x => x.Description)
+           .MaximumLength(500)
+           .WithMessage("Description must not exceed 500 characters");
     }
 }

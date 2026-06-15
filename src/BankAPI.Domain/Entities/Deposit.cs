@@ -9,4 +9,6 @@ public class Deposit
     public int ClientId { get; set; }
     public int AccountId { get; set; }
     public int UserId { get; set; }
+    public AccountModel Account { get; set; } = null!;
+    public UserModel User { get; set; } = null!;
 }

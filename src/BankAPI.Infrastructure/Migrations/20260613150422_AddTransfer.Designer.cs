@@ -3,6 +3,7 @@ using System;
 using BankAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BankAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260613150422_AddTransfer")]
+    partial class AddTransfer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,14 +182,15 @@ namespace BankAPI.Infrastructure.Migrations
             modelBuilder.Entity("BankAPI.Domain.Entities.Deposit", b =>
                 {
                     b.Property<Guid>("DepositId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("AccountId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
@@ -202,10 +206,6 @@ namespace BankAPI.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("DepositId");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Deposits");
                 });
@@ -244,8 +244,6 @@ namespace BankAPI.Infrastructure.Migrations
 
                     b.HasIndex("SourceAccountId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Transfers");
                 });
 
@@ -256,9 +254,6 @@ namespace BankAPI.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -325,61 +320,9 @@ namespace BankAPI.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BankAPI.Domain.Entities.Deposit", b =>
-                {
-                    b.HasOne("BankAPI.Domain.Entities.AccountModel", "Account")
-                        .WithMany("Deposits")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BankAPI.Domain.Entities.UserModel", "User")
-                        .WithMany("Deposits")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BankAPI.Domain.Entities.Transfer", b =>
-                {
-                    b.HasOne("BankAPI.Domain.Entities.AccountModel", "DestinationAccount")
-                        .WithMany("IncomingTransfers")
-                        .HasForeignKey("DestinationAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BankAPI.Domain.Entities.AccountModel", "SourceAccount")
-                        .WithMany("OutgoingTransfers")
-                        .HasForeignKey("SourceAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BankAPI.Domain.Entities.UserModel", "User")
-                        .WithMany("Transfers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("DestinationAccount");
-
-                    b.Navigation("SourceAccount");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BankAPI.Domain.Entities.AccountModel", b =>
                 {
                     b.Navigation("AccountComments");
-
-                    b.Navigation("Deposits");
-
-                    b.Navigation("IncomingTransfers");
-
-                    b.Navigation("OutgoingTransfers");
                 });
 
             modelBuilder.Entity("BankAPI.Domain.Entities.ClientModel", b =>
@@ -387,13 +330,6 @@ namespace BankAPI.Infrastructure.Migrations
                     b.Navigation("Accounts");
 
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("BankAPI.Domain.Entities.UserModel", b =>
-                {
-                    b.Navigation("Deposits");
-
-                    b.Navigation("Transfers");
                 });
 #pragma warning restore 612, 618
         }
