@@ -1,5 +1,13 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExceptionDispatchInfo_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fbf9021a960b74107a7e141aa06bc9d8a0a53c929178c2fb95b1597be8af8dc_003FExceptionDispatchInfo_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AHostEnvironmentEnvExtensions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F1978ad51fa9036cd0179c399e25bcb76886c5eee907b30b4fe256744ef46_003FHostEnvironmentEnvExtensions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AIServiceCollection_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F44cad551704bc7dae78cc7717b8b9f9313582aa8e67a6585a69de0cc33b4b8_003FIServiceCollection_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AServiceCollection_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F595e4f2361fd31cb66c7e9303f46cf8f2fe77d96eea9d0e42c17cae783aa74_003FServiceCollection_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AWebApplicationBuilder_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F75a913e9a7f21ec51df825066a2374e58efe6284a9f27a94ad93a275eb2d98_003FWebApplicationBuilder_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AWebApplication_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Ff0c16cda8a141e194c9151fd8f6acd0f93ef39e54a2a250baf2e5b2fa1fac6_003FWebApplication_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
+  &lt;Assembly Path="/Users/admin/.nuget/packages/system.text.json/10.0.0/lib/net8.0/System.Text.Json.dll" /&gt;
+&lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3312d1d8_002D7b20_002D4c0a_002Da0db_002Dc93d32b53656/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
@@ -34,14 +42,16 @@
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9e309708_002D5929_002D4ac6_002D86b8_002D8964d41a37cc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9e309708_002D5929_002D4ac6_002D86b8_002D8964d41a37cc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ClientServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f9525657_002D45a9_002D46c9_002D97be_002D2bd08bca0415/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f9525657_002D45a9_002D46c9_002D97be_002D2bd08bca0415/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;

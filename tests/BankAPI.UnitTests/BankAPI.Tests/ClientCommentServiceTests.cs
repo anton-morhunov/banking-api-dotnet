@@ -1,6 +1,6 @@
 using BankAPI.Application.DTOs.ClientCommentDto;
-using BankAPI.Application.Interfaces.RepositoryInterfaces;
-using BankAPI.Application.Services;
+using BankAPI.Application.Interfaces.RepositoryInterfaces.Comments;
+using BankAPI.Application.Services.Comments;
 using BankAPI.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Moq;

@@ -1,5 +1,5 @@
 using BankAPI.Application.DTOs.DepositDto;
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Deposits;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

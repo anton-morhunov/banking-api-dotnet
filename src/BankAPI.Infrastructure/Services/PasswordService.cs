@@ -1,4 +1,4 @@
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Authentication;
 using BankAPI.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 

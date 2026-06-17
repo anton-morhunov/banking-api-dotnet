@@ -1,8 +1,8 @@
 using BankAPI.Application.DTOs.ClientDto;
 using BankAPI.Domain.Enums;
-using BankAPI.Application.Interfaces.RepositoryInterfaces;
+using BankAPI.Application.Interfaces.RepositoryInterfaces.Clients;
 using Moq;
-using BankAPI.Application.Services;
+using BankAPI.Application.Services.Clients;
 using Microsoft.Extensions.Logging;
 using BankAPI.Domain.Entities;
 

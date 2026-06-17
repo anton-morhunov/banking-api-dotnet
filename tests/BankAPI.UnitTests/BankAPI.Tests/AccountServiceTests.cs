@@ -1,9 +1,9 @@
 using Moq;
 using BankAPI.Application.DTOs.AccountDto;
 using BankAPI.Domain.Enums;
-using BankAPI.Application.Interfaces.RepositoryInterfaces;
+using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Domain.Entities;
-using BankAPI.Application.Services;
+using BankAPI.Application.Services.Accounts;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.UnitTests.BankAPI.Tests;

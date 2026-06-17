@@ -1,6 +1,6 @@
 using BankAPI.Application.DTOs.AuthDto;
 using BankAPI.Application.DTOs.GoogleAuth;
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = BankAPI.Application.DTOs.AuthDto.LoginRequest;
