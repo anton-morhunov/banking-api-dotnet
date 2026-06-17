@@ -1,6 +1,6 @@
 using BankAPI.Application.DTOs.AuthDto;
 using Microsoft.AspNetCore.Mvc;
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;

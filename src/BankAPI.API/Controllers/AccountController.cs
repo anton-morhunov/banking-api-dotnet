@@ -1,5 +1,5 @@
 using BankAPI.Application.DTOs.AccountDto;
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

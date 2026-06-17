@@ -1,6 +1,6 @@
 using BankAPI.Domain.Enums;
-using BankAPI.Application.Interfaces.RepositoryInterfaces;
-using BankAPI.Application.Services;
+using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
+using BankAPI.Application.Services.Users;
 using Microsoft.Extensions.Logging;
 using Moq;
 using BankAPI.Domain.Entities;

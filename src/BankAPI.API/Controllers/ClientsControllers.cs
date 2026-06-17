@@ -1,5 +1,5 @@
 using BankAPI.Application.DTOs.ClientDto;
-using BankAPI.Application.Interfaces.ServiceInterfaces;
+using BankAPI.Application.Interfaces.ServiceInterfaces.Clients;
 using BankAPI.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
