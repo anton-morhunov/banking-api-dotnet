@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.AuthDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Users;
 using Microsoft.Extensions.Logging;
@@ -36,10 +37,10 @@ public class UserService : IUserService
         }).ToList();
     }
 
-    public async Task<UserResponse?> GetUserByIdAsync(int id)
+    public async Task<UserResponse> GetUserByIdAsync(int id)
     {
         _logger.LogInformation(
-            "Gettin user with Id {Id}", 
+            "Getting user with Id {Id}", 
             id
             );
 
@@ -52,7 +53,7 @@ public class UserService : IUserService
                 id
                 );
             
-            return null;
+            throw new NotFoundException($"User with Id {id} not found");
         }
 
         var response = new UserResponse

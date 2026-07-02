@@ -8,5 +8,5 @@ public interface IAccountCommentService
     Task<AccountCommentResponseDto> CreateAccountCommentAsync(AccountCommentCreateDto accountCommentCreateDto);
     Task<bool>  DeleteAccountCommentAsync(int commentId);
     Task<List<AccountCommentResponseDto>> GetCommentsByAccountIdAsync(int accountId);
-    Task<AccountCommentResponseDto?> UpdateAccountCommentAsync(int commentId, AccountCommentUpdateDto accountCommentUpdateDto);
+    Task<AccountCommentResponseDto> UpdateAccountCommentAsync(int commentId, AccountCommentUpdateDto accountCommentUpdateDto);
 }

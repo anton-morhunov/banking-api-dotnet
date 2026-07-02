@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.ClientDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Domain.Enums;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Clients;
 using Moq;
@@ -76,7 +77,7 @@ public class ClientServiceTests
     }
 
     [Fact]
-    public async Task GetClientAsync_ShouldReturnNull_WhenClientDoesNotExist()
+    public async Task GetClientAsync_ShouldThrowNotFoundException_WhenClientDoesNotExist()
     {
         var mockClientRepository = new Mock<IClientRepository>();
         var mockLogger = new Mock<ILogger<ClientService>>();
@@ -89,9 +90,10 @@ public class ClientServiceTests
 
         var service = new ClientService(mockClientRepository.Object, mockLogger.Object);
         
-        var result = await service.GetClientByIdAsync(clientId);
+        var exception = await Assert.ThrowsAsync<NotFoundException>(() => 
+            service.GetClientByIdAsync(clientId));
         
-        Assert.Null(result);
+        Assert.Equal($"Client {clientId} not found", exception.Message);
         
         mockClientRepository
             .Verify(x => x.GetClientByIdAsync(
@@ -166,7 +168,7 @@ public class ClientServiceTests
     }
 
     [Fact]
-    public async Task GetClientByNameAsync_ShouldReturnNull_WhenClientDoesNotExist()
+    public async Task GetClientByNameAsync_NotFoundException_WhenClientDoesNotExist()
     {
         var mockClientRepository = new Mock<IClientRepository>();
         var mockLogger = new Mock<ILogger<ClientService>>();
@@ -178,9 +180,9 @@ public class ClientServiceTests
         
         var service = new ClientService(mockClientRepository.Object, mockLogger.Object);
         
-        var result = await service.GetClientByNameAsync(name);
+        var exception = await Assert.ThrowsAsync<NotFoundException>(() => service.GetClientByNameAsync(name));
         
-        Assert.Null(result);
+        Assert.Equal($"Client with Name {name} not found", exception.Message);
         
         mockClientRepository
             .Verify(x => x.GetClientByName(name), 
@@ -299,7 +301,7 @@ public class ClientServiceTests
     }
 
     [Fact]
-    public async Task GetClientByIdAsync_ShouldReturnNull_WhenClientDoesNotExist()
+    public async Task GetClientByIdAsync_NotFoundException_WhenClientDoesNotExist()
     {
         var mockClientRepository = new Mock<IClientRepository>();
         var mockLogger = new Mock<ILogger<ClientService>>();
@@ -310,9 +312,10 @@ public class ClientServiceTests
 
         var service = new ClientService(mockClientRepository.Object, mockLogger.Object);
 
-        var result = await service.GetClientByIdAsync(999);
+        var exception = await Assert.ThrowsAsync<NotFoundException>(() =>
+            service.GetClientByIdAsync(999));
         
-        Assert.Null(result);
+        Assert.Equal($"Client {999} not found", exception.Message);
         
         mockClientRepository
             .Verify(x => x.GetClientByIdAsync(It.IsAny<int>()),

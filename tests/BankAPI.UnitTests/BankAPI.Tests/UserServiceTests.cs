@@ -1,3 +1,4 @@
+using BankAPI.Application.Exceptions;
 using BankAPI.Domain.Enums;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Services.Users;
@@ -79,23 +80,25 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task GetUserByIdAsync_ShouldReturnNull_WhenUserWasNotFound()
+    public async Task GetUserByIdAsync_NotFoundException_WhenUserWasNotFound()
     {
         var mockUserRepository = new Mock<IUserRepository>();
         var mockLoger = new Mock<ILogger<UserService>>();
         
-        var clientId = 1;
+        var userId = 1;
         
-        mockUserRepository.Setup(x => x.GetUserByIdAsync(clientId))
+        mockUserRepository.Setup(x => x.GetUserByIdAsync(userId))
             .ReturnsAsync((UserModel?)null);
         
         var service = new UserService(mockUserRepository.Object, mockLoger.Object);
-        var result = await service.GetUserByIdAsync(clientId);
         
-        Assert.Null(result);
+        var exception = await Assert.ThrowsAsync<NotFoundException>(
+            ()=> service.GetUserByIdAsync(userId)); 
+        
+        Assert.Equal($"User with Id {userId} not found", exception.Message);
         
         mockUserRepository
-            .Verify(x => x.GetUserByIdAsync(clientId), 
+            .Verify(x => x.GetUserByIdAsync(userId), 
                 Times.Once);
     }
 }

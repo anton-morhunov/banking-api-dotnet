@@ -46,4 +46,11 @@ public class EfClientRepository : IClientRepository
     {
          return _db.SaveChangesAsync();
     }
+
+    public async Task<ClientModel?> GetClientByEmail(string email)
+    {
+        return await _db.Clients
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Email == email);
+    }
 }

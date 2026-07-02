@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.ClientCommentDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Comments;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Comments;
 using BankAPI.Domain.Entities;
@@ -121,14 +122,14 @@ public class ClientCommentService : IClientCommentService
       return response;
    }
 
-   public async Task<ClientCommentResponseDto?> UpdateCommentAsync(
+   public async Task<ClientCommentResponseDto> UpdateCommentAsync(
       int commentId, 
       ClientCommentUpdateDto clientCommentUpdateDto
       )
    {
       
       _logger.LogInformation(
-         "Getting a coment with id {id}", 
+         "Getting a comment with id {id}", 
          commentId
          );
       
@@ -141,7 +142,7 @@ public class ClientCommentService : IClientCommentService
             commentId
             );
          
-         return null;
+         throw new NotFoundException($"Comment with id {commentId} not found");
       }
       
       comment.Text = clientCommentUpdateDto.Text ?? comment.Text;

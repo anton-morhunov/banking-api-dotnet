@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.AccountDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Domain.Entities;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Accounts;
@@ -17,7 +18,7 @@ public class AccountService : IAccountService
         _logger = logger;
     }
 
-    public async Task<AccountResponseDto?> GetAccountByIdAsync(
+    public async Task<AccountResponseDto> GetAccountByIdAsync(
         int? accountId
         )
     {
@@ -36,7 +37,7 @@ public class AccountService : IAccountService
                 accountId
                 );
             
-            return null;
+            throw new NotFoundException($"Account {accountId} not found");
         }
         
         var response = new AccountResponseDto
@@ -91,7 +92,8 @@ public class AccountService : IAccountService
         await _accountRepository.SaveAsync();
         
         _logger.LogInformation(
-            "Account was created successfully"
+            "Account {AccountNumber} created", 
+            createdAccount.AccountNumber
             );
         
         return response;
@@ -128,7 +130,7 @@ public class AccountService : IAccountService
         return response;
     }
 
-    public async Task<AccountResponseDto?> AccountUpdateStatusAsync(
+    public async Task<AccountResponseDto> AccountUpdateStatusAsync(
         int accountId, 
         AccountUpdateDto accountUpdateDto
         )
@@ -150,7 +152,7 @@ public class AccountService : IAccountService
                 accountId
                 );
             
-            return null;
+            throw new NotFoundException($"Account {accountId} not found");
         }
 
         var oldStatus = account.Status;
@@ -210,7 +212,7 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<AccountResponseDto?> AccountUpdatePlanAsync(
+    public async Task<AccountResponseDto> AccountUpdatePlanAsync(
         int accountId, 
         AccountUpdateDto accountUpdateDto
         )
@@ -229,7 +231,7 @@ public class AccountService : IAccountService
                 accountId
                 );
             
-            return null;
+            throw new NotFoundException($"Account {accountId} not found");
         }
 
         if (account.Status == AccountStatus.Closed)
@@ -239,7 +241,7 @@ public class AccountService : IAccountService
                 accountId
                 );
             
-            return null;
+            throw new BadRequestException("Account status is closed");
         }
         
         var oldPlan = account.Plan;
