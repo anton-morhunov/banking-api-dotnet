@@ -1,5 +1,6 @@
 using Moq;
 using BankAPI.Application.DTOs.AccountDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Domain.Enums;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Domain.Entities;
@@ -61,7 +62,7 @@ public class AccountServiceTests
     }
 
     [Fact]
-    public async Task GetAccountById_ShouldReturnNull_WhenAccountDoesNotExist()
+    public async Task GetAccountById_ShouldThrowNotFoundException_WhenAccountDoesNotExist()
     {
        var mockAccountRepository = new Mock<IAccountRepository>(); 
        var mockLogger = new Mock<ILogger<AccountService>>();
@@ -76,11 +77,13 @@ public class AccountServiceTests
        
        var service = new AccountService(mockAccountRepository.Object, mockLogger.Object);
        
-       var result = await service.GetAccountByIdAsync(
-           accountId
-           );
+       var exception = await Assert.ThrowsAsync<NotFoundException>(() => 
+           service.GetAccountByIdAsync(accountId));
        
-           Assert.Null(result);
+       Assert.Equal(
+           $"Account {accountId} not found", 
+           exception.Message
+           );
         
            mockAccountRepository
                .Verify(x => x.GetAccountAsync(
