@@ -5,5 +5,5 @@ namespace BankAPI.Application.Interfaces.ServiceInterfaces.Users;
 public interface IUserService
 { 
     Task<IEnumerable<UserResponse?>> GetAllUsersAsync();
-    Task<UserResponse?> GetUserByIdAsync(int id);
+    Task<UserResponse> GetUserByIdAsync(int id);
 }

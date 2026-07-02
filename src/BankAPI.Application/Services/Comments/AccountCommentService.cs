@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.AccountCommentDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Comments;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Comments;
 using BankAPI.Domain.Entities;
@@ -22,6 +23,12 @@ public class AccountCommentService : IAccountCommentService
 
     public async Task<AccountCommentResponseDto> CreateAccountCommentAsync(AccountCommentCreateDto accountCommentCreateDto)
     {
+        _logger.LogInformation(
+            "Creating comment for account {accountId} with content {commentContent}", 
+            accountCommentCreateDto.AccountId, 
+            accountCommentCreateDto.Text
+        );
+        
         AccountComment commentDto = new AccountComment
         {
             Text = accountCommentCreateDto.Text,
@@ -41,25 +48,54 @@ public class AccountCommentService : IAccountCommentService
             CommentId = createdComment.Id
         };
         
+        _logger.LogInformation(
+            "A new comment with {id} has been created",  
+            createdComment.Id
+        );
+        
         return response;
     }
 
     public async Task<bool> DeleteAccountCommentAsync(int commentId)
     {
+        _logger.LogDebug(
+            "Deleting a comment"
+        );
+        
         var comment = await _accountCommentRepository.GetAccountCommentByIdAsync(commentId);
+        
+        _logger.LogInformation(
+            "Looking for a comment with id {id}", 
+            commentId
+        );
 
         if (comment is null)
         {
+            _logger.LogWarning(
+                "Comment with id {id} was not found", 
+                commentId
+            );
+            
             return false;
         }
 
         await _accountCommentRepository.DeleteAccountCommentAsync(comment);
+        
+        _logger.LogInformation(
+            "Comment with id {id} deleted", 
+            commentId
+        );
         
         return true;
     }
 
     public async Task<List<AccountCommentResponseDto>> GetCommentsByAccountIdAsync(int accountId)
     {
+        _logger.LogDebug(
+            "Getting comments for a account with id {accountId}", 
+            accountId
+        );
+        
         var comments = await _accountCommentRepository.GetCommentsByAccountIdAsync(accountId);
 
         var response = new List<AccountCommentResponseDto>();
@@ -77,24 +113,46 @@ public class AccountCommentService : IAccountCommentService
             response.Add(dto); 
         }
         
+        _logger.LogInformation(
+            "Got  {count} comments for a account with id {accountId}", 
+            comments.Count, 
+            accountId
+        );
+        
         return response;
     }
 
-    public async Task<AccountCommentResponseDto?> UpdateAccountCommentAsync(
+    public async Task<AccountCommentResponseDto> UpdateAccountCommentAsync(
         int commentId,
         AccountCommentUpdateDto accountCommentUpdateDto
     )
     {
+        
+        _logger.LogInformation(
+            "Getting a comment with id {id}", 
+            commentId
+        );
+        
         var comment = await _accountCommentRepository.GetAccountCommentByIdAsync(commentId);
 
         if (comment is null)
         {
-            return null;
+            _logger.LogWarning(
+                "Comment with id {id} was not found", 
+                commentId
+            );
+            
+            throw new NotFoundException($"Comment with Id {commentId} not found");
         }
         
         comment.Text = accountCommentUpdateDto.Text ?? comment.Text;
 
         await _accountCommentRepository.SaveChangesAsync();
+        
+        _logger.LogInformation(
+            "Comment with id {id} updated", 
+            commentId
+        );
 
         return new AccountCommentResponseDto
         {

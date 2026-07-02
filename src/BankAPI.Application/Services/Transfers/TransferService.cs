@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.TransferDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Transfers;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
@@ -56,7 +57,7 @@ public class TransferService : ITransferService
                 createTransferDto.SourceAccountId
                 );
             
-            throw new Exception("Source Account not found");
+            throw new NotFoundException($"Source account with {transfer.SourceAccountId} does not exist");
         }
 
         if (sourceAccount.Balance < createTransferDto.Amount)
@@ -66,7 +67,9 @@ public class TransferService : ITransferService
                 sourceAccount.Balance
                 );
             
-            throw new Exception("The amount is not enough on source account");
+            throw new BadRequestException(
+                $"The source  account balance is {sourceAccount.Balance} while transfer amount is {createTransferDto.Amount}"
+                );
         }
 
         var destinationAccount = await _accountRepository.GetAccountAsync(createTransferDto.DestinationAccountId);
@@ -83,7 +86,7 @@ public class TransferService : ITransferService
                 createTransferDto.DestinationAccountId
                 );
             
-            throw new Exception("Destination Account not found");
+            throw new NotFoundException($"Destination account with {transfer.SourceAccountId} does not exist");
         }
 
         if (sourceAccount.Id == destinationAccount.Id)
@@ -92,7 +95,7 @@ public class TransferService : ITransferService
                 "Source and Destination account are identical"
                 );
             
-            throw new Exception("The source account is the same as the destination account");
+            throw new BadRequestException("Source and Destination account are identical");
         }
 
         if (createTransferDto.Amount <= 0)
@@ -101,7 +104,7 @@ public class TransferService : ITransferService
                 "The transfer amount cannot be less or equal to zero"
                 );
             
-            throw new Exception("The transfer amount is zero or below");
+            throw new BadRequestException("The transfer amount cannot be less or equal to zero");
         }
         
         var user = await _userRepository.GetUserByIdAsync(createTransferDto.UserId);
@@ -118,7 +121,7 @@ public class TransferService : ITransferService
                 createTransferDto.UserId
                 );
             
-            throw new Exception("User not found");
+            throw new  NotFoundException($"User with ID: {createTransferDto.UserId} does not exist");
         }
         
         sourceAccount.Balance -= createTransferDto.Amount;
@@ -202,7 +205,7 @@ public class TransferService : ITransferService
                 transferId
                 );
             
-            throw new Exception("Transfer not found");
+            throw new  NotFoundException($"Transfer with ID: {transferId} does not exist");
         }
 
         var result = new TransferResponseDto

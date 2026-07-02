@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.DepositDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Deposits;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Deposits;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
@@ -56,7 +57,7 @@ public class DepositService : IDepositService
                 "Amount should be greater than zero"
             );
             
-            throw new Exception("Amount must be greater than 0");
+            throw new BadRequestException("Amount should be greater than zero");
         }
         
         var account = await _accountRepository.GetAccountAsync(depositCreateDto.AccountId);
@@ -68,7 +69,7 @@ public class DepositService : IDepositService
                 depositCreateDto.AccountId
                 );
             
-            throw new Exception("Account not found");
+            throw new NotFoundException($"Account with Id {depositCreateDto.AccountId} not found");
         }
 
         var user = await _userRepository.GetUserByIdAsync(depositCreateDto.UserId);
@@ -80,7 +81,7 @@ public class DepositService : IDepositService
                 depositCreateDto.UserId
                 );
             
-            throw new Exception("User not found");
+            throw new NotFoundException($"User with Id {depositCreateDto.UserId} not found");
         }
         
         account.Balance += depositCreateDto.Amount;
@@ -145,7 +146,7 @@ public class DepositService : IDepositService
                 depositId
                 );
             
-            throw new Exception("No deposit found");
+            throw new NotFoundException($"Deposit with Id {depositId} not found");
         }
 
         var result = new DepositResponseDto

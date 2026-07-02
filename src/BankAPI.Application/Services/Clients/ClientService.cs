@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.ClientDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Clients;
 using BankAPI.Domain.Enums;
 using BankAPI.Domain.Entities;
@@ -93,7 +94,19 @@ public class ClientService : IClientService
             Email = normalizeEmail,
             PhoneNumber = clientCreateDto.PhoneNumber.Trim()
         };
+        
+        var existingClient = await _clientRepository.GetClientByEmail(normalizeEmail);
 
+        if (clientModel.Email == existingClient?.Email)
+        {
+            _logger.LogInformation(
+                "Client with email {clientEmail} already exists", 
+                clientModel.Email
+            );
+            
+            throw new ConflictException($"Client with email {clientModel.Email} already exists");
+        }
+        
         var createdClient = await _clientRepository.AddClient(clientModel);
 
         var response = new ClientResponseDTO
@@ -108,13 +121,14 @@ public class ClientService : IClientService
         await _clientRepository.SaveAsync();
         
         _logger.LogInformation(
-            "Created new client"
+            "Client {ClientId} created", 
+            createdClient.Id
             );
         
         return response;
     }
 
-    public async Task<ClientResponseDTO?> GetClientByIdAsync(int id)
+    public async Task<ClientResponseDTO> GetClientByIdAsync(int id)
     {
         _logger.LogInformation(
             "Getting client {ClientId}", 
@@ -130,7 +144,7 @@ public class ClientService : IClientService
                 id
                 );
             
-            return null;
+            throw new NotFoundException($"Client {id} not found");
         }
 
         var response = new ClientResponseDTO
@@ -151,7 +165,7 @@ public class ClientService : IClientService
         return response;
     }
 
-    public async Task<ClientResponseDTO?> UpdateClientAsync(int id, ClientUpdateDTO clientUpdateDto)
+    public async Task<ClientResponseDTO> UpdateClientAsync(int id, ClientUpdateDTO clientUpdateDto)
     {
         _logger.LogInformation(
             "Updating client{ClientId}", 
@@ -167,7 +181,7 @@ public class ClientService : IClientService
                 id
                 );
             
-            return null;
+            throw new NotFoundException($"Client {id} not found");
         }
 
         client.Name = clientUpdateDto.Name ?? client.Name;
@@ -209,7 +223,7 @@ public class ClientService : IClientService
         }).ToList();
     }
 
-    public async Task<ClientResponseDTO?> GetClientByNameAsync(string name)
+    public async Task<ClientResponseDTO> GetClientByNameAsync(string name)
     {
         _logger.LogInformation(
             "Getting client {ClientName} by name", 
@@ -225,7 +239,7 @@ public class ClientService : IClientService
                 name
                 );
             
-            return null;
+            throw new NotFoundException($"Client with Name {name} not found");
         }
 
         var response = new ClientResponseDTO
