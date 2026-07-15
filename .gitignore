@@ -2,9 +2,13 @@
 bin/
 obj/
 
+#VisualStudio
+.vs
+
 # Rider
 .idea/
 *.sln.iml
+*.DotSettings.user
 
 #Development Secrets
 appsettings.Development.json
