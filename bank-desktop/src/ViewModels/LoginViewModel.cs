@@ -1,25 +1,27 @@
 ﻿using bank_desktop.src.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows;
+using bank_desktop.Navigation;
 using bank_desktop.src.Services.Interfaces;
 using bank_desktop.src.DTOs.Requests;
+using bank_desktop.src.DTOs.Responses;
 
 namespace bank_desktop.src.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
         public ICommand LoginCommand { get; }
-        public readonly IAuthService _authService;
+        private readonly IAuthService _authService;
+        private readonly ITokenStorage _tokenStorage;
+        private readonly INavigationService _navigationService;
 
-        public LoginViewModel(IAuthService authService)
+        public LoginViewModel(
+            IAuthService authService,
+            ITokenStorage tokenStorage,
+            INavigationService navigationService)
         {
             _authService = authService;
+            _tokenStorage = tokenStorage;
+            _navigationService = navigationService;
 
             LoginCommand = new AsyncRelayCommand(LoginAsync);
         }
@@ -49,16 +51,18 @@ namespace bank_desktop.src.ViewModels
 
         private async Task LoginAsync()
         {
-            var request = new LoginRequestDto
+            LoginRequestDto request = new()
             {
                 Email = Email,
                 Password = Password
-                
             };
 
-            var response = await _authService.LoginAsync(request);
+            LoginResponseDto response 
+                = await _authService.LoginAsync(request);
 
-            MessageBox.Show(response.Token);
+            _tokenStorage.SetToken(response.Token);
+            
+            _navigationService.NavigateTo<ClientsViewModel>();
         }
     }
 }

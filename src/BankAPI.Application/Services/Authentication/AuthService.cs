@@ -37,7 +37,7 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Invalid credentials");
         }
 
-        var isValid = _passwordService.Verify(loginRequest.PasswordHash, user.PasswordHash);
+        var isValid = _passwordService.Verify(loginRequest.Password, user.PasswordHash);
 
         if (!isValid)
         {

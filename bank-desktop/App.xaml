@@ -1,7 +1,16 @@
 ﻿<Application x:Class="bank_desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:bank_desktop.src.ViewModels"
+             xmlns:views="clr-namespace:bank_desktop.src.Views"
+             xmlns:views1="clr-namespace:bank_desktop.Views">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+            <views:LoginView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type viewModels:ClientsViewModel}">
+            <views1:ClientsView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

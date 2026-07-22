@@ -11,7 +11,7 @@ public class LoginValidator : AbstractValidator<LoginRequest>
             .NotEmpty()
             .EmailAddress();
 
-        RuleFor(x => x.PasswordHash)
+        RuleFor(x => x.Password)
             .NotEmpty();
     }
 }
