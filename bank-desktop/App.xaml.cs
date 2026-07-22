@@ -4,7 +4,9 @@ using bank_desktop.src.ViewModels;
 using bank_desktop.src.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using bank_desktop.Navigation;
 using Microsoft.Extensions.Configuration;
+using bank_desktop.src.Handlers;
 
 namespace bank_desktop
 {
@@ -21,7 +23,7 @@ namespace bank_desktop
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            IConfigureServices(services);
+            ConfigureServices(services);
 
             _serviceProvider =
                 services.BuildServiceProvider();
@@ -48,13 +50,29 @@ namespace bank_desktop
             mainWindow.Show();
         }
 
-        private void IConfigureServices(ServiceCollection services)
+        private void ConfigureServices(ServiceCollection services)
         {
             services.AddSingleton<MainWindow>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<LoginView>();
             services.AddSingleton<IAuthService, AuthService>();
-            services.AddHttpClient();
+            services.AddHttpClient<IAuthService, AuthService>((provider, client) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+
+                client.BaseAddress = new Uri(configuration["ApiSettings:BaseUrl"]!);
+            }).AddHttpMessageHandler<JwtHandler>();
+            services.AddSingleton<ITokenStorage, TokenStorage>();
+            services.AddTransient<JwtHandler>();
+            services.AddHttpClient<IClientService, ClientService>((provider, client) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                
+                client.BaseAddress = new Uri(configuration["ApiSettings:BaseUrl"]!);
+            }).AddHttpMessageHandler<JwtHandler>();
+            services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<MainViewModel>();
+            services.AddTransient<ClientsViewModel>();
         }
     }
 
