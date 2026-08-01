@@ -59,6 +59,8 @@ namespace bank_desktop.src.ViewModels
 
             LoginResponseDto response 
                 = await _authService.LoginAsync(request);
+            
+            Console.WriteLine(response.Token);
 
             _tokenStorage.SetToken(response.Token);
             

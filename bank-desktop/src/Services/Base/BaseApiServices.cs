@@ -40,6 +40,7 @@ namespace bank_desktop.src.Services.Base
             return result!;
         }
 
+        
         protected async Task<TResponse> GetAsync<TResponse>(string endpoint)
         {
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);

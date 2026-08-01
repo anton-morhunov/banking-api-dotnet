@@ -25,6 +25,7 @@ namespace bank_desktop.src.Handlers
             )
         {
             string? token = _tokenStorage.GetToken();
+            
             if (!string.IsNullOrWhiteSpace(token))
             {
                 request.Headers.Authorization = 
@@ -33,6 +34,7 @@ namespace bank_desktop.src.Handlers
                         token
                         );
             }
+            
             return await base.SendAsync(
                 request, 
                 cancellationToken
