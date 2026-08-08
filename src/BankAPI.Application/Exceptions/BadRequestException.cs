@@ -1,6 +1,8 @@
+using BankAPI.Domain.Enums;
+
 namespace BankAPI.Application.Exceptions;
 
-public class BadRequestException : Exception
+public class BadRequestException : ApiExceptions
 {
-    public BadRequestException(string message) : base(message){}
+    public BadRequestException(string message) : base(message, ApiStatusCode.BadRequest){}
 }
