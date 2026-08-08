@@ -4,6 +4,7 @@ using BankAPI.Application.Interfaces.ServiceInterfaces.Clients;
 using BankAPI.Domain.Enums;
 using BankAPI.Domain.Entities;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Clients;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Clients;
@@ -97,7 +98,7 @@ public class ClientService : IClientService
         
         var existingClient = await _clientRepository.GetClientByEmail(normalizeEmail);
 
-        if (clientModel.Email == existingClient?.Email)
+        if (existingClient != null)
         {
             _logger.LogInformation(
                 "Client with email {clientEmail} already exists", 
@@ -108,15 +109,6 @@ public class ClientService : IClientService
         }
         
         var createdClient = await _clientRepository.AddClient(clientModel);
-
-        var response = new ClientResponseDTO
-        {
-            Id = createdClient.Id,
-            Name = createdClient.Name,
-            Email = createdClient.Email,
-            PhoneNumber = createdClient.PhoneNumber,
-            Status = createdClient.Status
-        };
         
         await _clientRepository.SaveAsync();
         
@@ -125,7 +117,7 @@ public class ClientService : IClientService
             createdClient.Id
             );
         
-        return response;
+        return ClientMapper.ToResponseDto(createdClient);
     }
 
     public async Task<ClientResponseDTO> GetClientByIdAsync(int id)
