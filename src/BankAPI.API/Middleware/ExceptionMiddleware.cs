@@ -1,3 +1,6 @@
+using BankAPI.Application.DTOs.Common;
+using BankAPI.Application.Exceptions;
+
 namespace BankAPI.Middleware;
 
 public class ExceptionMiddleware
@@ -20,14 +23,28 @@ public class ExceptionMiddleware
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception");
-            
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Response.ContentType = "application/json";
 
-            await context.Response.WriteAsJsonAsync(new
+            if (ex is ApiExceptions apiExceptions)
             {
-                error = ex.Message,
-                stackTrace = ex.StackTrace
+                context.Response.StatusCode = (int)apiExceptions.StatusCode;
+
+                await context.Response.WriteAsJsonAsync(new ErrorResponse
+                {
+                    StatusCode = (int)apiExceptions.StatusCode,
+                    Message = apiExceptions.Message,
+                    Path = context.Request.Path,
+                    TraceId = context.TraceIdentifier
+                });
+                
+                return;
+            }
+
+            context.Response.StatusCode = 500;
+
+            await context.Response.WriteAsJsonAsync(new ErrorResponse
+            {
+                StatusCode = 500,
+                Message = "Internal server error"
             });
         }
     }
