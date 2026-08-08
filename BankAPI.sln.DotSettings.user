@@ -10,65 +10,65 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
   &lt;Assembly Path="/Users/admin/.nuget/packages/system.text.json/10.0.0/lib/net8.0/System.Text.Json.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3312d1d8_002D7b20_002D4c0a_002Da0db_002Dc93d32b53656/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3312d1d8_002D7b20_002D4c0a_002Da0db_002Dc93d32b53656/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3ac3e0bf_002D9c2a_002D46c7_002D9e5d_002Df5488cd540fc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetClientsAsync_ShouldReturnClients" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3ac3e0bf_002D9c2a_002D46c7_002D9e5d_002Df5488cd540fc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetClientsAsync_ShouldReturnClients" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=518d74e9_002D1fbf_002D44db_002D9e8f_002D3470768868ec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests.GetAccountById_ShouldReturnAccount_WhenAccountExists&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=518d74e9_002D1fbf_002D44db_002D9e8f_002D3470768868ec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests.GetAccountById_ShouldReturnAccount_WhenAccountExists&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58b3b74c_002D0512_002D47d0_002D8271_002D8ea77745e8a0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AccountServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58b3b74c_002D0512_002D47d0_002D8271_002D8ea77745e8a0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AccountServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=64254480_002Da846_002D40fd_002D825e_002D97eab3e9b7d0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=64254480_002Da846_002D40fd_002D825e_002D97eab3e9b7d0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=70c62033_002Da584_002D44f3_002Dbe25_002D0615a2647da2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientIntegrationTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=70c62033_002Da584_002D44f3_002Dbe25_002D0615a2647da2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientIntegrationTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9e309708_002D5929_002D4ac6_002D86b8_002D8964d41a37cc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ClientServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9e309708_002D5929_002D4ac6_002D86b8_002D8964d41a37cc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ClientServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f9525657_002D45a9_002D46c9_002D97be_002D2bd08bca0415/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.ClientUpdateStatusAsync_ShouldReturnClient&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.CreateClientCommentAsync_ShouldReturnResponse_WhenCommentCreated&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.GetCommentByClientId_ShouldReturnResponseDto_WhenCommentExists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.CreateCommentAsync_ShouldReturnResponseDto_WhenCommentCreated&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.CreateCommentAsync_ShouldReturnDto_WhenCommentCreated&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.DeleteCommentAsync_ShouldDeleteComment_WhenCommentDeleted&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.GetAccountCommentByIdAsync_ShouldReturnDto_WhenCommentsExists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f9525657_002D45a9_002D46c9_002D97be_002D2bd08bca0415/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAccountById_ShouldReturnAccount_WhenAccountExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.UserServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.GetClientsAsync_ShouldReturnClients&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests.ClientUpdateStatusAsync_ShouldReturnClient&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B9DD6AC3-8163-4798-8AD9-AACD061C3931::net8.0::BankAPI.IntegrationTests.IntegrationTests.ClientIntegrationTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.CreateClientCommentAsync_ShouldReturnResponse_WhenCommentCreated&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.GetCommentByClientId_ShouldReturnResponseDto_WhenCommentExists&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests.CreateCommentAsync_ShouldReturnResponseDto_WhenCommentCreated&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.CreateCommentAsync_ShouldReturnDto_WhenCommentCreated&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.DeleteCommentAsync_ShouldDeleteComment_WhenCommentDeleted&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests.GetAccountCommentByIdAsync_ShouldReturnDto_WhenCommentsExists&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.AccountCommentServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F22A5265-D18C-4EE9-9873-0BEDAE330773::net8.0::BankAPI.UnitTests.BankAPI.Tests.ClientCommentServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

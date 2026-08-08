@@ -1,8 +1,8 @@
 using BankAPI.Application.DTOs.AccountDto;
 using BankAPI.Application.Exceptions;
-using BankAPI.Domain.Entities;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Accounts;
+using BankAPI.Application.Mappers;
 using BankAPI.Domain.Enums;
 using Microsoft.Extensions.Logging;
 
@@ -40,17 +40,7 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account {accountId} not found");
         }
         
-        var response = new AccountResponseDto
-        {
-            Balance = account.Balance,
-            Status = account.Status,
-            CreatedAt = account.CreatedAt,
-            AccountNumber = account.AccountNumber,
-            ClientId = account.ClientId,
-            AccountId = account.Id,
-            AccountType = account.AccountType,
-            Plan = account.Plan
-        };
+        var response = AccountMapper.ToResponseDto(account);
         
         _logger.LogInformation(
             "Account {AccountId} retrieved", 
@@ -65,29 +55,17 @@ public class AccountService : IAccountService
         _logger.LogInformation(
             "Creating account"
             );
-        
-        AccountModel account = new AccountModel
-        {
-            Balance = 0,
-            CreatedAt = DateTime.UtcNow,
-            Status = AccountStatus.Active,
-            AccountNumber = Guid.NewGuid().ToString(),
-            ClientId = accountCreateDto.ClientId,
-            AccountType = accountCreateDto.AccountType,
-            
-        };
+
+        var account = AccountMapper.ToAccountModel(accountCreateDto);
+
+        account.AccountNumber = Guid.NewGuid().ToString();
+        account.Balance = 0;
+        account.CreatedAt = DateTime.UtcNow;
+        account.Status = AccountStatus.Active;
 
         var createdAccount = await _accountRepository.CreateAccountAsync(account);
         
-        var response = new AccountResponseDto
-        {
-            ClientId = createdAccount.ClientId,
-            Balance = createdAccount.Balance,
-            Status = createdAccount.Status,
-            AccountType = createdAccount.AccountType,
-            AccountNumber = createdAccount.AccountNumber,
-            AccountId = createdAccount.Id
-        };
+        var response = AccountMapper.ToResponseDto(createdAccount);
 
         await _accountRepository.SaveAsync();
         
@@ -107,17 +85,7 @@ public class AccountService : IAccountService
         
         foreach (var account in accounts)
         {
-            var dto = new AccountResponseDto
-            {
-                AccountNumber = account.AccountNumber,
-                Balance = account.Balance,
-                ClientId = account.ClientId,
-                AccountType = account.AccountType,
-                Status = account.Status,
-                CreatedAt = account.CreatedAt,
-                AccountId = account.Id,
-                Plan = account.Plan
-            };
+            var dto = AccountMapper.ToResponseDto(account);
             
             response.Add(dto);
         }
@@ -141,9 +109,7 @@ public class AccountService : IAccountService
             accountUpdateDto.Status
             );
         
-        var account = await _accountRepository.GetAccountAsync(accountId
-            //clientId
-            );
+        var account = await _accountRepository.GetAccountAsync(accountId);
 
         if (account == null)
         {
@@ -160,13 +126,7 @@ public class AccountService : IAccountService
 
         await _accountRepository.SaveAsync();
 
-        var response = new AccountResponseDto
-        {
-            ClientId = account.ClientId,
-            Balance = account.Balance,
-            AccountNumber = account.AccountNumber,
-            Status = account.Status,
-        };
+        var response = AccountMapper.ToResponseDto(account);
         
         _logger.LogInformation(
             "Account {AccountId} status was updated from {OldStatus} to {NewStatus}", 
@@ -248,14 +208,7 @@ public class AccountService : IAccountService
         account.Plan =  accountUpdateDto.Plan;
         await _accountRepository.SaveAsync();
 
-        var response = new AccountResponseDto
-        {
-            ClientId = account.ClientId,
-            Balance = account.Balance,
-            AccountNumber = account.AccountNumber,
-            Status = account.Status,
-            Plan = account.Plan
-        };
+        var response = AccountMapper.ToResponseDto(account);
         
         _logger.LogInformation(
             "Changed account{AccountId} plan from {OldPlan} to {NewPlan}", 
@@ -275,16 +228,6 @@ public class AccountService : IAccountService
 
         var accounts = await _accountRepository.GetAllAccountsAsync();
 
-        return accounts.Select(x => new AccountResponseDto
-        {
-            AccountId = x.Id,
-            ClientId = x.ClientId,
-            Balance = x.Balance,
-            AccountNumber = x.AccountNumber,
-            Status = x.Status,
-            Plan = x.Plan,
-            CreatedAt = x.CreatedAt,
-            AccountType = x.AccountType
-        });
+        return accounts.Select(AccountMapper.ToResponseDto);
     }
 }

@@ -2,6 +2,7 @@ using BankAPI.Application.DTOs.AuthDto;
 using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Users;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Users;
@@ -28,13 +29,7 @@ public class UserService : IUserService
         
         var users = await _userRepository.GetAllUsersAsync();
         
-        return users.Select(x => new UserResponse
-        {
-            Id = x.Id,
-            Email = x.Email,
-            UserRole = x.Role
-            
-        }).ToList();
+        return users.Select(UserMapper.ToResponseDto).ToList();
     }
 
     public async Task<UserResponse> GetUserByIdAsync(int id)
@@ -56,12 +51,7 @@ public class UserService : IUserService
             throw new NotFoundException($"User with Id {id} not found");
         }
 
-        var response = new UserResponse
-        {
-            Id = user.Id,
-            Email = user.Email,
-            UserRole = user.Role
-        };
+        var response = UserMapper.ToResponseDto(user);
         
         _logger.LogInformation(
             "User with Id {Id} retrieved successfully", 
