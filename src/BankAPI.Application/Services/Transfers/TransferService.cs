@@ -4,7 +4,7 @@ using BankAPI.Application.Interfaces.RepositoryInterfaces.Transfers;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Transfers;
-using BankAPI.Domain.Entities;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Transfers;
@@ -31,17 +31,10 @@ public class TransferService : ITransferService
 
     public async Task<TransferResponseDto> CreateTransferAsync(CreateTransferDto createTransferDto)
     {
-        Transfer transfer = new Transfer
-        {
-            Amount = createTransferDto.Amount,
-            SourceAccountId = createTransferDto.SourceAccountId,
-            DestinationAccountId = createTransferDto.DestinationAccountId,
-            UserId = createTransferDto.UserId,
-            CreatedAt = DateTime.UtcNow,
-            TransferId = Guid.NewGuid(),
-            Description = createTransferDto.Description,
-            
-        };
+        var transfer = TransferMapper.ToTransferEntity(createTransferDto);
+        
+        transfer.CreatedAt = DateTime.UtcNow;
+        transfer.TransferId = Guid.NewGuid();
         
         var sourceAccount = await _accountRepository.GetAccountAsync(createTransferDto.SourceAccountId);
         
@@ -144,16 +137,7 @@ public class TransferService : ITransferService
 
         await _accountRepository.SaveAsync();
 
-        TransferResponseDto response = new TransferResponseDto
-        {
-            TransferId = makeTransfer.TransferId,
-            Amount = makeTransfer.Amount,
-            SourceAccountId = makeTransfer.SourceAccountId,
-            DestinationAccountId = makeTransfer.DestinationAccountId,
-            UserId = makeTransfer.UserId,
-            CreatedAt = DateTime.UtcNow,
-            Description = makeTransfer.Description,
-        };
+        var response = TransferMapper.ToResponseDto(makeTransfer);
         
         _logger.LogInformation(
             "Transfer with ID:{transferId} successfully created", 
@@ -171,16 +155,7 @@ public class TransferService : ITransferService
 
         foreach (var transfer in transfers)
         {
-            var dto = new TransferResponseDto
-            {
-                Amount = transfer.Amount,
-                SourceAccountId = transfer.SourceAccountId,
-                DestinationAccountId = transfer.DestinationAccountId,
-                UserId = transfer.UserId,
-                CreatedAt = transfer.CreatedAt,
-                TransferId = transfer.TransferId,
-                Description = transfer.Description,
-            };
+            var dto = TransferMapper.ToResponseDto(transfer);
             
             response.Add(dto);
         }
@@ -208,15 +183,7 @@ public class TransferService : ITransferService
             throw new  NotFoundException($"Transfer with ID: {transferId} does not exist");
         }
 
-        var result = new TransferResponseDto
-        {
-            Amount = transfer.Amount,
-            CreatedAt = transfer.CreatedAt,
-            Description = transfer.Description,
-            SourceAccountId = transfer.SourceAccountId,
-            DestinationAccountId = transfer.DestinationAccountId,
-            TransferId = transfer.TransferId
-        };
+        var result = TransferMapper.ToResponseDto(transfer);
         
         _logger.LogInformation(
             "Transfer with ID:{transferId} was found", 
@@ -239,15 +206,7 @@ public class TransferService : ITransferService
 
         foreach (var transfer in outgoingTransfers)
         {
-            var dto = new TransferResponseDto
-            {
-                Amount = transfer.Amount,
-                CreatedAt = transfer.CreatedAt,
-                Description = transfer.Description,
-                SourceAccountId = transfer.SourceAccountId,
-                DestinationAccountId = transfer.DestinationAccountId,
-                TransferId = transfer.TransferId
-            };
+            var dto = TransferMapper.ToResponseDto(transfer);
             
             response.Add(dto);
         }
@@ -274,15 +233,7 @@ public class TransferService : ITransferService
 
         foreach (var transfer in incomingTransfers)
         {
-            var dto = new TransferResponseDto
-            {
-                Amount = transfer.Amount,
-                CreatedAt = transfer.CreatedAt,
-                Description = transfer.Description,
-                SourceAccountId = transfer.SourceAccountId,
-                DestinationAccountId = transfer.DestinationAccountId,
-                TransferId = transfer.TransferId
-            };
+            var dto = TransferMapper.ToResponseDto(transfer);
             
             response.Add(dto);
         }
@@ -309,16 +260,7 @@ public class TransferService : ITransferService
             transfers.Count
             );
         
-        return transfers.Select(x => new TransferResponseDto
-        {
-            Amount = x.Amount,
-            CreatedAt = x.CreatedAt,
-            Description = x.Description,
-            SourceAccountId = x.SourceAccountId,
-            DestinationAccountId = x.DestinationAccountId,
-            TransferId = x.TransferId
-            
-        }).ToList();
+        return transfers.Select(TransferMapper.ToResponseDto).ToList();
     }
 
     public async Task<List<TransferResponseDto>> GetAllTransfersByUserIdAsync(int userId)
@@ -334,15 +276,7 @@ public class TransferService : ITransferService
 
         foreach (var transfer in transfers)
         {
-            var dto = new TransferResponseDto
-            {
-                Amount = transfer.Amount,
-                CreatedAt = transfer.CreatedAt,
-                Description = transfer.Description,
-                SourceAccountId = transfer.SourceAccountId,
-                DestinationAccountId = transfer.DestinationAccountId,
-                TransferId = transfer.TransferId
-            };
+            var dto = TransferMapper.ToResponseDto(transfer);
             
             response.Add(dto);
         }

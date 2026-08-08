@@ -68,13 +68,7 @@ public class ClientService : IClientService
 
         return  clients
             .Where(x => x.Status == ClientStatus.Active)
-            .Select(x => new ClientResponseDTO
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Status = x.Status,
-                
-            })
+            .Select(ClientMapper.ToResponseDto)
             .ToList();
     }
 
@@ -85,8 +79,16 @@ public class ClientService : IClientService
             );
         
         var normalizeEmail = clientCreateDto.Email.Trim().ToLowerInvariant();
+
+        clientCreateDto.Email = normalizeEmail;
         
-        ClientModel clientModel = new ClientModel
+        var clientModel = ClientMapper.ToModel(clientCreateDto);
+        
+        clientModel.CreateDate = DateTime.UtcNow;
+        clientModel.Status = ClientStatus.Active;
+        clientModel.Accounts = new List<AccountModel>();
+        
+        /*ClientModel clientModel = new ClientModel
         {
             CreateDate = DateTime.UtcNow,
             Status = ClientStatus.Active,
@@ -94,7 +96,7 @@ public class ClientService : IClientService
             Name = clientCreateDto.Name.Trim(),
             Email = normalizeEmail,
             PhoneNumber = clientCreateDto.PhoneNumber.Trim()
-        };
+        };*/
         
         var existingClient = await _clientRepository.GetClientByEmail(normalizeEmail);
 
@@ -139,15 +141,7 @@ public class ClientService : IClientService
             throw new NotFoundException($"Client {id} not found");
         }
 
-        var response = new ClientResponseDTO
-        {
-            Id = client.Id,
-            Name = client.Name,
-            Email = client.Email,
-            PhoneNumber = client.PhoneNumber,
-            Status = client.Status,
-            Created = client.CreateDate
-        };
+        var response = ClientMapper.ToResponseDto(client);
 
         _logger.LogInformation(
             "Client {ClientId} was found", 
@@ -187,12 +181,7 @@ public class ClientService : IClientService
             id
             );
         
-        return new ClientResponseDTO
-        {
-            Name = client.Name,
-            Email = client.Email,
-            PhoneNumber = client.PhoneNumber,
-        };
+        return ClientMapper.ToResponseDto(client);
     }
 
     public async Task<IEnumerable<ClientResponseDTO>> GetAllClientsAsync()
@@ -203,16 +192,7 @@ public class ClientService : IClientService
         
         var clients = await _clientRepository.GetAllClients();
         
-        return clients.Select(x => new ClientResponseDTO
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Email = x.Email,
-            PhoneNumber = x.PhoneNumber,
-            Status = x.Status,
-            Created = x.CreateDate
-            
-        }).ToList();
+        return clients.Select(ClientMapper.ToResponseDto).ToList();
     }
 
     public async Task<ClientResponseDTO> GetClientByNameAsync(string name)
@@ -234,14 +214,7 @@ public class ClientService : IClientService
             throw new NotFoundException($"Client with Name {name} not found");
         }
 
-        var response = new ClientResponseDTO
-        {
-            Id = client.Id,
-            Name = client.Name,
-            Email = client.Email,
-            PhoneNumber = client.PhoneNumber,
-            Status = client.Status
-        };
+        var response = ClientMapper.ToResponseDto(client);
         
         _logger.LogInformation(
             "Client with {ClientName} was found", 

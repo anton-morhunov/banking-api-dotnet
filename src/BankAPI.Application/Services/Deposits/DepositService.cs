@@ -4,6 +4,7 @@ using BankAPI.Application.Interfaces.RepositoryInterfaces.Deposits;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Deposits;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Accounts;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
+using BankAPI.Application.Mappers;
 using BankAPI.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -40,16 +41,10 @@ public class DepositService : IDepositService
             depositCreateDto.Amount
             );
         
-        Deposit deposit = new Deposit
-        {
-            Amount = depositCreateDto.Amount,
-            AccountId = depositCreateDto.AccountId,
-            UserId = depositCreateDto.UserId,
-            Description = depositCreateDto.Description,
-            CreatedAt =  DateTime.UtcNow,
-            DepositId = Guid.NewGuid()
-
-        };
+        var deposit = DepositMapper.ToDepositEntity(depositCreateDto);
+        
+        deposit.CreatedAt = DateTime.UtcNow;
+        deposit.DepositId = Guid.NewGuid();
         
         if (depositCreateDto.Amount <= 0)
         {
@@ -90,13 +85,7 @@ public class DepositService : IDepositService
 
         await _accountRepository.SaveAsync();
 
-        var response = new DepositResponseDto
-        {
-            Amount = makeDeposit.Amount,
-            DepositId = makeDeposit.DepositId,
-            AccountId = makeDeposit.AccountId,
-            UserId = makeDeposit.UserId,
-        };
+        var response = DepositMapper.ToResponseDto(makeDeposit);
         
         _logger.LogInformation(
             "Deposit was created successfully"
@@ -114,14 +103,7 @@ public class DepositService : IDepositService
 
         foreach (var deposit in deposits)
         {
-            var dto = new DepositResponseDto
-            {
-                Amount = deposit.Amount,
-                DepositId = deposit.DepositId,
-                AccountId = deposit.AccountId,
-                UserId = deposit.UserId,
-                CreatedAt = deposit.CreatedAt,
-            };
+            var dto = DepositMapper.ToResponseDto(deposit);
             
             response.Add(dto);
         }
@@ -149,14 +131,7 @@ public class DepositService : IDepositService
             throw new NotFoundException($"Deposit with Id {depositId} not found");
         }
 
-        var result = new DepositResponseDto
-        {
-            DepositId = deposit.DepositId,
-            Amount = deposit.Amount,
-            AccountId = deposit.AccountId,
-            UserId = deposit.UserId,
-            CreatedAt = deposit.CreatedAt,
-        };
+        var result = DepositMapper.ToResponseDto(deposit);
         
         _logger.LogInformation(
             "Deposit {depositId} was found",

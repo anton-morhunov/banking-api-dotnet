@@ -2,7 +2,7 @@ using BankAPI.Application.DTOs.AccountCommentDto;
 using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Comments;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Comments;
-using BankAPI.Domain.Entities;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Comments;
@@ -28,25 +28,13 @@ public class AccountCommentService : IAccountCommentService
             accountCommentCreateDto.AccountId, 
             accountCommentCreateDto.Text
         );
-        
-        AccountComment commentDto = new AccountComment
-        {
-            Text = accountCommentCreateDto.Text,
-            UserId = accountCommentCreateDto.UserId,
-            AccountId = accountCommentCreateDto.AccountId,
-            CreatedAt = DateTime.UtcNow,
-        };
+
+        var commentDto = AccountCommentsMapper.ToAccountCommentModel(accountCommentCreateDto);
+        commentDto.CreatedAt = DateTime.UtcNow;
 
         var createdComment = await _accountCommentRepository.CreateAccountCommentAsync(commentDto);
 
-        var response = new AccountCommentResponseDto
-        {
-            CreatedAt = createdComment.CreatedAt,
-            Text = createdComment.Text,
-            UserId = createdComment.UserId,
-            AccountId = createdComment.AccountId,
-            CommentId = createdComment.Id
-        };
+        var response = AccountCommentsMapper.ToResponseDto(createdComment);
         
         _logger.LogInformation(
             "A new comment with {id} has been created",  
@@ -102,13 +90,7 @@ public class AccountCommentService : IAccountCommentService
 
         foreach (var comment in comments)
         {
-            var dto = new AccountCommentResponseDto
-            {
-                CreatedAt = comment.CreatedAt,
-                Text = comment.Text,
-                CommentId = comment.Id,
-                AccountId = comment.AccountId,
-            };
+            var dto = AccountCommentsMapper.ToResponseDto(comment);
             
             response.Add(dto); 
         }
@@ -154,10 +136,6 @@ public class AccountCommentService : IAccountCommentService
             commentId
         );
 
-        return new AccountCommentResponseDto
-        {
-            Text = accountCommentUpdateDto.Text,
-            UpdatedAt = DateTime.UtcNow
-        };
+        return AccountCommentsMapper.ToResponseDto(comment);
     }
 }

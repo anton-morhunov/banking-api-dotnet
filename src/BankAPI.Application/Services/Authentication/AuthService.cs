@@ -1,7 +1,7 @@
 using BankAPI.Application.DTOs.AuthDto;
-using BankAPI.Domain.Entities;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Authentication;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Authentication;
@@ -65,20 +65,11 @@ public class AuthService : IAuthService
             throw new InvalidOperationException("User already exists");
         }
 
-        var user = new UserModel
-        {
-            Email = request.Email,
-            PasswordHash = _passwordService.Hash(request.Password),
-            Role = request.UserRole
-        };
+        var user = UserMapper.ToUserModel(request);
+        user.PasswordHash = _passwordService.Hash(request.Password);
 
         await _userRepository.CreateUserAsync(user);
 
-        return new UserResponse
-        {
-            Id = user.Id,
-            Email = user.Email,
-            UserRole = user.Role
-        };
+        return UserMapper.ToResponseDto(user);
     }
 }

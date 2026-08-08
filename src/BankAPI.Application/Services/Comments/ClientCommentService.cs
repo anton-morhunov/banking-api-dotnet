@@ -2,7 +2,7 @@ using BankAPI.Application.DTOs.ClientCommentDto;
 using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Comments;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Comments;
-using BankAPI.Domain.Entities;
+using BankAPI.Application.Mappers;
 using Microsoft.Extensions.Logging;
 
 namespace BankAPI.Application.Services.Comments;
@@ -29,24 +29,12 @@ public class ClientCommentService : IClientCommentService
          clientCommentCreateDto.Text
          );
       
-      ClientComment clientComment = new ClientComment
-      {
-         CreatedAt = DateTime.UtcNow,
-         Text = clientCommentCreateDto.Text,
-         ClientId = clientCommentCreateDto.ClientId,
-         UserId = clientCommentCreateDto.UserId,
-      };
+      var clientComment = ClientCommentsMapper.ToClientCommentModel(clientCommentCreateDto);
+      clientComment.CreatedAt = DateTime.UtcNow;
       
       var createdComment = await _clientCommentRepository.CreateCommentAsync(clientComment);
 
-      var response = new ClientCommentResponseDto
-      {
-         CreatedAt = createdComment.CreatedAt,
-         Text = createdComment.Text,
-         ClientId = createdComment.ClientId,
-         UserId = createdComment.UserId,
-         CommentId =  createdComment.Id
-      };
+      var response = ClientCommentsMapper.ToResponseDto(createdComment);
       
       _logger.LogInformation(
          "A new comment with {id} has been created",  
@@ -101,14 +89,7 @@ public class ClientCommentService : IClientCommentService
 
       foreach (var comment in comments)
       {
-         var dto = new ClientCommentResponseDto
-         {
-            CommentId = comment.Id,
-            Text = comment.Text,
-            ClientId = comment.ClientId,
-            CreatedAt = comment.CreatedAt,
-            UserId = comment.UserId
-         };
+         var dto = ClientCommentsMapper.ToResponseDto(comment);
          
          response.Add(dto);
       }
@@ -154,10 +135,6 @@ public class ClientCommentService : IClientCommentService
          commentId
          );
 
-      return new ClientCommentResponseDto
-      {
-         Text = comment.Text,
-         UpdatedAt = DateTime.UtcNow
-      };
+      return ClientCommentsMapper.ToResponseDto(comment);
    }
 }

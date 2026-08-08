@@ -1,5 +1,6 @@
 using BankAPI.Application.DTOs.ClientDto;
 using BankAPI.Domain.Entities;
+using BankAPI.Domain.Enums;
 
 namespace BankAPI.Application.Mappers;
 
@@ -15,6 +16,16 @@ public static class ClientMapper
             PhoneNumber = client.PhoneNumber,
             Created = client.CreateDate,
             Status = client.Status,
+        };
+    }
+
+    public static ClientModel ToModel(ClientCreateDTO clientCreateDto)
+    {
+        return new ClientModel
+        {
+            Email = clientCreateDto.Email,
+            Name = clientCreateDto.Name.Trim(),
+            PhoneNumber = clientCreateDto.PhoneNumber.Trim()
         };
     }
 }
