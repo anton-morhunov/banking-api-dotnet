@@ -40,6 +40,7 @@ var app = builder.Build();
 await app.InitializeDatabaseAsync();
 
 app.UseCors("AllowFrontend");
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
