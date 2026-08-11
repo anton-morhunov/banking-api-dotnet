@@ -1,4 +1,5 @@
 using BankAPI.Application.DTOs.AuthDto;
+using BankAPI.Application.Exceptions;
 using BankAPI.Application.Interfaces.RepositoryInterfaces.Users;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Authentication;
 using BankAPI.Application.Mappers;
@@ -62,7 +63,7 @@ public class AuthService : IAuthService
         if (existing != null)
         {
             _logger.LogWarning("User with email {email} already exists", request.Email);
-            throw new InvalidOperationException("User already exists");
+            throw new ConflictException("Registration failed. User already exists");
         }
 
         var user = UserMapper.ToUserModel(request);

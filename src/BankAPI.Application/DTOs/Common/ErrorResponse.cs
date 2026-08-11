@@ -7,4 +7,5 @@ public class ErrorResponse
     public string Path { get; set; } =  string.Empty;
     public string TraceId { get; set; } =  string.Empty;
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public string? StackTrace { get; set; }
 }

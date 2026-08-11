@@ -25,7 +25,9 @@ builder.Host.UseSerilog((context, services, configuration) =>
                            " [{TraceId}]" +
                            " [{User}]" +
                            "[{IP}] " +
-                           "{Message:lj}{NewLine}{Exception}");
+                           "{Message:lj}{NewLine}{Exception}")
+        
+        .WriteTo.Seq(context.Configuration["Seq:ServerUrl"]!);
 });
 
 builder.Services.AddDatabase(builder.Configuration);
