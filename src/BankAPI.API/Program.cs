@@ -12,7 +12,15 @@ builder.Host.UseSerilog((context, services, configuration) =>
 {
     configuration
         .MinimumLevel.Information()
-        .WriteTo.Console();
+        
+        .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.EntityFramework", Serilog.Events.LogEventLevel.Information)
+        
+        .Enrich.FromLogContext()
+        
+        .WriteTo.Console(
+            outputTemplate:"[{Timestamp:HH:mm:ss} {Level:u3}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}");
 });
 
 builder.Services.AddDatabase(builder.Configuration);
@@ -40,6 +48,7 @@ var app = builder.Build();
 await app.InitializeDatabaseAsync();
 
 app.UseCors("AllowFrontend");
+app.UseMiddleware<CorrelationMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
