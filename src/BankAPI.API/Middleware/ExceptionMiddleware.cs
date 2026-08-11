@@ -7,11 +7,16 @@ public class ExceptionMiddleware
 {
     private readonly ILogger<ExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;
+    private readonly IWebHostEnvironment _environment;
 
-    public ExceptionMiddleware(ILogger<ExceptionMiddleware> logger, RequestDelegate next)
+    public ExceptionMiddleware(
+        ILogger<ExceptionMiddleware> logger, 
+        RequestDelegate next,
+        IWebHostEnvironment environment)
     {
         _logger = logger;
         _next = next;
+        _environment = environment;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -22,28 +27,29 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception");
-
             if (ex is ApiExceptions apiExceptions)
             {
+                _logger.LogWarning(ex, apiExceptions.Message);
+                
                 context.Response.StatusCode = (int)apiExceptions.StatusCode;
 
                 await context.Response.WriteAsJsonAsync(new ErrorResponse
                 {
                     StatusCode = (int)apiExceptions.StatusCode,
                     Message = apiExceptions.Message,
-                    Path = context.Request.Path,
-                    TraceId = context.TraceIdentifier
+                    StackTrace = _environment.IsDevelopment() ? ex.StackTrace : null
                 });
                 
                 return;
             }
+            
+            _logger.LogError(ex, "Unhandled exception");
 
-            context.Response.StatusCode = 500;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
             await context.Response.WriteAsJsonAsync(new ErrorResponse
             {
-                StatusCode = 500,
+                StatusCode = StatusCodes.Status500InternalServerError,
                 Message = "Internal server error"
             });
         }

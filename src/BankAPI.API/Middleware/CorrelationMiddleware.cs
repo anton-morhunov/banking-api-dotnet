@@ -33,8 +33,6 @@ public class CorrelationMiddleware
                        ["IP"] =  context.Connection.RemoteIpAddress?.ToString()
                    }))
         {
-            _logger.LogInformation("CorrelationId: {CorrelationId} assigned", correlationId);
-        
             await _next(context);
         }
     }
