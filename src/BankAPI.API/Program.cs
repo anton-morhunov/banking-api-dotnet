@@ -20,7 +20,12 @@ builder.Host.UseSerilog((context, services, configuration) =>
         .Enrich.FromLogContext()
         
         .WriteTo.Console(
-            outputTemplate:"[{Timestamp:HH:mm:ss} {Level:u3}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}");
+            outputTemplate:"[{Timestamp:HH:mm:ss} {Level:u3}]" +
+                           " [{CorrelationId}]" +
+                           " [{TraceId}]" +
+                           " [{User}]" +
+                           "[{IP}] " +
+                           "{Message:lj}{NewLine}{Exception}");
 });
 
 builder.Services.AddDatabase(builder.Configuration);

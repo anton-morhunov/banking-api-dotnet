@@ -27,7 +27,10 @@ public class CorrelationMiddleware
         using (_logger.BeginScope(
                    new Dictionary<string, object>
                    {
-                       ["CorrelationId"] = correlationId
+                       ["CorrelationId"] = correlationId,
+                       ["User"] = context.User.Identity?.Name ?? "Anonymous",
+                       ["TraceId"] = context.TraceIdentifier,
+                       ["IP"] =  context.Connection.RemoteIpAddress?.ToString()
                    }))
         {
             _logger.LogInformation("CorrelationId: {CorrelationId} assigned", correlationId);
