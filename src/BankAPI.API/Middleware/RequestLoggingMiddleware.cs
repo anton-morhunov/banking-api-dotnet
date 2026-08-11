@@ -19,11 +19,12 @@ public class RequestLoggingMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         _logger.LogInformation(
-            "Incoming request: {Method} {Path}", 
+            "→ {Method} {Path}", 
             context.Request.Method, 
             context.Request.Path);
         
         var stopwatch = Stopwatch.StartNew();
+        var userAgent = context.Request.Headers.UserAgent.ToString();
         
         try
         {
@@ -34,17 +35,11 @@ public class RequestLoggingMiddleware
             stopwatch.Stop();
         
             _logger.LogInformation(
-                "HTTP {Method} {Path} responded {StatusCode} in {ElapsedMilliseconds} ms. " +
-                "TraceId: {TraceId}. " +
-                "User: {User}. " +
-                "IP: {IP}",
+                "← {Method} {Path} {StatusCode} ({ElapsedMilliseconds} ms)",
                 context.Request.Method,
                 context.Request.Path,
                 context.Response.StatusCode,
-                stopwatch.ElapsedMilliseconds,
-                context.TraceIdentifier,
-                context.User.Identity?.Name,
-                context.Connection.RemoteIpAddress?.ToString() ?? "N/A");
+                stopwatch.ElapsedMilliseconds);
         }
         
     }
