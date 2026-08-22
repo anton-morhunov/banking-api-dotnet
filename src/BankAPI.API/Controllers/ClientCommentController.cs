@@ -2,9 +2,11 @@ using BankAPI.Application.DTOs.ClientCommentDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Comments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace BankAPI.Controllers;
 
+[EnableRateLimiting("user-limit")]
 [ApiController]
 [Route("api/comments")]
 
@@ -16,7 +18,7 @@ public class ClientCommentController : ControllerBase
     {
         _clientCommentService = clientCommentService;
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<ClientCommentResponseDto>> CreateCommentAsync(ClientCommentCreateDto clientCommentCreateDto)
@@ -25,7 +27,7 @@ public class ClientCommentController : ControllerBase
         
         return Ok(comment);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpDelete]
     public async Task<ActionResult> DeleteCommentAsync(int commentId)
@@ -34,7 +36,7 @@ public class ClientCommentController : ControllerBase
         
         return Ok();
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("client/{clientId:int}")]
     public async Task<ActionResult<IEnumerable<ClientCommentResponseDto>>> GetAllCommentsByClientIdAsync(int clientId)
@@ -43,7 +45,7 @@ public class ClientCommentController : ControllerBase
         
         return Ok(response);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpPut]
     public async Task<ActionResult<ClientCommentResponseDto>> UpdateCommentAsync(int id,

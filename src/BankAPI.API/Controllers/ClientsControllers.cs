@@ -3,9 +3,11 @@ using BankAPI.Application.Interfaces.ServiceInterfaces.Clients;
 using BankAPI.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace BankAPI.Controllers;
 
+[EnableRateLimiting("user-limit")]
 [ApiController]
 [Route("api/clients")]
 public class ClientsControllers : ControllerBase
@@ -30,7 +32,6 @@ public class ClientsControllers : ControllerBase
         return Ok(claims);
     }*/
     
-    //Get Client by ID
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ClientResponseDTO>> GetClientById(int id)
@@ -45,7 +46,6 @@ public class ClientsControllers : ControllerBase
         return Ok(client);
     }
     
-    //Create new Client
     [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<ClientResponseDTO>> CreateClient(ClientCreateDTO dto)
@@ -57,7 +57,6 @@ public class ClientsControllers : ControllerBase
             client
             );
     }
-    
     
     [Authorize(Roles = "Admin")]
     [HttpGet]
@@ -72,7 +71,7 @@ public class ClientsControllers : ControllerBase
         var client = await _clientService.GetClientByNameAsync(name);
         return Ok(client);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateClient(
@@ -88,7 +87,7 @@ public class ClientsControllers : ControllerBase
         
         return Ok(client);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{id:int}")]
     public async Task<IActionResult> ClientUpdateStatus(int id, ClientStatus dto)
@@ -102,7 +101,7 @@ public class ClientsControllers : ControllerBase
         
         return NoContent();
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("active")]
     public async Task<ActionResult<IEnumerable<ClientResponseDTO>>> GetAllActiveClients()
