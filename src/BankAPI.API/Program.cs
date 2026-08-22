@@ -1,7 +1,9 @@
+using System.Threading.RateLimiting;
 using BankAPI.Middleware;
 using Serilog;
 using BankAPI.Application.DependencyInjection;
 using BankAPI.DependencyInjection;
+using BankAPI.Extensions;
 using BankAPI.Infrastructure.Data.Configurations;
 using BankAPI.Infrastructure.DependencyInjection;
 using BankAPI.Infrastructure.Initialization;
@@ -36,6 +38,7 @@ builder.Services.AddSwaggerDocumentation();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationValidators();
+builder.Services.AddApiRateLimiter();
 builder.Services.AddControllers();
 builder.Services.AddCorsConfiguration(builder.Configuration);
 
@@ -59,6 +62,7 @@ app.UseMiddleware<CorrelationMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
+app.UseRateLimiter();
 app.UseAuthorization();
 
 var port = Environment.GetEnvironmentVariable("PORT");

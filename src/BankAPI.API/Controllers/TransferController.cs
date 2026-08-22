@@ -2,6 +2,7 @@ using BankAPI.Application.DTOs.TransferDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Transfers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace BankAPI.Controllers;
 
@@ -16,6 +17,7 @@ public class TransferController : ControllerBase
         _transferService = transferService;
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpPost]
     public async Task<ActionResult<TransferResponseDto>> CreateTransferAsync(CreateTransferDto createTransferDto)
@@ -24,6 +26,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("accounts/{accountId:int}")]
     public async Task<ActionResult<IEnumerable<TransferResponseDto>>> GetAllTransfersByAccountIdAsync(int accountId)
@@ -32,6 +35,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("{transferId:guid}")]
     public async Task<ActionResult<TransferResponseDto>> GetTransferByIdAsync(Guid transferId)
@@ -41,6 +45,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TransferResponseDto>>> GetAllTransfersAsync()
@@ -49,6 +54,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("accounts/{accountId:int}/outgoing")]
     public async Task<ActionResult<IEnumerable<TransferResponseDto>>> GetOutgoingTransfersByAccountIdAsync(
@@ -58,6 +64,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("accounts/{accountId:int}/incoming")]
     public async Task<ActionResult<IEnumerable<TransferResponseDto>>> GetIncomingTransfersByAccountIdAsync(
@@ -67,6 +74,7 @@ public class TransferController : ControllerBase
         return Ok(response);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("users/{userId}")]
     public async Task<ActionResult<IEnumerable<TransferResponseDto>>> GetAllTransfersByUserIdAsync(int userId)

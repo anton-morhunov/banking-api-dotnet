@@ -2,9 +2,11 @@ using BankAPI.Application.DTOs.AuthDto;
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace BankAPI.Controllers;
 
+[EnableRateLimiting("user-limit")]
 [ApiController]
 [Route("api/users")]
 public class UserController : ControllerBase
@@ -30,7 +32,7 @@ public class UserController : ControllerBase
         }
         return Ok(users);
     }
-
+    
     [Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<UserResponse?>> GetUserByIdAsync(int id)

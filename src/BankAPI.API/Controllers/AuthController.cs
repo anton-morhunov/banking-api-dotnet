@@ -3,6 +3,7 @@ using BankAPI.Application.DTOs.GoogleAuth;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using LoginRequest = BankAPI.Application.DTOs.AuthDto.LoginRequest;
 
 namespace BankAPI.Controllers;
@@ -24,6 +25,7 @@ public class AuthController : ControllerBase
         _googleAuthService = googleAuthService;
     }
 
+    [EnableRateLimiting("fixed")]
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest loginRequest)
     {
@@ -37,6 +39,7 @@ public class AuthController : ControllerBase
         return Ok(token);
     }
 
+    [EnableRateLimiting("fixed")]
     [Authorize(Roles = "Admin")]
     [HttpPost("register")]
     public async Task<ActionResult<UserResponse>> Register(CreateUserRequest createUserRequest)
@@ -46,6 +49,7 @@ public class AuthController : ControllerBase
         return Ok(createUser);
     }
 
+    [EnableRateLimiting("fixed")]
     [HttpPost("google")]
     public async Task<IActionResult> GoogleLogin(GoogleAuthRequestDto dto)
     {

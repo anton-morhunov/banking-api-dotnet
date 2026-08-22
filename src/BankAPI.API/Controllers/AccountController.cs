@@ -2,9 +2,11 @@ using BankAPI.Application.DTOs.AccountDto;
 using BankAPI.Application.Interfaces.ServiceInterfaces.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace BankAPI.Controllers;
 
+[EnableRateLimiting("user-limit")]
 [ApiController]
 [Route("api/accounts")]
 
@@ -36,7 +38,7 @@ public class AccountController : ControllerBase
             
         return Ok(account);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccounts()
@@ -44,7 +46,7 @@ public class AccountController : ControllerBase
         var all = await _accountService.GetAllAccounts();
         return Ok(all);
     }
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpGet("client/{clientId:int}")]
     public async Task<ActionResult<IEnumerable<AccountResponseDto>>> GetAllAccountsByClientId(int clientId)
@@ -100,7 +102,7 @@ public class AccountController : ControllerBase
 
         return Ok(closeAccount);
     }*/
-
+    
     [Authorize(Roles = "Admin, Employee")]
     [HttpPatch("{accountId:int}/plan")]
     public async Task<ActionResult<AccountResponseDto>> UpdatePlanAsync(
